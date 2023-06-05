@@ -1,10 +1,14 @@
 package com.codecool.dungeoncrawl.logic.actors;
 
-import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.cell.Cell;
 import com.codecool.dungeoncrawl.logic.Drawable;
+import lombok.Getter;
+
 
 public abstract class Actor implements Drawable {
+    @Getter
     private Cell cell;
+    @Getter
     private int health = 10;
 
     public Actor(Cell cell) {
@@ -17,14 +21,6 @@ public abstract class Actor implements Drawable {
         cell.setActor(null);
         nextCell.setActor(this);
         cell = nextCell;
-    }
-
-    public int getHealth() {
-        return health;
-    }
-
-    public Cell getCell() {
-        return cell;
     }
 
     public int getX() {

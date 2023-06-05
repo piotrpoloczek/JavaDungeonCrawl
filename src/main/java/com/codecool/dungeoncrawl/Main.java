@@ -1,8 +1,8 @@
 package com.codecool.dungeoncrawl;
 
-import com.codecool.dungeoncrawl.logic.Cell;
-import com.codecool.dungeoncrawl.logic.GameMap;
-import com.codecool.dungeoncrawl.logic.MapLoader;
+import com.codecool.dungeoncrawl.logic.cell.Cell;
+import com.codecool.dungeoncrawl.logic.map.GameMap;
+import com.codecool.dungeoncrawl.logic.map.MapLoader;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -14,6 +14,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+
 
 public class Main extends Application {
     GameMap map = MapLoader.loadMap();
