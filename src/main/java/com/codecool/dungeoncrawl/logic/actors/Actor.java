@@ -10,6 +10,8 @@ public abstract class Actor implements Drawable {
     private Cell cell;
     @Getter
     private int health = 10;
+    private String name;
+
 
     public Actor(Cell cell) {
         this.cell = cell;
