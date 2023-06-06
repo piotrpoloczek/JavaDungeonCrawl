@@ -51,6 +51,9 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+
+    // make it as interface controller,
+    // in order to use different types of controllers
     private void onKeyPressed(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
             case UP:
