@@ -1,4 +1,4 @@
-package com.codecool.dungeoncrawl.logic.cell;
+package com.codecool.dungeoncrawl.logic;
 
 public enum CellType {
     EMPTY("empty"),
