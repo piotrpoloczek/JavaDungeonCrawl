@@ -11,4 +11,11 @@ public class Skeleton extends Actor {
     public String getTileName() {
         return "skeleton";
     }
+
+    @Override
+    protected void fight(Actor actor) {
+        if (actor.getClass().equals(Player.class)) {
+            // this should result in fight with player
+        }
+    }
 }

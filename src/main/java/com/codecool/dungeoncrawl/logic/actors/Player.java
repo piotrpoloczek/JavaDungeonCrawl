@@ -7,6 +7,11 @@ public class Player extends Actor {
         super(cell);
     }
 
+    @Override
+    protected void fight(Actor actor) {
+        // implement fight with the actor
+    }
+
     public String getTileName() {
         return "player";
     }
