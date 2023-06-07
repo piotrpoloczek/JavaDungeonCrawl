@@ -8,6 +8,8 @@ import com.codecool.dungeoncrawl.logic.something.Something;
 public abstract class Actor extends Something {
 
     private int health = 10;
+    private int attack = 2;
+    private int defense = 5;
 
     public Actor(Cell cell) {
         super(cell);
@@ -15,20 +17,35 @@ public abstract class Actor extends Something {
 
     public void move(int dx, int dy) {
         Cell nextCell = cell.getNeighbor(dx, dy);
-//        if (nextCell.getActor() != null) {
-//            Actor actor = nextCell.getActor();
-//            fight(actor);
+
         if (nextCell.getSomething() != null) {
             Something something = nextCell.getSomething();
             action(something);
-            // action depending on what it is we can use
-            // the method with different arguments
-        }
-        else if (nextCell.getType().equals(CellType.FLOOR)) {
-            cell.setActor(null);
-            nextCell.setActor(this);
+        } else if (nextCell.getType().equals(CellType.FLOOR)) {
+            cell.setSomething(null);
+            nextCell.setSomething(this);
             cell = nextCell;
         }
+    }
+
+    public void attack(Actor actor){
+        System.out.println("I attacked the " + actor);
+        actor.defense(this.attack);
+        if (actor.isAlive()) {
+            actor.counterAttack(this);
+        }
+    }
+
+    private void counterAttack(Actor actor) {
+        actor.defense(this.attack);
+    }
+
+    public void defense(int attack) {
+        health = this.health - attack;
+    }
+
+    public boolean isAlive() {
+        return health > 0;
     }
 
     public int getHealth() {

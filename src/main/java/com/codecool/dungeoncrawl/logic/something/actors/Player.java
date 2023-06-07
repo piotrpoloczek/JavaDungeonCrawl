@@ -3,23 +3,29 @@ package com.codecool.dungeoncrawl.logic.something.actors;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.something.Something;
 import com.codecool.dungeoncrawl.logic.something.items.Item;
+import com.codecool.dungeoncrawl.logic.something.items.StairsDown;
 
 public class Player extends Actor {
+
+
     public Player(Cell cell) {
         super(cell);
     }
 
     @Override
     protected void fight(Actor actor) {
-        // implement fight with the actor
+        this.attack(actor);
     }
 
     @Override
     protected void action(Something something) {
-        if (something.getClass().equals(Actor.class)) {
-            // fight with the monsters
+        if (something instanceof Actor) {
             // private method for fighting with the monsters
-        } else if (something.getClass().equals(Item.class)) {
+            fight((Actor) something);
+        } else if (something instanceof StairsDown) {
+            // go to next level
+
+        } else if (something instanceof Item) {
             // take item from the ground
             // get item in inventory
         }

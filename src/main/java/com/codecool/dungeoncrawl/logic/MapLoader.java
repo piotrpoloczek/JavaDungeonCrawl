@@ -1,9 +1,12 @@
 package com.codecool.dungeoncrawl.logic;
 
+import com.codecool.dungeoncrawl.logic.something.actors.Actor;
 import com.codecool.dungeoncrawl.logic.something.actors.Player;
 import com.codecool.dungeoncrawl.logic.something.actors.Skeleton;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class MapLoader {
@@ -16,6 +19,8 @@ public class MapLoader {
         scanner.nextLine(); // empty line
 
         GameMap map = new GameMap(width, height, CellType.EMPTY);
+        List<Actor> monsters = new ArrayList<>();
+
         for (int y = 0; y < height; y++) {
             String line = scanner.nextLine();
             for (int x = 0; x < width; x++) {
@@ -33,7 +38,7 @@ public class MapLoader {
                             break;
                         case 's':
                             cell.setType(CellType.FLOOR);
-                            new Skeleton(cell);
+                            monsters.add(new Skeleton(cell));
                             break;
                         case '@':
                             cell.setType(CellType.FLOOR);
@@ -45,6 +50,9 @@ public class MapLoader {
                 }
             }
         }
+
+        map.setMonsters(monsters);
+
         return map;
     }
 

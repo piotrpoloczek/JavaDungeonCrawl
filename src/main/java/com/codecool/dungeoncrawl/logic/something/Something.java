@@ -10,6 +10,7 @@ public abstract class Something implements Drawable {
 
     public Something(Cell cell) {
         this.cell = cell;
+        cell.setSomething(this);
     }
 
 }
