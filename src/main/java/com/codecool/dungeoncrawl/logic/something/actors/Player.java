@@ -7,10 +7,12 @@ import com.codecool.dungeoncrawl.logic.something.items.StairsDown;
 
 public class Player extends Actor {
 
+    private static int PLAYER_HEALTH = 50;
 
     public Player(Cell cell) {
-        super(cell);
+        super(cell, PLAYER_HEALTH);
     }
+
 
     @Override
     protected void fight(Actor actor) {

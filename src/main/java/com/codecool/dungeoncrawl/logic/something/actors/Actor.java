@@ -15,6 +15,11 @@ public abstract class Actor extends Something {
         super(cell);
     }
 
+    public Actor(Cell cell, int health) {
+        super(cell);
+        this.health = health;
+    }
+
     public void move(int dx, int dy) {
         Cell nextCell = cell.getNeighbor(dx, dy);
 
@@ -29,10 +34,14 @@ public abstract class Actor extends Something {
     }
 
     public void attack(Actor actor){
-        System.out.println("I attacked the " + actor);
+        System.out.println("I attacked the " + actor + "health points: " + actor.getHealth());
+        System.out.println("My health points: " + this.getHealth());
+
         actor.defense(this.attack);
         if (actor.isAlive()) {
             actor.counterAttack(this);
+        } else {
+            actor.cell.setSomething(null);
         }
     }
 
