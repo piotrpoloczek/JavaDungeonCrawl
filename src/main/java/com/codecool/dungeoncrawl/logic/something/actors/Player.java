@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl.logic.something.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.exceptions.NewLevelException;
 import com.codecool.dungeoncrawl.logic.something.Something;
 import com.codecool.dungeoncrawl.logic.something.items.Item;
 import com.codecool.dungeoncrawl.logic.something.items.StairsDown;
@@ -20,12 +21,14 @@ public class Player extends Actor {
     }
 
     @Override
-    protected void action(Something something) {
+    protected void action(Something something) throws NewLevelException {
         if (something instanceof Actor) {
             // private method for fighting with the monsters
             fight((Actor) something);
         } else if (something instanceof StairsDown) {
             // go to next level
+            // use exception?
+            throw new NewLevelException();
 
         } else if (something instanceof Item) {
             // take item from the ground

@@ -7,4 +7,9 @@ public class StairsDown extends Item {
     public StairsDown(Cell cell) {
         super(cell);
     }
+
+    @Override
+    public String getTileName() {
+        return "stairs down";
+    }
 }
