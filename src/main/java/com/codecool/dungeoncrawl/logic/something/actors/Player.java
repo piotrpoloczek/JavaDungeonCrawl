@@ -19,6 +19,9 @@ public class Player extends Actor {
         if (something.getClass().equals(Actor.class)) {
             // fight with the monsters
             // private method for fighting with the monsters
+        } else if (something.getClass().equals(Item.class)) {
+            // take item from the ground
+            // get item in inventory
         }
 
     }
