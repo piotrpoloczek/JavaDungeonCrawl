@@ -5,6 +5,7 @@ import com.codecool.dungeoncrawl.logic.Direction;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.exceptions.NewLevelException;
+import com.codecool.dungeoncrawl.logic.something.actors.Actor;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -16,6 +17,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+
+import java.util.Random;
+
+import static com.codecool.dungeoncrawl.logic.Direction.generateRandomDirection;
 
 public class Main extends Application {
 
@@ -52,52 +57,50 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         refresh();
 
-        scene.setOnKeyPressed(keyEvent -> {
-            try {
-                onKeyPressed(keyEvent);
-            } catch (NewLevelException e) {
-                // change levels
-                changeCurrentMap();
-                refresh();
-            }
-        });
+        scene.setOnKeyPressed(this::onKeyPressed);
 
         primaryStage.setTitle("Dungeon Crawl");
         primaryStage.show();
     }
 
-    private void onKeyPressed(KeyEvent keyEvent) throws NewLevelException {
+
+    private void onKeyPressed(KeyEvent keyEvent){
 
         switch (keyEvent.getCode()) {
             case UP:
-                getCurrentMap().getPlayer().move(0, -1);
-                refresh();
+                gameTurn(Direction.UP);
                 break;
             case DOWN:
-                getCurrentMap().getPlayer().move(0, 1);
-                refresh();
+                gameTurn(Direction.DOWN);
                 break;
             case LEFT:
-                getCurrentMap().getPlayer().move(-1, 0);
-                refresh();
+                gameTurn(Direction.LEFT);
                 break;
             case RIGHT:
-                getCurrentMap().getPlayer().move(1,0);
-                refresh();
+                gameTurn(Direction.RIGHT);
                 break;
         }
     }
 
+    private void monstersTurn() throws NewLevelException {
+        for (Actor monster : getCurrentMap().getMonsters()) {
+            Direction direction = generateRandomDirection();
+            System.out.println("x: " + direction.getX() + " y: " +direction.getY());
+            monster.move(direction.getX(), direction.getY());
+        }
+    }
+
+
     private void gameTurn(Direction direction) {
         try {
             getCurrentMap().getPlayer().move(direction.getX(), direction.getY());
+            monstersTurn();
             refresh();
         } catch (Exception e) {
             // change levels
             changeCurrentMap();
             refresh();
         }
-
     }
 
     private GameMap getCurrentMap() {
