@@ -6,6 +6,7 @@ import com.codecool.dungeoncrawl.logic.gameobject.actors.Actor;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.Monster;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.Player;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.Skeleton;
+import com.codecool.dungeoncrawl.logic.gameobject.items.Apple;
 import com.codecool.dungeoncrawl.logic.gameobject.items.StairsDown;
 
 import java.io.InputStream;
@@ -51,6 +52,10 @@ public class MapLoader {
                         case 'd':
                             cell.setType(CellType.FLOOR);
                             new StairsDown(cell);
+                            break;
+                        case 'i':
+                            cell.setType(CellType.FLOOR);
+                            new Apple(cell);
                             break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");

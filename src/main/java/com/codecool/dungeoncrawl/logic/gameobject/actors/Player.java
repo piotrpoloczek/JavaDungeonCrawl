@@ -5,17 +5,22 @@ import com.codecool.dungeoncrawl.logic.exceptions.NewLevelException;
 import com.codecool.dungeoncrawl.logic.gameobject.GameObject;
 import com.codecool.dungeoncrawl.logic.gameobject.items.Item;
 import com.codecool.dungeoncrawl.logic.gameobject.items.StairsDown;
+import com.codecool.dungeoncrawl.logic.inventory.Inventory;
 
 public class Player extends Actor {
+
+    Inventory inventory;
 
     private static int PLAYER_HEALTH = 50;
 
     public Player(Cell cell) {
         super(cell, PLAYER_HEALTH);
+        this.inventory = new Inventory();
     }
 
     public Player(){
         super(PLAYER_HEALTH);
+        this.inventory = new Inventory();
     }
 
     public String getName() {
@@ -40,10 +45,12 @@ public class Player extends Actor {
 
         } else if (gameObject instanceof Item) {
             // take item from the ground
-            // get item in inventory
+            // get item in to inventory
+            inventory.putItemToInventory((Item) gameObject);
+            gameObject.getCell().setGameObject(null);
         }
-
     }
+
 
     // methods in order to use when we want to apply different action
     // depending on the argument we have
