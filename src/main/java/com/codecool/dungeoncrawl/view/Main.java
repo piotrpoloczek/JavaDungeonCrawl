@@ -14,15 +14,25 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import lombok.Getter;
+import lombok.Setter;
 
 public class Main extends Application {
 
-    Game game = new Game();
-    Canvas canvas = new Canvas(
-            game.getCurrentMap().getWidth() * Tiles.TILE_WIDTH,
-            game.getCurrentMap().getHeight() * Tiles.TILE_WIDTH);
-    GraphicsContext context = canvas.getGraphicsContext2D();
-    Label healthLabel = new Label();
+    @Getter @Setter
+    Game game;
+    @Getter @Setter
+    Canvas canvas;
+    @Getter @Setter
+    GraphicsContext context;
+    @Getter @Setter
+    Label healthLabel;
+    @Getter @Setter
+    Label inventoryLabel;
+    @Getter @Setter
+    GridPane ui;
+    @Getter @Setter
+    BorderPane borderPane;
 
 
     public static void main(String[] args) {
@@ -31,21 +41,13 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        GridPane ui = new GridPane();
-        ui.setPrefWidth(200);
-        ui.setPadding(new Insets(10));
 
+        // prepare the game
+        prepareGame();
+        setUi(prepareGridPane());
+        setBorderPane(prepareBorderPane());
 
-        // TODO:  this is special for you @Piotr
-        ui.add(new Label("Health: "), 0, 0);
-        ui.add(healthLabel, 1, 0);
-
-        BorderPane borderPane = new BorderPane();
-
-        borderPane.setCenter(canvas);
-        borderPane.setRight(ui);
-
-        Scene scene = new Scene(borderPane);
+        Scene scene = new Scene(getBorderPane());
         primaryStage.setScene(scene);
         refresh();
 
@@ -54,6 +56,42 @@ public class Main extends Application {
         primaryStage.setTitle("Dungeon Crawl");
         primaryStage.show();
     }
+
+    private BorderPane prepareBorderPane() {
+        BorderPane borderPane = new BorderPane();
+        borderPane.setCenter(getCanvas());
+        borderPane.setRight(getUi());
+        return borderPane;
+    }
+
+    private GridPane prepareGridPane() {
+        GridPane ui = new GridPane();
+        ui.setPrefWidth(200);
+        ui.setPadding(new Insets(10));
+
+
+        // TODO:  this is special for you @Piotr
+        ui.add(new Label("Health: "), 0, 0);
+        ui.add(healthLabel, 1, 0);
+        return ui;
+    }
+
+    private void prepareGame() {
+        setGame(new Game());
+
+        int levelWidth = getGame().getCurrentMap().getWidth();
+        int levelHeight = getGame().getCurrentMap().getHeight();
+        int tileSize = Tiles.TILE_WIDTH;
+
+        System.out.println(levelHeight + " " + levelWidth);
+
+        setCanvas( new Canvas(25 * tileSize, 20 * tileSize));
+        setContext(canvas.getGraphicsContext2D());
+
+        setHealthLabel(new Label());
+        setInventoryLabel(new Label());
+    }
+
 
 
     private void onKeyPressed(KeyEvent keyEvent){
@@ -72,9 +110,44 @@ public class Main extends Application {
                 game.gameTurn(Direction.RIGHT);
                 break;
         }
-        refresh();
+        refreshView();
     }
 
+
+    private void refreshView() {
+        context.setFill(Color.BLACK);
+        context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+
+        int levelWidth = game.getCurrentMap().getWidth();
+        int levelHeight = game.getCurrentMap().getHeight();
+
+        int playerX = game.getCurrentMap().getPlayer().getX();
+        int playerY = game.getCurrentMap().getPlayer().getY();
+
+        int viewportWidth = (int) (canvas.getWidth() / Tiles.TILE_WIDTH);
+        int viewportHeight = (int) (canvas.getHeight() / Tiles.TILE_WIDTH);
+
+        int startX = Math.max(0, playerX - viewportWidth / 2);
+        int startY = Math.max(0, playerY - viewportHeight / 2);
+        int endX = Math.min(levelWidth, startX + viewportWidth);
+        int endY = Math.min(levelHeight, startY + viewportHeight);
+
+        drawViewport(startX, startY, endX, endY);
+        healthLabel.setText("Health: " + game.getCurrentMap().getPlayer().getHealth());
+    }
+
+    private void drawViewport(int startX, int startY, int endX, int endY) {
+        for (int x = startX; x < endX; x++) {
+            for (int y = startY; y < endY; y++) {
+                Cell cell = game.getCurrentMap().getCell(x, y);
+                if (cell.getGameObject() != null) {
+                    Tiles.drawTile(context, cell.getGameObject(), x - startX, y - startY);
+                } else {
+                    Tiles.drawTile(context, cell, x - startX, y - startY);
+                }
+            }
+        }
+    }
 
     private void refresh() {
         context.setFill(Color.BLACK);
@@ -90,5 +163,6 @@ public class Main extends Application {
             }
         }
         healthLabel.setText("" + game.getCurrentMap().getPlayer().getHealth());
+        inventoryLabel.setText(getGame().getCurrentMap().getPlayer().getName());
     }
 }
