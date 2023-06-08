@@ -1,10 +1,11 @@
-package com.codecool.dungeoncrawl.logic.gameobject.items;
+package com.codecool.dungeoncrawl.logic.gameobject.items.treasures;
 
 
 import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.gameobject.items.Item;
 import com.codecool.dungeoncrawl.logic.util.RandomGenerator;
 
-public class Gold extends Item{
+public class Gold extends Item {
 
     private int value;
     public Gold(Cell cell) {

@@ -2,12 +2,11 @@ package com.codecool.dungeoncrawl.logic.map;
 
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
-import com.codecool.dungeoncrawl.logic.gameobject.actors.Actor;
-import com.codecool.dungeoncrawl.logic.gameobject.actors.Monster;
+import com.codecool.dungeoncrawl.logic.gameobject.actors.monsters.Monster;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.Player;
-import com.codecool.dungeoncrawl.logic.gameobject.actors.Skeleton;
-import com.codecool.dungeoncrawl.logic.gameobject.items.Apple;
-import com.codecool.dungeoncrawl.logic.gameobject.items.StairsDown;
+import com.codecool.dungeoncrawl.logic.gameobject.actors.monsters.Skeleton;
+import com.codecool.dungeoncrawl.logic.gameobject.items.food.Apple;
+import com.codecool.dungeoncrawl.logic.gameobject.items.special.StairsDown;
 
 import java.io.InputStream;
 import java.util.ArrayList;

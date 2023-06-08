@@ -1,9 +1,11 @@
-package com.codecool.dungeoncrawl.logic.gameobject.actors;
+package com.codecool.dungeoncrawl.logic.gameobject.actors.monsters;
 
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.exceptions.NewLevelException;
 import com.codecool.dungeoncrawl.logic.gameobject.GameObject;
+import com.codecool.dungeoncrawl.logic.gameobject.actors.Actor;
+import com.codecool.dungeoncrawl.logic.gameobject.actors.Player;
 
 
 public class Monster extends Actor {

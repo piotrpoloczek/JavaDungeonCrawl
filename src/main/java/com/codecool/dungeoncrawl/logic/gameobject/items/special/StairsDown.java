@@ -1,6 +1,7 @@
-package com.codecool.dungeoncrawl.logic.gameobject.items;
+package com.codecool.dungeoncrawl.logic.gameobject.items.special;
 
 import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.gameobject.items.Item;
 
 public class StairsDown extends Item {
 

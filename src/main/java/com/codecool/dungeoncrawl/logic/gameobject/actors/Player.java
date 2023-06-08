@@ -4,7 +4,7 @@ import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.exceptions.NewLevelException;
 import com.codecool.dungeoncrawl.logic.gameobject.GameObject;
 import com.codecool.dungeoncrawl.logic.gameobject.items.Item;
-import com.codecool.dungeoncrawl.logic.gameobject.items.StairsDown;
+import com.codecool.dungeoncrawl.logic.gameobject.items.special.StairsDown;
 import com.codecool.dungeoncrawl.logic.inventory.Inventory;
 
 public class Player extends Actor {
