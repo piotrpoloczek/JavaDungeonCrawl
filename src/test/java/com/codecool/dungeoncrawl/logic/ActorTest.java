@@ -2,7 +2,7 @@ package com.codecool.dungeoncrawl.logic;
 
 import com.codecool.dungeoncrawl.logic.map.GameMap;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.Player;
-import com.codecool.dungeoncrawl.logic.gameobject.actors.Skeleton;
+import com.codecool.dungeoncrawl.logic.gameobject.actors.monsters.Skeleton;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

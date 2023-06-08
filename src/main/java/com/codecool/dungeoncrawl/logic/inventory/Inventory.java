@@ -4,7 +4,7 @@ package com.codecool.dungeoncrawl.logic.inventory;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.codecool.dungeoncrawl.logic.gameobject.items.Gold;
+import com.codecool.dungeoncrawl.logic.gameobject.items.treasures.Gold;
 import com.codecool.dungeoncrawl.logic.gameobject.items.Item;
 import lombok.Getter;
 import lombok.Setter;
