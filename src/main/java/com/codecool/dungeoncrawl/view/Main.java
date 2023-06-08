@@ -36,7 +36,7 @@ public class Main extends Application {
         ui.setPadding(new Insets(10));
 
 
-        // this is it
+        // TODO:  this is special for you @Piotr
         ui.add(new Label("Health: "), 0, 0);
         ui.add(healthLabel, 1, 0);
 
