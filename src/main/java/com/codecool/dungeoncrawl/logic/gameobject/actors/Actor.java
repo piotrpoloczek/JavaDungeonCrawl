@@ -29,13 +29,13 @@ public abstract class Actor extends GameObject {
     public void move(int dx, int dy) throws NewLevelException {
         Cell nextCell = cell.getNeighbor(dx, dy);
 
-        if (nextCell.getSomething() != null) {
+        if (nextCell.getGameObject() != null) {
             System.out.println("there is something");
-            GameObject gameObject = nextCell.getSomething();
+            GameObject gameObject = nextCell.getGameObject();
             action(gameObject);
         } else if (nextCell.getType().equals(CellType.FLOOR)) {
-            cell.setSomething(null);
-            nextCell.setSomething(this);
+            cell.setGameObject(null);
+            nextCell.setGameObject(this);
             cell = nextCell;
         }
     }
@@ -48,7 +48,7 @@ public abstract class Actor extends GameObject {
         if (actor.isAlive()) {
             actor.counterAttack(this);
         } else {
-            actor.cell.setSomething(null);
+            actor.cell.setGameObject(null);
         }
     }
 

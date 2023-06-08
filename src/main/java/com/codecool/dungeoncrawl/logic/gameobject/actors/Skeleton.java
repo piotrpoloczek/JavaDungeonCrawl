@@ -4,7 +4,7 @@ import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.gameobject.GameObject;
 import com.codecool.dungeoncrawl.logic.gameobject.items.Item;
 
-public class Skeleton extends Actor {
+public class Skeleton extends Monster {
     public Skeleton(Cell cell) {
         super(cell);
     }

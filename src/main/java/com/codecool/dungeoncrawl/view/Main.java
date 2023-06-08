@@ -17,8 +17,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    static Game game = new Game();
-
+    Game game = new Game();
     Canvas canvas = new Canvas(
             game.getCurrentMap().getWidth() * Tiles.TILE_WIDTH,
             game.getCurrentMap().getHeight() * Tiles.TILE_WIDTH);
@@ -81,8 +80,8 @@ public class Main extends Application {
         for (int x = 0; x < game.getCurrentMap().getWidth(); x++) {
             for (int y = 0; y < game.getCurrentMap().getHeight(); y++) {
                 Cell cell = game.getCurrentMap().getCell(x, y);
-                if (cell.getSomething() != null) {
-                    Tiles.drawTile(context, cell.getSomething(), x, y);
+                if (cell.getGameObject() != null) {
+                    Tiles.drawTile(context, cell.getGameObject(), x, y);
                 } else {
                     Tiles.drawTile(context, cell, x, y);
                 }

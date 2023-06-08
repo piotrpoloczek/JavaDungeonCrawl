@@ -3,6 +3,7 @@ package com.codecool.dungeoncrawl.logic.map;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.Actor;
+import com.codecool.dungeoncrawl.logic.gameobject.actors.Monster;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.Player;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public class GameMap {
     private int height;
     private Cell[][] cells;
     private Player player;
-    private List<Actor> monsters;
+    private List<Monster> monsters;
 
 
     public GameMap(Player player, int width, int height, CellType defaultCellType) {
@@ -47,11 +48,11 @@ public class GameMap {
         return height;
     }
 
-    public List<Actor> getMonsters() {
+    public List<Monster> getMonsters() {
         return this.monsters;
     }
 
-    public void setMonsters(List<Actor> monsters) {
+    public void setMonsters(List<Monster> monsters) {
         this.monsters = monsters;
     }
 

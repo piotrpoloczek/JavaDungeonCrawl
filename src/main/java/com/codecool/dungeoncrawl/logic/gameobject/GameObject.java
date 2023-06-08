@@ -12,7 +12,7 @@ public abstract class GameObject implements Drawable {
 
     public GameObject(Cell cell) {
         this.cell = cell;
-        cell.setSomething(this);
+        cell.setGameObject(this);
     }
 
     public GameObject() {
@@ -20,7 +20,7 @@ public abstract class GameObject implements Drawable {
 
     public void setCell(Cell cell) {
         this.cell = cell;
-        cell.setSomething(this);
+        cell.setGameObject(this);
     }
 
     public String getName() {

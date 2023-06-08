@@ -3,6 +3,7 @@ package com.codecool.dungeoncrawl.logic.map;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.Actor;
+import com.codecool.dungeoncrawl.logic.gameobject.actors.Monster;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.Player;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.Skeleton;
 import com.codecool.dungeoncrawl.logic.gameobject.items.StairsDown;
@@ -22,7 +23,7 @@ public class MapLoader {
         scanner.nextLine(); // empty line
 
         GameMap map = new GameMap(player, width, height, CellType.EMPTY);
-        List<Actor> monsters = new ArrayList<>();
+        List<Monster> monsters = new ArrayList<>();
 
         for (int y = 0; y < height; y++) {
             String line = scanner.nextLine();

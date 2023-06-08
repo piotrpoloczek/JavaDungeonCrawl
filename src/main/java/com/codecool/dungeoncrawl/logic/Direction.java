@@ -2,6 +2,7 @@ package com.codecool.dungeoncrawl.logic;
 
 import java.util.Random;
 
+
 public enum Direction {
     UP(0, -1),
     DOWN(0, 1),
@@ -24,6 +25,8 @@ public enum Direction {
     public int getY() {
         return this.y;
     }
+
+
 
     public static Direction generateRandomDirection() {
         Random random = new Random();
