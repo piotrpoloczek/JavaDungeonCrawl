@@ -12,17 +12,13 @@ import lombok.Setter;
 
 public class Inventory {
     private List<Item> sack;
-
     private int inventorySize = 2;
-
     private List<Item> gold;
 
-    @Getter
-    @Setter
+    @Getter @Setter
     private Item currentWepon;
 
-    @Getter
-    @Setter
+    @Getter @Setter
     private Item currentArmor;
 
     //TODO ? limit space in sack
