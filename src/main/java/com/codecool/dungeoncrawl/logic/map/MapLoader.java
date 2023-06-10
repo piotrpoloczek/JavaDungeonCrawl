@@ -6,9 +6,11 @@ import com.codecool.dungeoncrawl.logic.gameobject.actors.monsters.Monster;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.Player;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.monsters.Skeleton;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.npc.Wizard;
+import com.codecool.dungeoncrawl.logic.gameobject.items.doors.Door;
 import com.codecool.dungeoncrawl.logic.gameobject.items.food.Apple;
 import com.codecool.dungeoncrawl.logic.gameobject.items.keys.Key;
 import com.codecool.dungeoncrawl.logic.gameobject.items.special.StairsDown;
+import com.codecool.dungeoncrawl.logic.gameobject.items.treasures.Gold;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -65,6 +67,14 @@ public class MapLoader {
                         case 'k':
                             cell.setType(CellType.FLOOR);
                             new Key(cell);
+                            break;
+                        case 'g':
+                            cell.setType(CellType.FLOOR);
+                            new Door(cell);
+                            break;
+                        case '$':
+                            cell.setType(CellType.FLOOR);
+                            new Gold(cell);
                             break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");

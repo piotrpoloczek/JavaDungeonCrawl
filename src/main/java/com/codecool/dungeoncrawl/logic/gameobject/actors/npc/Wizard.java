@@ -23,6 +23,6 @@ public class Wizard extends Actor {
 
     @Override
     protected void action(GameObject gameObject) throws NewLevelException {
-        System.out.println("you met wizard");
+
     }
 }
