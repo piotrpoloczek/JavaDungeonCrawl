@@ -5,6 +5,7 @@ import com.codecool.dungeoncrawl.logic.gameobject.items.Item;
 import lombok.Getter;
 
 public abstract class Food extends Item {
+
     @Getter
     private int itemPower;
 

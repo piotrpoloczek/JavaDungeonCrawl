@@ -1,5 +1,7 @@
 package com.codecool.dungeoncrawl.logic;
 
+import com.codecool.dungeoncrawl.logic.exceptions.GameEndException;
+import com.codecool.dungeoncrawl.logic.exceptions.GameException;
 import com.codecool.dungeoncrawl.logic.exceptions.NewLevelException;
 import com.codecool.dungeoncrawl.logic.map.GameMap;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
@@ -12,7 +14,7 @@ class ActorTest {
     GameMap gameMap = new GameMap(null,3, 3, CellType.FLOOR);
 
     @Test
-    void moveUpdatesCells() throws NewLevelException {
+    void moveUpdatesCells() throws GameException {
         Player player = new Player(gameMap.getCell(1, 1));
         player.move(1, 0);
 
@@ -23,7 +25,7 @@ class ActorTest {
     }
 
     @Test
-    void cannotMoveIntoWall() throws NewLevelException {
+    void cannotMoveIntoWall() throws GameEndException {
         gameMap.getCell(2, 1).setType(CellType.WALL);
         Player player = new Player(gameMap.getCell(1, 1));
         player.move(1, 0);
@@ -33,7 +35,7 @@ class ActorTest {
     }
 
     @Test
-    void cannotMoveOutOfMap() throws NewLevelException {
+    void cannotMoveOutOfMap() throws GameException {
         Player player = new Player(gameMap.getCell(2, 1));
         player.move(1, 0);
 
@@ -42,7 +44,7 @@ class ActorTest {
     }
 
     @Test
-    void cannotMoveIntoAnotherActor() throws NewLevelException {
+    void cannotMoveIntoAnotherActor() throws GameException {
         Player player = new Player(gameMap.getCell(1, 1));
         Skeleton skeleton = new Skeleton(gameMap.getCell(2, 1));
         player.move(1, 0);

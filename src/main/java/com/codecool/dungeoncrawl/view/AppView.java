@@ -65,6 +65,10 @@ public class AppView extends Application {
             case LEFT:
                 gameView.getGame().gameTurn(Direction.LEFT);
                 break;
+            case I:
+                // gameView.getGame().pauseGame()
+                // showInventoryMenu()
+                break;
             case RIGHT:
                 gameView.getGame().gameTurn(Direction.RIGHT);
                 break;

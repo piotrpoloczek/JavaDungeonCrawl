@@ -6,6 +6,7 @@ import com.codecool.dungeoncrawl.logic.exceptions.NewLevelException;
 import com.codecool.dungeoncrawl.logic.gameobject.GameObject;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.Actor;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.monsters.Monster;
+import com.codecool.dungeoncrawl.logic.gameobject.items.Item;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -48,6 +49,11 @@ public class Player extends Actor {
         } else {
             gameObject.action(this);
         }
+    }
+
+    public void useItem(Item item) {
+//        item.useIt(this);
+        //use item;
     }
 
     public String getTileName() {

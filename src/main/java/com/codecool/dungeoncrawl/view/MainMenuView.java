@@ -39,9 +39,5 @@ public class MainMenuView extends VBox {
         });
 
         getChildren().addAll(playButton, nameLabel, startButton);
-
     }
-
-
-
 }

@@ -1,11 +1,8 @@
 package com.codecool.dungeoncrawl.logic.gameobject.actors.player;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
-import com.codecool.dungeoncrawl.logic.gameobject.items.keys.Key;
-import com.codecool.dungeoncrawl.logic.gameobject.items.treasures.Gold;
 import com.codecool.dungeoncrawl.logic.gameobject.items.Item;
 import com.codecool.dungeoncrawl.logic.gameobject.items.treasures.Treasures;
 import lombok.Getter;
@@ -57,15 +54,17 @@ public class Inventory {
         return sack.size()>=inventorySize;
     }
 
-    private boolean isGold(Item item){
-        return item instanceof Gold;
+
+    public void useItem(Item item) {
+        //item.useIt();
     }
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Sack: ").append("\n");
         for (Item item : sack) {
-            sb.append(item.toString()).append("\n");
+
+            sb.append(sack.indexOf(item) + " : " + item.toString()).append("\n");
         }
         sb.append("Inventory Size: ").append(inventorySize).append("\n");
         sb.append("Gold: ").append(getGoldAmount()).append("\n");
