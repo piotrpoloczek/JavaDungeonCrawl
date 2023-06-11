@@ -61,8 +61,6 @@ public class GameView {
 //
 //        Label genderLabel = new Label("Gender: ");
 //        ui.add(genderLabel, 0, 3);
-
-
         return ui;
     }
 

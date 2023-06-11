@@ -9,6 +9,8 @@ public class GameMapFactory {
         ArrayList<String> gameMaps = new ArrayList<>();
         gameMaps.add("/map.txt");
         gameMaps.add("/map2.txt");
+        gameMaps.add("/map3.txt");
+        gameMaps.add("/map4.txt");
         return gameMaps;
     }
 }

@@ -15,7 +15,7 @@ public class Player extends Actor {
     @Getter @Setter
     Inventory inventory;
 
-    private static int PLAYER_HEALTH = 50;
+    private static int PLAYER_HEALTH = 500;
 
     public Player(Cell cell) {
         super(cell, PLAYER_HEALTH);

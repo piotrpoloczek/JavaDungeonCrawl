@@ -9,8 +9,8 @@ import javafx.stage.Stage;
 
 public class AppView extends Application {
 
-    private static int SCENE_WIDTH = 400;
-    private static int SCENE_HEIGHT = 400;
+    private static int SCENE_WIDTH = 600;
+    private static int SCENE_HEIGHT = 600;
 
     private Stage primaryStage;
     private GameView gameView;
