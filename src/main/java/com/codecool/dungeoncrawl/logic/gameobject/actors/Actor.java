@@ -3,14 +3,14 @@ package com.codecool.dungeoncrawl.logic.gameobject.actors;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.exceptions.GameException;
-import com.codecool.dungeoncrawl.logic.exceptions.NewLevelException;
 import com.codecool.dungeoncrawl.logic.gameobject.GameObject;
 import lombok.Getter;
 import lombok.Setter;
 
 public abstract class Actor extends GameObject {
 
-    private int health = 10;
+    @Getter @Setter
+    private int health;
 
     @Getter @Setter
     private int attack = 2;

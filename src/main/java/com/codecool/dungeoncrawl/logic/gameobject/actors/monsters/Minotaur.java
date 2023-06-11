@@ -5,20 +5,17 @@ import com.codecool.dungeoncrawl.logic.gameobject.GameObject;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.Actor;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
 
-public class Skeleton extends Monster {
+public class Minotaur extends Monster {
+    private int health = 30;
 
-    private int health = 10;
-
-    public Skeleton(Cell cell) {
+    public Minotaur(Cell cell) {
         super(cell);
         setHealth(health);
     }
 
-
-
     @Override
     public String getTileName() {
-        return "skeleton";
+        return "minotaur";
     }
 
     @Override

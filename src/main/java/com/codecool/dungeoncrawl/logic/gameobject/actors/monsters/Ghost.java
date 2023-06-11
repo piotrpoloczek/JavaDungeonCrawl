@@ -6,8 +6,11 @@ import com.codecool.dungeoncrawl.logic.gameobject.actors.Actor;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
 
 public class Ghost extends Monster {
+    private int health = 20;
+
     public Ghost(Cell cell) {
         super(cell);
+        setHealth(health);
     }
 
     @Override
