@@ -1,6 +1,5 @@
 package com.codecool.dungeoncrawl.view;
 
-import com.codecool.dungeoncrawl.App;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -21,35 +20,28 @@ public class ClassMenuView extends HBox {
         setSpacing(10);
         setAlignment(Pos.CENTER);
 
-        // Create the images and buttons for hero classes
-        Image warriorImage = new Image("classes/warrior.png");
-        ImageView warriorImageView = createResizedImageView(warriorImage, 100, 100);
-        Button warriorButton = createClassButton("Warrior");
-
-        Image mageImage = new Image("classes/mage.png");
-        ImageView mageImageView = createResizedImageView(mageImage, 100, 100);
-        Button mageButton = createClassButton("Mage");
-
-        Image rogueImage = new Image("classes/archer.png");
-        ImageView rogueImageView = createResizedImageView(rogueImage, 100, 100);
-        Button rogueButton = createClassButton("Rogue");
-
-        VBox warriorVBox = new VBox();
-        warriorVBox.getChildren().addAll(warriorImageView, warriorButton);
-        warriorVBox.setAlignment(Pos.CENTER);
-
-        VBox mageVBox = new VBox();
-        mageVBox.getChildren().addAll(mageImageView, mageButton);
-        mageVBox.setAlignment(Pos.CENTER);
-
-        VBox rogueVBox = new VBox();
-        rogueVBox.getChildren().addAll(rogueImageView, rogueButton);
-        rogueVBox.setAlignment(Pos.CENTER);
+        VBox warriorVBox = prepareVBox("classes/warrior.png", "Warrior");
+        VBox mageVBox = prepareVBox("classes/mage.png", "Mage");
+        VBox archerVBox = prepareVBox("classes/archer.png", "Archer");
 
         getChildren().addAll(
                 warriorVBox,
                 mageVBox,
-                rogueVBox);
+                archerVBox
+        );
+    }
+
+    private VBox prepareVBox(String imagePath, String className) {
+        VBox warriorVBox = new VBox();
+
+        // Create the images and buttons for hero classes
+        Image warriorImage = new Image(imagePath);
+        ImageView warriorImageView = createResizedImageView(warriorImage, 100, 100);
+        Button warriorButton = createClassButton(className);
+
+        warriorVBox.getChildren().addAll(warriorImageView, warriorButton);
+        warriorVBox.setAlignment(Pos.CENTER);
+        return warriorVBox;
     }
 
     private Button createClassButton(String className) {
