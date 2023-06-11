@@ -22,6 +22,7 @@ public class Main extends Application {
         gameView = new GameView();
         Scene scene = new Scene(gameView.getBorderPane());
         primaryStage.setScene(scene);
+
         gameView.refreshView();
 
         scene.setOnKeyPressed(this::onKeyPressed);
