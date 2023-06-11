@@ -14,6 +14,9 @@ public class AppView extends Application {
 
     private Stage primaryStage;
     private GameView gameView;
+    private Scene mainMenuScene;
+    private Scene classMenuScene;
+    private Scene gameScene;
 
 
     public static void main(String[] args) {
@@ -24,34 +27,48 @@ public class AppView extends Application {
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
         this.gameView = new GameView();
+        this.mainMenuScene = createMainMenuScene();
+        this.classMenuScene = createClassMenuView();
+        this.gameScene = createGameScene();
         showMainMenuView();
     }
 
-    public void showMainMenuView() {
+    private Scene createMainMenuScene() {
         MainMenuView mainMenuView = new MainMenuView(this);
         Scene scene = new Scene(mainMenuView, SCENE_HEIGHT, SCENE_WIDTH);
         scene.getStylesheets().add("style.css");
-        primaryStage.setScene(scene);
+        return scene;
+    }
+
+    private Scene createClassMenuView() {
+        ClassMenuView classMenuView = new ClassMenuView(this);
+        Scene scene = new Scene(classMenuView, SCENE_HEIGHT, SCENE_WIDTH);
+        scene.getStylesheets().add("style.css");
+        scene.setOnKeyPressed(this::onKeyPressed);
+        return scene;
+    }
+
+    private Scene createGameScene() {
+        Scene scene = new Scene(gameView.getBorderPane());
+        scene.getStylesheets().add("style.css");
+        scene.setOnKeyPressed(this::onKeyPressed);
+        return scene;
+    }
+
+    public void showMainMenuView() {
+        primaryStage.setScene(mainMenuScene);
         primaryStage.show();
     }
 
     public void showClassMenuView() {
-        ClassMenuView classMenuView = new ClassMenuView(this);
-        Scene scene = new Scene(classMenuView, SCENE_HEIGHT, SCENE_WIDTH);
-        scene.getStylesheets().add("style.css");
-        primaryStage.setScene(scene);
+        primaryStage.setScene(classMenuScene);
         primaryStage.show();
     }
 
+
     public void showGameView() {
-        Scene scene = new Scene(gameView.getBorderPane());
-        scene.getStylesheets().add("style.css");
-        primaryStage.setScene(scene);
-
+        primaryStage.setScene(gameScene);
         gameView.refreshView();
-
-        scene.setOnKeyPressed(this::onKeyPressed);
-        primaryStage.setTitle("Dungeon Crawl");
         primaryStage.show();
     }
 
@@ -69,8 +86,10 @@ public class AppView extends Application {
                 gameView.getGame().gameTurn(Direction.LEFT);
                 break;
             case I:
-                // gameView.getGame().pauseGame()
-                // showInventoryMenu()
+                this.showClassMenuView();
+                break;
+            case Q:
+                this.showGameView();
                 break;
             case RIGHT:
                 gameView.getGame().gameTurn(Direction.RIGHT);
