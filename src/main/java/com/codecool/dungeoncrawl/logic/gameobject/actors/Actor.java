@@ -2,6 +2,7 @@ package com.codecool.dungeoncrawl.logic.gameobject.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
+import com.codecool.dungeoncrawl.logic.exceptions.GameException;
 import com.codecool.dungeoncrawl.logic.exceptions.NewLevelException;
 import com.codecool.dungeoncrawl.logic.gameobject.GameObject;
 
@@ -27,7 +28,7 @@ public abstract class Actor extends GameObject {
         this.health = health;
     }
 
-    public void move(int dx, int dy) throws NewLevelException {
+    public void move(int dx, int dy) throws GameException {
         Cell nextCell = cell.getNeighbor(dx, dy);
 
         if (nextCell.getGameObject() != null) {
@@ -82,5 +83,5 @@ public abstract class Actor extends GameObject {
 
     protected abstract void fight(Actor actor);
 
-    public abstract void action(GameObject gameObject) throws NewLevelException;
+    public abstract void action(GameObject gameObject) throws GameException;
 }

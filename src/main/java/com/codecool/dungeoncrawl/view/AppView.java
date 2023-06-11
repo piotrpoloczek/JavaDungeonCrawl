@@ -24,7 +24,7 @@ public class AppView extends Application {
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
         this.gameView = new GameView();
-        showClassMenuView();
+        showMainMenuView();
     }
 
     public void showMainMenuView() {

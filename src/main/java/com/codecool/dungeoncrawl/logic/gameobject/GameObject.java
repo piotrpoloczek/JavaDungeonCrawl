@@ -2,6 +2,7 @@ package com.codecool.dungeoncrawl.logic.gameobject;
 
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.Drawable;
+import com.codecool.dungeoncrawl.logic.exceptions.GameException;
 import com.codecool.dungeoncrawl.logic.exceptions.NewLevelException;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,7 +22,7 @@ public abstract class GameObject implements Drawable {
     public GameObject() {
     }
 
-    public abstract void action(GameObject gameObject) throws NewLevelException;
+    public abstract void action(GameObject gameObject) throws GameException;
 
     public void setCell(Cell cell) {
         this.cell = cell;
@@ -36,5 +37,8 @@ public abstract class GameObject implements Drawable {
         return this.getName();
     }
 
-
+    @Override
+    public String getTileName() {
+        return this.getName();
+    }
 }

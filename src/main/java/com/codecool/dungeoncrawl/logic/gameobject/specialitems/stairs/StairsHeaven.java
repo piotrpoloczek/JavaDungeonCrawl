@@ -1,28 +1,27 @@
 package com.codecool.dungeoncrawl.logic.gameobject.specialitems.stairs;
 
 import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.exceptions.GameEndException;
+import com.codecool.dungeoncrawl.logic.exceptions.GameException;
 import com.codecool.dungeoncrawl.logic.exceptions.NewLevelException;
 import com.codecool.dungeoncrawl.logic.gameobject.GameObject;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
-import com.codecool.dungeoncrawl.logic.gameobject.items.Item;
 import com.codecool.dungeoncrawl.logic.gameobject.specialitems.SpecialItem;
 
-public class StairsDown extends SpecialItem {
+public class StairsHeaven extends SpecialItem {
 
-    public StairsDown(Cell cell) {
+    private static String NAME = "stairs heaven";
+
+
+    public StairsHeaven(Cell cell) {
         super(cell);
+        setName(NAME);
     }
 
     @Override
-    public void action(GameObject gameObject) throws NewLevelException {
+    public void action(GameObject gameObject) throws GameException {
         if (gameObject instanceof Player) {
-            System.out.println("Congratulations you can go to the next level!!!");
-            throw new NewLevelException();
+            throw new GameEndException();
         }
-    }
-
-    @Override
-    public String getTileName() {
-        return "stairs down";
     }
 }

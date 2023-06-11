@@ -1,5 +1,7 @@
 package com.codecool.dungeoncrawl.logic;
 
+import com.codecool.dungeoncrawl.logic.exceptions.GameEndException;
+import com.codecool.dungeoncrawl.logic.exceptions.GameOverException;
 import com.codecool.dungeoncrawl.logic.exceptions.NewLevelException;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.monsters.Monster;
 import com.codecool.dungeoncrawl.logic.map.GameMap;
@@ -45,15 +47,29 @@ public class Game {
 
     public void gameTurn(Direction direction) {
         try {
+
+            if (!getCurrentMap().getPlayer().isAlive()) {
+                throw new GameOverException();
+            }
+
             System.out.println(direction.getX() + " : " + direction.getY());
             getCurrentMap().getPlayer().getName();
             getCurrentMap().getPlayer().move(direction.getX(), direction.getY());
             monstersTurn();
+        } catch (GameOverException e) {
+            System.out.println(e);
+            System.out.println("Game Over");
+            System.exit(0);
         } catch (NewLevelException e) {
             System.out.println(e);
             changeCurrentMap();
+        } catch (GameEndException e) {
+            System.out.println("Game is finished");
+            System.exit(0);
         } catch (ConcurrentModificationException e) {
             System.out.println(e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 

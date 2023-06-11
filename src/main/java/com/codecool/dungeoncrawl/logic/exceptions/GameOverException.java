@@ -1,4 +1,4 @@
 package com.codecool.dungeoncrawl.logic.exceptions;
 
-public class NewLevelException extends GameException{
+public class GameOverException extends GameException{
 }

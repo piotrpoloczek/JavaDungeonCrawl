@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl.logic.gameobject.actors.player;
 
 import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.exceptions.GameException;
 import com.codecool.dungeoncrawl.logic.exceptions.NewLevelException;
 import com.codecool.dungeoncrawl.logic.gameobject.GameObject;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.Actor;
@@ -36,7 +37,7 @@ public class Player extends Actor {
     }
 
     @Override
-    public void action(GameObject gameObject) throws NewLevelException {
+    public void action(GameObject gameObject) throws GameException {
 
         // if the object is monster then player will attack it,
         // in other situation the gameObject will take action, taking player as parameter
