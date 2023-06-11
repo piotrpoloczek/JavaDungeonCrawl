@@ -11,6 +11,7 @@ import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
 
 public abstract class Monster extends Actor {
 
+
     public Monster(Cell cell) {
         super(cell);
     }
