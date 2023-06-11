@@ -9,6 +9,9 @@ import javafx.stage.Stage;
 
 public class AppView extends Application {
 
+    private static int SCENE_WIDTH = 400;
+    private static int SCENE_HEIGHT = 400;
+
     private Stage primaryStage;
     private GameView gameView;
 
@@ -21,12 +24,19 @@ public class AppView extends Application {
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
         this.gameView = new GameView();
-        showMainMenuView();
+        showClassMenuView();
     }
 
     public void showMainMenuView() {
         MainMenuView mainMenuView = new MainMenuView(this);
-        Scene scene = new Scene(mainMenuView, 200, 200);
+        Scene scene = new Scene(mainMenuView, SCENE_HEIGHT, SCENE_WIDTH);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    public void showClassMenuView() {
+        ClassMenuView classMenuView = new ClassMenuView(this);
+        Scene scene = new Scene(classMenuView, SCENE_HEIGHT, SCENE_WIDTH);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
