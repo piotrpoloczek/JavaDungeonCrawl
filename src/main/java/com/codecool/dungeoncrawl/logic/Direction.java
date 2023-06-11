@@ -1,5 +1,7 @@
 package com.codecool.dungeoncrawl.logic;
 
+import com.codecool.dungeoncrawl.logic.util.RandomGenerator;
+
 import java.util.Random;
 
 
@@ -26,13 +28,8 @@ public enum Direction {
         return this.y;
     }
 
-
-
     public static Direction generateRandomDirection() {
-        Random random = new Random();
-        int randomInt = random.nextInt(4);
-
-        switch (randomInt) {
+        switch (RandomGenerator.getRandomIntBetween(1, 4)) {
             case 1:
                 return Direction.UP;
             case 2:

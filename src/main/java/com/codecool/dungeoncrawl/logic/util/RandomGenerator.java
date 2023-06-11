@@ -11,4 +11,8 @@ public class RandomGenerator {
     public static int getRandomInt(int bound){
         return random.nextInt(bound);
     }
+
+    public static int getRandomIntBetween(int min, int max) {
+        return random.nextInt(max-min) + min;
+    }
 }
