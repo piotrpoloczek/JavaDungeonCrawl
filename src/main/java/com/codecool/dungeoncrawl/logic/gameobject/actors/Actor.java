@@ -14,6 +14,8 @@ public abstract class Actor extends GameObject {
 
     @Getter @Setter
     private int attack = 2;
+
+    @Getter @Setter
     private int defense = 5;
 
 
