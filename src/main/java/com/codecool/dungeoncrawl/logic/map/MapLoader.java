@@ -58,7 +58,7 @@ public class MapLoader {
                             cell.setType(CellType.FLOOR);
                             new StairsDown(cell);
                             break;
-                        case 'i':
+                        case 'a':
                             cell.setType(CellType.FLOOR);
                             new Apple(cell);
                             break;
