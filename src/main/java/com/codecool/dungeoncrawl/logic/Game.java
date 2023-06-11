@@ -5,7 +5,7 @@ import com.codecool.dungeoncrawl.logic.gameobject.actors.monsters.Monster;
 import com.codecool.dungeoncrawl.logic.map.GameMap;
 import com.codecool.dungeoncrawl.logic.map.GameMapFactory;
 import com.codecool.dungeoncrawl.logic.map.MapLoader;
-import com.codecool.dungeoncrawl.logic.gameobject.actors.Player;
+import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
 import lombok.Getter;
 import lombok.Setter;
 

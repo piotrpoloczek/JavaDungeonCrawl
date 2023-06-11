@@ -3,8 +3,7 @@ package com.codecool.dungeoncrawl.logic.gameobject.actors.monsters;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.gameobject.GameObject;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.Actor;
-import com.codecool.dungeoncrawl.logic.gameobject.actors.Player;
-import com.codecool.dungeoncrawl.logic.gameobject.actors.monsters.Monster;
+import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
 
 public class Skeleton extends Monster {
     public Skeleton(Cell cell) {
@@ -18,14 +17,15 @@ public class Skeleton extends Monster {
 
     @Override
     protected void fight(Actor actor) {
-        if (actor.getClass().equals(Player.class)) {
-            this.attack(actor);
-        }
+        attack(actor);
     }
 
     @Override
-    protected void action(GameObject gameObject) {
-        fight((Actor) gameObject);
+    public void action(GameObject gameObject) {
+        if (gameObject instanceof Player) {
+            Player player = (Player) gameObject;
+            fight(player);
+        }
     }
 
 }

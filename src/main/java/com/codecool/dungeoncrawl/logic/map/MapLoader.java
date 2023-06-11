@@ -3,13 +3,14 @@ package com.codecool.dungeoncrawl.logic.map;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.monsters.Monster;
-import com.codecool.dungeoncrawl.logic.gameobject.actors.Player;
+import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.monsters.Skeleton;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.npc.Wizard;
-import com.codecool.dungeoncrawl.logic.gameobject.items.doors.Door;
 import com.codecool.dungeoncrawl.logic.gameobject.items.food.Apple;
 import com.codecool.dungeoncrawl.logic.gameobject.items.keys.Key;
-import com.codecool.dungeoncrawl.logic.gameobject.items.special.StairsDown;
+import com.codecool.dungeoncrawl.logic.gameobject.items.keys.RedKey;
+import com.codecool.dungeoncrawl.logic.gameobject.specialitems.doors.RedDoor;
+import com.codecool.dungeoncrawl.logic.gameobject.specialitems.stairs.StairsDown;
 import com.codecool.dungeoncrawl.logic.gameobject.items.treasures.Gold;
 
 import java.io.InputStream;
@@ -66,11 +67,11 @@ public class MapLoader {
                             break;
                         case 'k':
                             cell.setType(CellType.FLOOR);
-                            new Key(cell);
+                            new RedKey(cell);
                             break;
                         case 'g':
                             cell.setType(CellType.FLOOR);
-                            new Door(cell);
+                            new RedDoor(cell);
                             break;
                         case '$':
                             cell.setType(CellType.FLOOR);

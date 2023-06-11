@@ -52,6 +52,17 @@ public class GameView {
         // TODO:  this is special for you @Piotr
         ui.add(new Label("Health: "), 0, 0);
         ui.add(healthLabel, 1, 0);
+
+        Label nameLabel = new Label("Name: ");
+        ui.add(inventoryLabel, 0, 1);
+
+//        Label ageLabel = new Label("Age: ");
+//        ui.add(ageLabel, 0, 2);
+//
+//        Label genderLabel = new Label("Gender: ");
+//        ui.add(genderLabel, 0, 3);
+
+
         return ui;
     }
 
@@ -92,6 +103,7 @@ public class GameView {
 
         drawViewport(startX, startY, endX, endY);
         healthLabel.setText("Health: " + game.getCurrentMap().getPlayer().getHealth());
+        inventoryLabel.setText("Inventory: " + game.getCurrentMap().getPlayer().getInventory().toString());
     }
 
     private void drawViewport(int startX, int startY, int endX, int endY) {

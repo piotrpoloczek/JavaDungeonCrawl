@@ -21,6 +21,7 @@ public abstract class Actor extends GameObject {
         super(cell);
     }
 
+
     public Actor(Cell cell, int health) {
         super(cell);
         this.health = health;
@@ -81,5 +82,5 @@ public abstract class Actor extends GameObject {
 
     protected abstract void fight(Actor actor);
 
-    protected abstract void action(GameObject gameObject) throws NewLevelException;
+    public abstract void action(GameObject gameObject) throws NewLevelException;
 }

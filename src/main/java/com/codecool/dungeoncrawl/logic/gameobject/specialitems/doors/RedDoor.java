@@ -1,38 +1,34 @@
-package com.codecool.dungeoncrawl.logic.gameobject.actors.npc;
+package com.codecool.dungeoncrawl.logic.gameobject.specialitems.doors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.exceptions.NewLevelException;
 import com.codecool.dungeoncrawl.logic.gameobject.GameObject;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
 
-public class Merchant extends Npc {
+public class RedDoor extends Door {
 
-
-    public Merchant(int health) {
-        super(health);
-    }
-
-    public Merchant(Cell cell) {
+    public RedDoor(Cell cell) {
         super(cell);
-    }
-
-    public Merchant(Cell cell, int health) {
-        super(cell, health);
     }
 
     @Override
     public void action(GameObject gameObject) throws NewLevelException {
-
         if (gameObject instanceof Player) {
             Player player = (Player) gameObject;
+            System.out.println("Solid door");
+            System.out.println("You need a key");
 
-            System.out.println(player.getName() + " you are lucky because you meet the best merchant in the world.");
-            System.out.println("What do you need to buy?");
+            if(player.getInventory().isInABag("RedKey")) {
+                this.getCell().setGameObject(null);
+            }
+            else {
+                System.out.println("You don't have a key");
+            }
         }
     }
 
     @Override
     public String getTileName() {
-        return "merchant";
+        return "door";
     }
 }

@@ -6,28 +6,25 @@ import com.codecool.dungeoncrawl.logic.Direction;
 import com.codecool.dungeoncrawl.logic.exceptions.NewLevelException;
 import com.codecool.dungeoncrawl.logic.gameobject.GameObject;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.Actor;
-import com.codecool.dungeoncrawl.logic.gameobject.actors.Player;
+import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
 
 
-public class Monster extends Actor {
+public abstract class Monster extends Actor {
 
     public Monster(Cell cell) {
         super(cell);
     }
 
     @Override
-    public String getTileName() {
-        return null;
-    }
-
-    @Override
     protected void fight(Actor actor) {
-
     }
 
     @Override
-    protected void action(GameObject gameObject) throws NewLevelException {
-
+    public void action(GameObject gameObject) throws NewLevelException {
+        if (gameObject instanceof Player) {
+            Player player = (Player) gameObject;
+            this.fight(player);
+        }
     }
 
     public void move(int dx, int dy, Player player) throws NewLevelException {
@@ -50,7 +47,6 @@ public class Monster extends Actor {
             nextCell.setGameObject(this);
             cell = nextCell;
         }
-
     }
 
     private Direction getChasePlayerDirection(Player player) {

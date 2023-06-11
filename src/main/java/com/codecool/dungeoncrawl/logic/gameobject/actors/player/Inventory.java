@@ -1,4 +1,4 @@
-package com.codecool.dungeoncrawl.logic.inventory;
+package com.codecool.dungeoncrawl.logic.gameobject.actors.player;
 
 
 import java.util.ArrayList;
@@ -7,6 +7,7 @@ import java.util.List;
 import com.codecool.dungeoncrawl.logic.gameobject.items.keys.Key;
 import com.codecool.dungeoncrawl.logic.gameobject.items.treasures.Gold;
 import com.codecool.dungeoncrawl.logic.gameobject.items.Item;
+import com.codecool.dungeoncrawl.logic.gameobject.items.treasures.Treasures;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,12 +15,12 @@ import lombok.Setter;
 public class Inventory {
     @Getter @Setter
     private List<Item> sack;
-    private int inventorySize = 2;
+    private int inventorySize = 10;
     @Getter
-    private List<Item> gold;
+    private List<Treasures> gold;
 
     @Getter @Setter
-    private Item currentWepon;
+    private Item currentWeapon;
 
     @Getter @Setter
     private Item currentArmor;
@@ -32,8 +33,8 @@ public class Inventory {
     }
 
     public void putItemToInventory(Item item){
-        if (isGold(item)){
-            gold.add(item);
+        if (item instanceof Treasures){
+            gold.add((Treasures) item);
         } else if (!isInventoryFull()){
             sack.add(item);
         } else {
@@ -43,7 +44,9 @@ public class Inventory {
 
     //TODO geter do zawracania ilości złota (wielkości listy)
     public int getGoldAmount() {
-        return 50;
+        return gold.stream()
+                .mapToInt(Treasures::getValue)
+                .sum();
     }
 
     public boolean isInABag(String itemName ) {
@@ -56,5 +59,18 @@ public class Inventory {
 
     private boolean isGold(Item item){
         return item instanceof Gold;
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Sack: ").append("\n");
+        for (Item item : sack) {
+            sb.append(item.toString()).append("\n");
+        }
+        sb.append("Inventory Size: ").append(inventorySize).append("\n");
+        sb.append("Gold: ").append(getGoldAmount()).append("\n");
+        sb.append("Current Weapon: ").append(currentWeapon).append("\n");
+        sb.append("Current Armor: ").append(currentArmor).append("\n");
+        return sb.toString();
     }
 }
