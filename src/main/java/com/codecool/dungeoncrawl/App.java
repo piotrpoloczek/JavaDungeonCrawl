@@ -1,9 +1,9 @@
 package com.codecool.dungeoncrawl;
 
-import com.codecool.dungeoncrawl.view.Main;
+import com.codecool.dungeoncrawl.view.AppView;
 
 public class App {
     public static void main(String[] args) {
-        Main.main(args);
+        AppView.main(args);
     }
 }
