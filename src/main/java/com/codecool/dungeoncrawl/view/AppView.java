@@ -30,6 +30,7 @@ public class AppView extends Application {
     public void showMainMenuView() {
         MainMenuView mainMenuView = new MainMenuView(this);
         Scene scene = new Scene(mainMenuView, SCENE_HEIGHT, SCENE_WIDTH);
+        scene.getStylesheets().add("style.css");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -37,12 +38,14 @@ public class AppView extends Application {
     public void showClassMenuView() {
         ClassMenuView classMenuView = new ClassMenuView(this);
         Scene scene = new Scene(classMenuView, SCENE_HEIGHT, SCENE_WIDTH);
+        scene.getStylesheets().add("style.css");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
     public void showGameView() {
         Scene scene = new Scene(gameView.getBorderPane());
+        scene.getStylesheets().add("style.css");
         primaryStage.setScene(scene);
 
         gameView.refreshView();
