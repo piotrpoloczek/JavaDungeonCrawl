@@ -7,9 +7,11 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 
-public class Main extends Application {
+public class AppView extends Application {
 
-    GameView gameView;
+    private Stage primaryStage;
+    private GameView gameView;
+
 
     public static void main(String[] args) {
         launch(args);
@@ -17,9 +19,19 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        this.primaryStage = primaryStage;
+        this.gameView = new GameView();
+        showMainMenuView();
+    }
 
-        // prepare the game
-        gameView = new GameView();
+    public void showMainMenuView() {
+        MainMenuView mainMenuView = new MainMenuView(this);
+        Scene scene = new Scene(mainMenuView, 200, 200);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    public void showGameView() {
         Scene scene = new Scene(gameView.getBorderPane());
         primaryStage.setScene(scene);
 
@@ -29,6 +41,7 @@ public class Main extends Application {
         primaryStage.setTitle("Dungeon Crawl");
         primaryStage.show();
     }
+
 
     private void onKeyPressed(KeyEvent keyEvent){
 
