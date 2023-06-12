@@ -2,6 +2,7 @@ package com.codecool.dungeoncrawl.view;
 
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.Game;
+import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
 import javafx.geometry.Insets;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -111,31 +112,15 @@ public class GameView {
             for (int y = startY; y < endY; y++) {
                 Cell cell = game.getCurrentMap().getCell(x, y);
                 if (cell.getGameObject() != null) {
-                    Tiles.drawTile(context, cell.getGameObject(), x - startX, y - startY);
+                    if (cell.getGameObject() instanceof Player) {
+                        Tiles.drawPlayer(context, cell.getGameObject(), x - startX, y - startY);
+                    } else {
+                        Tiles.drawTile(context, cell.getGameObject(), x - startX, y - startY);
+                    }
                 } else {
                     Tiles.drawTile(context, cell, x - startX, y - startY);
                 }
             }
         }
     }
-
-// original method for the view
-//    private void refresh() {
-//        get.setFill(Color.BLACK);
-//        context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-//        for (int x = 0; x < game.getCurrentMap().getWidth(); x++) {
-//            for (int y = 0; y < game.getCurrentMap().getHeight(); y++) {
-//                Cell cell = game.getCurrentMap().getCell(x, y);
-//                if (cell.getGameObject() != null) {
-//                    Tiles.drawTile(context, cell.getGameObject(), x, y);
-//                } else {
-//                    Tiles.drawTile(context, cell, x, y);
-//                }
-//            }
-//        }
-//        healthLabel.setText("" + game.getCurrentMap().getPlayer().getHealth());
-//        inventoryLabel.setText(getGame().getCurrentMap().getPlayer().getName());
-//    }
-
-
 }
