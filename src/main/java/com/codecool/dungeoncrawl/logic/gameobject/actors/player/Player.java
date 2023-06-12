@@ -5,6 +5,7 @@ import com.codecool.dungeoncrawl.logic.exceptions.GameException;
 import com.codecool.dungeoncrawl.logic.gameobject.GameObject;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.Actor;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.monsters.Monster;
+import com.codecool.dungeoncrawl.logic.gameobject.actors.player.herclasses.HeroClass;
 import com.codecool.dungeoncrawl.logic.gameobject.items.Item;
 import com.codecool.dungeoncrawl.logic.gameobject.items.treasures.Gold;
 import com.codecool.dungeoncrawl.logic.tasks.Journal;
@@ -21,6 +22,7 @@ public class Player extends Actor {
     private int experience;
     private int level;
     private Level playerLevel;
+    private HeroClass heroClass;
 
     private static int PLAYER_HEALTH = 100;
 
