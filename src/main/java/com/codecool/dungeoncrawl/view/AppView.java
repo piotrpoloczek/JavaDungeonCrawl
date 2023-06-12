@@ -60,7 +60,7 @@ public class AppView extends Application {
     }
 
     private Scene createInventoryScene() {
-        Scene scene = new Scene(inventoryMenuView, SCENE_HEIGHT, SCENE_WIDTH);
+        Scene scene = new Scene(inventoryMenuView.getBorderPane());
         scene.getStylesheets().add("style.css");
         scene.setOnKeyPressed(this::onKeyPressed);
         return scene;

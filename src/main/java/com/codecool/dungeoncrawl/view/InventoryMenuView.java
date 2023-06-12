@@ -1,83 +1,113 @@
 package com.codecool.dungeoncrawl.view;
 
+import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.Game;
+import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
+import com.codecool.dungeoncrawl.logic.gameobject.items.Item;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import lombok.Getter;
 import lombok.Setter;
 
-public class InventoryMenuView extends HBox {
+import java.util.List;
+
+public class InventoryMenuView {
 
 
     private AppView appView;
-    @Getter
-    @Setter
+    @Getter @Setter
     private Game game;
     @Getter @Setter
     private Label inventoryLabel;
+    @Getter @Setter
+    Canvas canvas;
+
+    @Getter @Setter
+    GraphicsContext context;
+    @Getter @Setter
+    Label healthLabel;
+    @Getter @Setter
+    GridPane ui;
+    @Getter @Setter
+    BorderPane borderPane;
+
 
     public InventoryMenuView(AppView appView, Game game) {
         this.appView = appView;
         this.game = game;
-        initializeUI();
+        //initializeUI();
+
+        prepareGame();
+        setUi(prepareGridPane());
+        setBorderPane(prepareBorderPane());
     }
 
-    private void initializeUI() {
-        setSpacing(10);
-        setAlignment(Pos.CENTER);
+    private void prepareGame() {
 
+        int levelWidth = game.getCurrentMap().getWidth();
+        int levelHeight = game.getCurrentMap().getHeight();
+        int tileSize = Tiles.TILE_WIDTH;
 
-        inventoryLabel = new Label("Health: ");
+        System.out.println(levelHeight + " " + levelWidth);
 
+        setCanvas( new Canvas(25 * tileSize, 20 * tileSize));
+        setContext(canvas.getGraphicsContext2D());
 
-
-
-        VBox warriorVBox = prepareVBox("classes/warrior.png", "Warrior");
-        VBox mageVBox = prepareVBox("classes/mage.png", "Mage");
-        VBox archerVBox = prepareVBox("classes/archer.png", "Archer");
-
-        getChildren().addAll(
-                warriorVBox,
-                mageVBox,
-                archerVBox,
-                inventoryLabel
-        );
+        setHealthLabel(new Label());
+        setInventoryLabel(new Label());
     }
+
+
+    private GridPane prepareGridPane() {
+        GridPane ui = new GridPane();
+        ui.setPrefWidth(200);
+        ui.setPadding(new Insets(10));
+
+        // TODO:  this is special for you @Piotr
+        ui.add(new Label("Health: "), 0, 0);
+        ui.add(healthLabel, 1, 0);
+
+        Label nameLabel = new Label("Name: ");
+        ui.add(inventoryLabel, 0, 1);
+        return ui;
+    }
+
+    private BorderPane prepareBorderPane() {
+        BorderPane borderPane = new BorderPane();
+        borderPane.setCenter(getCanvas());
+        borderPane.setRight(getUi());
+        return borderPane;
+    }
+
 
     public void refresh() {
+        context.setFill(Color.BLACK);
+        context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         inventoryLabel.setText("Inventory: " + game.getCurrentMap().getPlayer().getInventory().toString());
+        drawItem();
     }
 
-    private VBox prepareVBox(String imagePath, String className) {
-        VBox warriorVBox = new VBox();
+    private void drawItem() {
+        List<Item> items = game.getCurrentMap().getPlayer().getInventory().getSack();
+        int startX = 0;
+        int startY = 0; // Set the y-coordinate for drawing items
 
-        // Create the images and buttons for hero classes
-        Image warriorImage = new Image(imagePath);
-        ImageView warriorImageView = createResizedImageView(warriorImage, 100, 100);
-        Button warriorButton = createClassButton(className);
-
-        warriorVBox.getChildren().addAll(warriorImageView, warriorButton);
-        warriorVBox.setAlignment(Pos.CENTER);
-        return warriorVBox;
-    }
-
-    private Button createClassButton(String className) {
-        Button button = new Button(className);
-        button.setOnAction(event -> {
-            System.out.println("Selected Class: " + className);
-        });
-        return button;
-    }
-
-    private ImageView createResizedImageView(Image image, double width, double height) {
-        ImageView imageView = new ImageView(image);
-        imageView.setFitWidth(width);
-        imageView.setFitHeight(height);
-        return imageView;
+        for (Item item : items) {
+            System.out.println(startX);
+            System.out.println(item);
+            Tiles.drawTile(context, item, startX, startY);
+            startX += 2; // Decrease the x-coordinate for each item
+        }
     }
 }

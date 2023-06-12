@@ -46,17 +46,10 @@ public class Tiles {
 
     }
 
-    public static void drawTileOld(GraphicsContext context, Drawable d, int x, int y) {
+    public static void drawTile(GraphicsContext context, Drawable d, int x, int y) {
         Tile tile = tileMap.get(d.getTileName());
         context.drawImage(tileset, tile.x, tile.y, tile.w, tile.h,
                 x * TILE_WIDTH, y * TILE_WIDTH, TILE_WIDTH, TILE_WIDTH);
-    }
-
-    public static void drawTile(GraphicsContext context, Drawable d, int x, int y) {
-        Tile tile = tileMap.get(d.getTileName());
-        context.drawImage(
-                tileset, tile.x, tile.y, tile.w, tile.h,
-                x * TILE_WIDTH, y * TILE_WIDTH, tile.w, tile.h);
     }
 
     public static void drawPlayer(GraphicsContext context, Drawable d, int x, int y) {
