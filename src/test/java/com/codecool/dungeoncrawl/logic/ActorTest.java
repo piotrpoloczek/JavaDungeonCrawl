@@ -25,7 +25,7 @@ class ActorTest {
     }
 
     @Test
-    void cannotMoveIntoWall() throws GameEndException {
+    void cannotMoveIntoWall() throws GameException {
         gameMap.getCell(2, 1).setType(CellType.WALL);
         Player player = new Player(gameMap.getCell(1, 1));
         player.move(1, 0);

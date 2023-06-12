@@ -39,7 +39,7 @@ public class Game {
                 getCurrentMap().removeMonsters(monster);
             } else {
                 Direction direction = generateRandomDirection();
-                System.out.println("x: " + direction.getX() + " y: " +direction.getY());
+//                System.out.println("x: " + direction.getX() + " y: " +direction.getY());
                 monster.move(direction.getX(), direction.getY(), getCurrentMap().getPlayer());
             }
         }
@@ -52,7 +52,7 @@ public class Game {
                 throw new GameOverException();
             }
 
-            System.out.println(direction.getX() + " : " + direction.getY());
+//            System.out.println(direction.getX() + " : " + direction.getY());
             getCurrentMap().getPlayer().getName();
             getCurrentMap().getPlayer().move(direction.getX(), direction.getY());
             monstersTurn();

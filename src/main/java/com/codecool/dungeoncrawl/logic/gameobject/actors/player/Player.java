@@ -13,9 +13,18 @@ import lombok.Setter;
 public class Player extends Actor {
 
     @Getter @Setter
-    Inventory inventory;
+    private Inventory inventory;
 
-    private static int PLAYER_HEALTH = 50;
+    @Getter @Setter
+    private int attack = 5;
+
+    @Getter @Setter
+    private int defense = 5;
+
+    @Getter @Setter
+    private int dexterity = 5;
+
+    private static int PLAYER_HEALTH = 100;
 
     public Player(Cell cell) {
         super(cell, PLAYER_HEALTH);

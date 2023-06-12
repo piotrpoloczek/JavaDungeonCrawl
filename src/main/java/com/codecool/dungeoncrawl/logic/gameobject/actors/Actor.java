@@ -4,6 +4,7 @@ import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.exceptions.GameException;
 import com.codecool.dungeoncrawl.logic.gameobject.GameObject;
+import com.codecool.dungeoncrawl.logic.util.RandomGenerator;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,10 +14,13 @@ public abstract class Actor extends GameObject {
     private int health;
 
     @Getter @Setter
-    private int attack = 2;
+    private int attack = 5;
 
     @Getter @Setter
     private int defense = 5;
+
+    @Getter @Setter
+    private int dexterity = 5;
 
 
     public Actor(int health){
@@ -48,13 +52,24 @@ public abstract class Actor extends GameObject {
     }
 
     public void attack(Actor actor){
-        System.out.println("I attacked the " + actor + "health points: " + actor.getHealth());
-        System.out.println("My health points: " + this.getHealth());
 
-        actor.defense(this.attack);
+        System.out.println( this.getName() + " is attacking " + actor.getName());
+
+        if(isDefenceSuccessful(actor)) {
+            System.out.println(actor.getName() + "pushes back the attack!");
+            System.out.println();
+        }
+        else {
+            setHarm(actor, attack);
+            System.out.println(actor.getName() + " health: " + actor.getHealth());
+            System.out.println();
+        }
+
         if (actor.isAlive()) {
             actor.counterAttack(this);
-        } else {
+        }
+        else {
+            System.out.println(actor.getName() + " died!");
             actor.cell.setGameObject(null);
         }
     }
@@ -65,6 +80,26 @@ public abstract class Actor extends GameObject {
 
     public void defense(int attack) {
         health = this.health - attack;
+    }
+
+    private void setHarm(Actor actor, int damage) {
+        if(isHitCritical()) {
+            System.out.println("Critical hit!");
+            actor.setHealth((actor.getHealth() - damage * 2));
+        }
+        else {
+            actor.setHealth(actor.getHealth() - damage);
+        }
+    }
+
+    private boolean isHitCritical() {
+        int diceThrow = RandomGenerator.throwADice() + RandomGenerator.throwADice();
+        return diceThrow * 10 >= 110 - dexterity * 4;
+    }
+
+    private boolean isDefenceSuccessful(Actor actor) {
+        int diceThrow = RandomGenerator.throwADice() + RandomGenerator.throwADice();
+        return diceThrow * 10 >= 110 - actor.getDefense() * 4;
     }
 
     public boolean isAlive() {
@@ -85,6 +120,10 @@ public abstract class Actor extends GameObject {
 
     public int getY() {
         return cell.getY();
+    }
+
+    public String getName() {
+        return this.getClass().getSimpleName();
     }
 
     protected abstract void fight(Actor actor);
