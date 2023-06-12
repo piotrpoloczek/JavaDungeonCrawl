@@ -17,6 +17,9 @@ public class Player extends Actor {
     private Inventory inventory;
     @Getter
     private Journal journal = new Journal();
+    @Getter @Setter
+    private int experience;
+    private int level;
 
     private static int PLAYER_HEALTH = 100;
 
@@ -41,6 +44,11 @@ public class Player extends Actor {
     @Override
     protected void fight(Actor actor) {
         this.attack(actor);
+
+        Monster monster = (Monster) actor;
+        if(!actor.isAlive()) {
+            this.setExperience(getExperience() + monster.getExpReward());
+        }
     }
 
     @Override
@@ -53,7 +61,7 @@ public class Player extends Actor {
             Monster monster = (Monster) gameObject;
             fight(monster);
         }
-        if (gameObject instanceof Gold) {
+        else if (gameObject instanceof Gold) {
             Gold gold = (Gold) gameObject;
             System.out.println("Collected " + ((Gold) gameObject).getValue() + " gold");
             gold.action(this);

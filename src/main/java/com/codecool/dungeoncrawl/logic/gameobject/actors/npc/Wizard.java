@@ -28,7 +28,11 @@ public class Wizard extends Npc {
                 this.getCell().setGameObject(null);
 
                 Task task = player.getJournal().moveTaskToFinishedList("Gold for the Wizz");
-                System.out.println("Task finished! You gained " + task.getExpReward() + " exp!");
+
+                int expReward = task.getExpReward();
+                System.out.println("Task finished! You gained " + expReward + " exp!");
+
+                player.setExperience(player.getExperience() + expReward);
             }
             else {
                 System.out.println("Bring more gold!");

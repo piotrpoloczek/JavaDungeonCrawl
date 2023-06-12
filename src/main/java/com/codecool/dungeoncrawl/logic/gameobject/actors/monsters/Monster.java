@@ -7,10 +7,13 @@ import com.codecool.dungeoncrawl.logic.exceptions.NewLevelException;
 import com.codecool.dungeoncrawl.logic.gameobject.GameObject;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.Actor;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
+import lombok.Getter;
 
 
 public abstract class Monster extends Actor {
 
+    @Getter
+    private int expReward;
 
     public Monster(Cell cell) {
         super(cell);
