@@ -23,6 +23,8 @@ public class Game {
     private GameMap currentMap;
     private int actualLevel;
     private Player player;
+    @Getter @Setter
+    private Thread monstersThread;
 
 
     public Game() {
@@ -30,6 +32,30 @@ public class Game {
         this.mapFiles = GameMapFactory.createGameMaps();
         this.actualLevel = 0;
         this.currentMap = MapLoader.loadMap(mapFiles.get(actualLevel), player);
+        this.monstersThread = createMonstersThread();
+        monstersThread.start();
+    }
+
+    private Thread createMonstersThread() {
+        Thread monstersThread = new Thread(() -> {
+            while (true) {
+                System.out.println("it works");
+                try {
+                    System.out.println("move cow");
+                    monstersTurn();
+                } catch (NewLevelException e) {
+                    System.out.println("it doesn't work");
+                }
+
+                // Delay between turns (optional)
+                try {
+                    Thread.sleep(100); // Adjust the delay as needed
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        return monstersThread;
     }
 
     private void monstersTurn() throws NewLevelException {
