@@ -10,7 +10,8 @@ import lombok.Setter;
 public class Skeleton extends Monster {
 
     private int health = 20;
-    private int expReward = 10;
+    @Getter @Setter
+    private int expReward;
 
     public Skeleton(Cell cell) {
         super(cell);
@@ -18,6 +19,7 @@ public class Skeleton extends Monster {
         setAttack(2);
         setDefense(2);
         setDexterity(2);
+        setExpReward(10);
     }
 
     @Override

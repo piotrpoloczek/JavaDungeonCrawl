@@ -48,6 +48,7 @@ public class Player extends Actor {
         Monster monster = (Monster) actor;
         if(!actor.isAlive()) {
             this.setExperience(getExperience() + monster.getExpReward());
+            System.out.println("Exp gained " + monster.getExpReward());
         }
     }
 
