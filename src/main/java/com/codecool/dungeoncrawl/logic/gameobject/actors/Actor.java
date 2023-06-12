@@ -14,13 +14,13 @@ public abstract class Actor extends GameObject {
     private int health;
 
     @Getter @Setter
-    private int attack = 5;
+    private int attack;
 
     @Getter @Setter
-    private int defense = 5;
+    private int defense;
 
     @Getter @Setter
-    private int dexterity = 5;
+    private int dexterity;
 
 
     public Actor(int health){
@@ -44,7 +44,8 @@ public abstract class Actor extends GameObject {
         if (nextCell.getGameObject() != null) {
             GameObject gameObject = nextCell.getGameObject();
             action(gameObject);
-        } else if (nextCell.getType().equals(CellType.FLOOR)) {
+        }
+        else if (nextCell.getType().equals(CellType.FLOOR)) {
             cell.setGameObject(null);
             nextCell.setGameObject(this);
             cell = nextCell;
@@ -56,12 +57,12 @@ public abstract class Actor extends GameObject {
         System.out.println( this.getName() + " is attacking " + actor.getName());
 
         if(isDefenceSuccessful(actor)) {
-            System.out.println(actor.getName() + "pushes back the attack!");
+            System.out.println(actor.getName() + " pushes back the attack!");
             System.out.println();
         }
         else {
-            setHarm(actor, attack);
-            System.out.println(actor.getName() + " health: " + actor.getHealth());
+            int damage = setHarm(actor, attack);
+            System.out.println("Damage: " + damage + ", " + actor.getName() + " health: " + actor.getHealth());
             System.out.println();
         }
 
@@ -82,14 +83,16 @@ public abstract class Actor extends GameObject {
         health = this.health - attack;
     }
 
-    private void setHarm(Actor actor, int damage) {
+    private int setHarm(Actor actor, int damage) {
         if(isHitCritical()) {
             System.out.println("Critical hit!");
             actor.setHealth((actor.getHealth() - damage * 2));
+            damage *= 2;
         }
         else {
             actor.setHealth(actor.getHealth() - damage);
         }
+        return damage;
     }
 
     private boolean isHitCritical() {
@@ -104,10 +107,6 @@ public abstract class Actor extends GameObject {
 
     public boolean isAlive() {
         return health > 0;
-    }
-
-    public int getHealth() {
-        return health;
     }
 
     public Cell getCell() {

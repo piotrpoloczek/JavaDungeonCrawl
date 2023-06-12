@@ -39,7 +39,6 @@ public class Game {
                 getCurrentMap().removeMonsters(monster);
             } else {
                 Direction direction = generateRandomDirection();
-//                System.out.println("x: " + direction.getX() + " y: " +direction.getY());
                 monster.move(direction.getX(), direction.getY(), getCurrentMap().getPlayer());
             }
         }

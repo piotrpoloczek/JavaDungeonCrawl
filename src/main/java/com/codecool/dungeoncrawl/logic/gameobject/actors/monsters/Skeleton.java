@@ -11,21 +11,14 @@ public class Skeleton extends Monster {
 
     private int health = 20;
 
-    @Getter @Setter
-    private int attack = 2;
-
-    @Getter @Setter
-    private int defense = 2;
-
-    @Getter @Setter
-    private int dexterity = 2;
 
     public Skeleton(Cell cell) {
         super(cell);
         setHealth(health);
+        setAttack(2);
+        setDefense(2);
+        setDexterity(2);
     }
-
-
 
     @Override
     public String getTileName() {
