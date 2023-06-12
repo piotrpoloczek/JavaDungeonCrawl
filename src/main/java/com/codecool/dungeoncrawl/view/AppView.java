@@ -14,9 +14,11 @@ public class AppView extends Application {
 
     private Stage primaryStage;
     private GameView gameView;
+    private InventoryMenuView inventoryMenuView;
     private Scene mainMenuScene;
     private Scene classMenuScene;
     private Scene gameScene;
+    private Scene inventoryScene;
 
 
     public static void main(String[] args) {
@@ -30,6 +32,8 @@ public class AppView extends Application {
         this.mainMenuScene = createMainMenuScene();
         this.classMenuScene = createClassMenuView();
         this.gameScene = createGameScene();
+        this.inventoryMenuView = new InventoryMenuView(this, gameView.getGame());
+        this.inventoryScene = createInventoryScene();
         showMainMenuView();
     }
 
@@ -41,7 +45,7 @@ public class AppView extends Application {
     }
 
     private Scene createClassMenuView() {
-        ClassMenuView classMenuView = new ClassMenuView(this);
+        ClassMenuView classMenuView = new ClassMenuView(this, gameView.getGame());
         Scene scene = new Scene(classMenuView, SCENE_HEIGHT, SCENE_WIDTH);
         scene.getStylesheets().add("style.css");
         scene.setOnKeyPressed(this::onKeyPressed);
@@ -55,8 +59,21 @@ public class AppView extends Application {
         return scene;
     }
 
+    private Scene createInventoryScene() {
+        Scene scene = new Scene(inventoryMenuView.getBorderPane());
+        scene.getStylesheets().add("style.css");
+        scene.setOnKeyPressed(this::onKeyPressed);
+        return scene;
+    }
+
     public void showMainMenuView() {
         primaryStage.setScene(mainMenuScene);
+        primaryStage.show();
+    }
+
+    public void showInventoryView() {
+        inventoryMenuView.refresh();
+        primaryStage.setScene(inventoryScene);
         primaryStage.show();
     }
 
@@ -86,7 +103,7 @@ public class AppView extends Application {
                 gameView.getGame().gameTurn(Direction.LEFT);
                 break;
             case I:
-                this.showClassMenuView();
+                this.showInventoryView();
                 break;
             case Q:
                 this.showGameView();

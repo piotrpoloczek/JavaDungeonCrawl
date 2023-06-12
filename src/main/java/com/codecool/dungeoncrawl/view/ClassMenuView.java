@@ -1,24 +1,35 @@
 package com.codecool.dungeoncrawl.view;
 
+import com.codecool.dungeoncrawl.logic.Game;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import lombok.Getter;
+import lombok.Setter;
 
 public class ClassMenuView extends HBox {
 
     private AppView appView;
+    @Getter @Setter
+    private Game game;
+    @Getter @Setter
+    private Label inventoryLabel;
 
-    public ClassMenuView(AppView appView) {
+    public ClassMenuView(AppView appView, Game game) {
         this.appView = appView;
+        this.game = game;
         initializeUI();
     }
 
     private void initializeUI() {
         setSpacing(10);
         setAlignment(Pos.CENTER);
+
+        Label label = new Label("Health: ");
 
         VBox warriorVBox = prepareVBox("classes/warrior.png", "Warrior");
         VBox mageVBox = prepareVBox("classes/mage.png", "Mage");

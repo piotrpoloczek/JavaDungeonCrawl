@@ -46,7 +46,7 @@ public class GameView {
 
     private GridPane prepareGridPane() {
         GridPane ui = new GridPane();
-        ui.setPrefWidth(200);
+        ui.setPrefWidth(300);
         ui.setPadding(new Insets(10));
 
 

@@ -5,7 +5,7 @@ import com.codecool.dungeoncrawl.logic.exceptions.NewLevelException;
 import com.codecool.dungeoncrawl.logic.gameobject.GameObject;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
 
-public abstract class Item extends GameObject {
+public abstract class Item extends GameObject implements UseItem {
 
     public Item(Cell cell) {
         super(cell);
