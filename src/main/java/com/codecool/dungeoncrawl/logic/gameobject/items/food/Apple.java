@@ -1,6 +1,8 @@
 package com.codecool.dungeoncrawl.logic.gameobject.items.food;
 
 import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.exceptions.NewLevelException;
+import com.codecool.dungeoncrawl.logic.gameobject.GameObject;
 
 public class Apple extends Food {
 

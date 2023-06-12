@@ -31,4 +31,9 @@ public class RedDoor extends Door {
     public String getTileName() {
         return "door";
     }
+
+    @Override
+    public void use(Player player) {
+
+    }
 }

@@ -2,9 +2,11 @@ package com.codecool.dungeoncrawl.view;
 
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.Game;
+import com.codecool.dungeoncrawl.logic.exceptions.NewLevelException;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
 import com.codecool.dungeoncrawl.logic.gameobject.items.Item;
 import javafx.geometry.Insets;
+import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -20,11 +22,14 @@ import javafx.scene.paint.Color;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class InventoryMenuView {
 
 
+    private static int TILE_WIDTH = 32;
     private AppView appView;
     @Getter @Setter
     private Game game;
@@ -41,6 +46,8 @@ public class InventoryMenuView {
     GridPane ui;
     @Getter @Setter
     BorderPane borderPane;
+
+    private Map<Point2D, Item> itemMap = new HashMap<>();
 
 
     public InventoryMenuView(AppView appView, Game game) {
@@ -96,6 +103,28 @@ public class InventoryMenuView {
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         inventoryLabel.setText("Inventory: " + game.getCurrentMap().getPlayer().getInventory().toString());
         drawItem();
+
+        canvas.setOnMouseClicked(event -> {
+            double mouseX = event.getX();
+            double mouseY = event.getY();
+
+            // Check if the clicked coordinates are within the bounds of any item
+            for (Map.Entry<Point2D, Item> entry : itemMap.entrySet()) {
+                Point2D itemPosition = entry.getKey();
+                Item item = entry.getValue();
+                // Adjust the comparison logic according to your needs
+                if (mouseX >= itemPosition.getX() && mouseX < itemPosition.getX() + TILE_WIDTH &&
+                        mouseY >= itemPosition.getY() && mouseY < itemPosition.getY() + TILE_WIDTH) {
+                    // Item is clicked, perform the desired action
+                    System.out.println("Item clicked: " + item.getName() + item);
+                    item.use(game.getCurrentMap().getPlayer());
+                    getGame().getCurrentMap().getPlayer().getInventory().getSack().remove(item);
+                    // ...
+                    refresh();
+                    break; // Exit the loop since the item has been found
+                }
+            }
+        });
     }
 
     private void drawItem() {
@@ -106,8 +135,10 @@ public class InventoryMenuView {
         for (Item item : items) {
             System.out.println(startX);
             System.out.println(item);
+            Point2D itemPosition = new Point2D(startX * TILE_WIDTH, startY * TILE_WIDTH);
             Tiles.drawTile(context, item, startX, startY);
-            startX += 2; // Decrease the x-coordinate for each item
+            itemMap.put(itemPosition, item);
+            startX += 2; // Increase the x-coordinate for each item
         }
     }
 }
