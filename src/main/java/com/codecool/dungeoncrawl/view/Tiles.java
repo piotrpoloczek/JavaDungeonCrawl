@@ -43,4 +43,9 @@ public class Tiles {
         context.drawImage(tileset, tile.x, tile.y, tile.w, tile.h,
                 x * TILE_WIDTH, y * TILE_WIDTH, TILE_WIDTH, TILE_WIDTH);
     }
+
+    public static void drawPlayer(GraphicsContext context, Drawable d, int x, int y) {
+        Image image = new Image("classes/mage.png");
+        context.drawImage(image, x * TILE_WIDTH, y * TILE_WIDTH, TILE_WIDTH, TILE_WIDTH);
+    }
 }
