@@ -80,7 +80,7 @@ public class Game {
 //            System.out.println(direction.getX() + " : " + direction.getY());
             getCurrentMap().getPlayer().getName();
             getCurrentMap().getPlayer().move(direction.getX(), direction.getY());
-            monstersTurn();
+//            monstersTurn();
         } catch (GameOverException e) {
             System.out.println(e);
             System.out.println("Game Over");
