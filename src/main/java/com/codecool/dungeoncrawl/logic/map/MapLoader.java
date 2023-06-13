@@ -15,11 +15,24 @@ import com.codecool.dungeoncrawl.logic.gameobject.items.treasures.Gold;
 import com.codecool.dungeoncrawl.logic.gameobject.specialitems.stairs.StairsHeaven;
 
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
 
 public class MapLoader {
+
+    private static Map<Character, String> symbolsClasses = new HashMap<>();
+
+    static {
+        symbolsClasses.put('s' , "com.codecool.dungeoncrawl.logic.gameobject.actors.monsters.Skeleton");
+        symbolsClasses.put('@' , "com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player");
+        symbolsClasses.put('d' , "com.codecool.dungeoncrawl.logic.gameobject.specialitems.stairs.StairsDown");
+        symbolsClasses.put('w' , "com.codecool.dungeoncrawl.logic.gameobject.actors.npc.Wizard");
+        symbolsClasses.put('k' , "com.codecool.dungeoncrawl.logic.gameobject.items.keys.RedKey");
+        symbolsClasses.put('g' , "com.codecool.dungeoncrawl.logic.gameobject.specialitems.doors.RedDoor");
+        symbolsClasses.put('$' , "com.codecool.dungeoncrawl.logic.gameobject.items.treasures.Gold");
+        symbolsClasses.put('h' , "com.codecool.dungeoncrawl.logic.gameobject.specialitems.stairs.StairsHeaven");
+    }
     public static GameMap loadMap(String filename, Player player) {
         InputStream is = MapLoader.class.getResourceAsStream(filename);
         Scanner scanner = new Scanner(is);
@@ -36,54 +49,39 @@ public class MapLoader {
             for (int x = 0; x < width; x++) {
                 if (x < line.length()) {
                     Cell cell = map.getCell(x, y);
-                    switch (line.charAt(x)) {
-                        case ' ':
-                            cell.setType(CellType.EMPTY);
-                            break;
-                        case '#':
-                            cell.setType(CellType.WALL);
-                            break;
-                        case '.':
+                    char currentChar = line.charAt(x);
+                    if(currentChar == ' ') {
+                        cell.setType(CellType.EMPTY);
+                    }
+                    else if(currentChar == '#') {
+                        cell.setType(CellType.WALL);
+                    }
+                    else {
+                        try {
                             cell.setType(CellType.FLOOR);
-                            break;
-                        case 's':
-                            cell.setType(CellType.FLOOR);
-                            monsters.add(new Skeleton(cell));
-                            break;
-                        case '@':
-                            cell.setType(CellType.FLOOR);
-                            map.getPlayer().setCell(cell);
-                            break;
-                        case 'd':
-                            cell.setType(CellType.FLOOR);
-                            new StairsDown(cell);
-                            break;
-                        case 'a':
-                            cell.setType(CellType.FLOOR);
-                            new Apple(cell);
-                            break;
-                        case 'w':
-                            cell.setType(CellType.FLOOR);
-                            new Wizard(cell);
-                            break;
-                        case 'k':
-                            cell.setType(CellType.FLOOR);
-                            new RedKey(cell);
-                            break;
-                        case 'g':
-                            cell.setType(CellType.FLOOR);
-                            new RedDoor(cell);
-                            break;
-                        case '$':
-                            cell.setType(CellType.FLOOR);
-                            new Gold(cell);
-                            break;
-                        case 'h':
-                            cell.setType(CellType.FLOOR);
-                            new StairsHeaven(cell);
-                            break;
-                        default:
-                            throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");
+                            if(symbolsClasses.get(currentChar) == null) {
+                                continue;
+                            }
+                            String className = symbolsClasses.get(currentChar);
+
+                            Class aClass = Class.forName(className);
+
+                            Class[] types = {Cell.class};
+                            Constructor constructor = aClass.getConstructor(types);
+
+                            Object[] parameters = {cell};
+                            Object o = constructor.newInstance(parameters);
+
+                            if(currentChar == 's') {
+                                monsters.add((Monster) o);
+                            }
+                            if(currentChar == '@') {
+                                map.getPlayer().setCell(cell);
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
