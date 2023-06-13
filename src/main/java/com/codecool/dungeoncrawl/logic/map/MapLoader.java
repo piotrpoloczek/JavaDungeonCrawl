@@ -3,6 +3,7 @@ package com.codecool.dungeoncrawl.logic.map;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.monsters.Monster;
+import com.codecool.dungeoncrawl.logic.gameobject.actors.npc.Princes;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.monsters.Skeleton;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.npc.Wizard;
@@ -65,6 +66,10 @@ public class MapLoader {
                         case 'w':
                             cell.setType(CellType.FLOOR);
                             new Wizard(cell);
+                            break;
+                        case 'p':
+                            cell.setType(CellType.FLOOR);
+                            new Princes(cell);
                             break;
                         case 'k':
                             cell.setType(CellType.FLOOR);
