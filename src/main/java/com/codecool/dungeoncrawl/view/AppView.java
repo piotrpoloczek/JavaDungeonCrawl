@@ -1,7 +1,6 @@
 package com.codecool.dungeoncrawl.view;
 
 import com.codecool.dungeoncrawl.logic.Direction;
-import com.codecool.dungeoncrawl.logic.exceptions.NewLevelException;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
