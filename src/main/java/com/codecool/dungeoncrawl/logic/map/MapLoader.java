@@ -12,6 +12,7 @@ import com.codecool.dungeoncrawl.logic.gameobject.actors.npc.Wizard;
 import com.codecool.dungeoncrawl.logic.gameobject.items.food.Apple;
 import com.codecool.dungeoncrawl.logic.gameobject.items.keys.Key;
 import com.codecool.dungeoncrawl.logic.gameobject.items.keys.RedKey;
+import com.codecool.dungeoncrawl.logic.gameobject.items.treasures.Crown;
 import com.codecool.dungeoncrawl.logic.gameobject.specialitems.doors.RedDoor;
 import com.codecool.dungeoncrawl.logic.gameobject.specialitems.stairs.StairsDown;
 import com.codecool.dungeoncrawl.logic.gameobject.items.treasures.Gold;
@@ -96,6 +97,10 @@ public class MapLoader {
                         case '$':
                             cell.setType(CellType.FLOOR);
                             new Gold(cell);
+                            break;
+                        case 'x':
+                            cell.setType(CellType.FLOOR);
+                            new Crown(cell);
                             break;
                         case 'h':
                             cell.setType(CellType.FLOOR);

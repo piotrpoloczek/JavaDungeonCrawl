@@ -36,6 +36,9 @@ public class Tiles {
         tileMap.put("floor", new Tile(1, 4));
         tileMap.put("player", new Tile(27, 0));
         tileMap.put("skeleton", new Tile(12, 10, 32, 64));
+        tileMap.put("ghost", new Tile(28, 7));
+        tileMap.put("minotaur", new Tile(26, 9));
+        tileMap.put("princes", new Tile(12, 23));
         tileMap.put("stairs down", new Tile(28, 6));
         tileMap.put("apple", new Tile(15, 29));
         tileMap.put("wizard", new Tile(26, 0));

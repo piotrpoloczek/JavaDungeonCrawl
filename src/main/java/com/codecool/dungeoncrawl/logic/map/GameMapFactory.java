@@ -7,7 +7,7 @@ public class GameMapFactory {
 
     public static List<String> createGameMaps() {
         ArrayList<String> gameMaps = new ArrayList<>();
-        gameMaps.add("/map.txt");
+        gameMaps.add("/newMap.txt");
         gameMaps.add("/map2.txt");
         return gameMaps;
     }
