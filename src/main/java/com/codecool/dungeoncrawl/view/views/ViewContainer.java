@@ -3,9 +3,6 @@ package com.codecool.dungeoncrawl.view.views;
 import com.codecool.dungeoncrawl.logic.Direction;
 import com.codecool.dungeoncrawl.logic.Game;
 import com.codecool.dungeoncrawl.view.DisplayTask;
-import com.codecool.dungeoncrawl.view.DisplayThread;
-import javafx.application.Platform;
-import javafx.concurrent.Task;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
@@ -32,7 +29,6 @@ public class ViewContainer {
     @Getter @Setter
     private InventoryView inventoryView;
     private DisplayTask displayTask;
-    private Thread displayThread;
 
 
     public ViewContainer(Game game) {
@@ -78,18 +74,19 @@ public class ViewContainer {
                 getGame().gameTurn(Direction.RIGHT);
                 break;
         }
-//        gameView.refreshView();
     }
 
     public void showGameView() {
         this.displayTask.resumeTask();
+        this.getContainer().getChildren().clear();
         this.getContainer().getChildren().add(this.getGameView().getGamePane());
     }
 
     public void showInventoryView() {
         this.displayTask.pauseTask();
+        this.getContainer().getChildren().clear();
+        this.getInventoryView().refresh();
         this.getContainer().getChildren().add(this.getInventoryView().getMainPane());
-//        primaryStage.show();
     }
 
 
