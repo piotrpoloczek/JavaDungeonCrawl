@@ -8,6 +8,7 @@ import com.codecool.dungeoncrawl.logic.map.GameMap;
 import com.codecool.dungeoncrawl.logic.map.GameMapFactory;
 import com.codecool.dungeoncrawl.logic.map.MapLoader;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
+import javafx.application.Platform;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -40,12 +41,15 @@ public class Game {
         Thread monstersThread = new Thread(() -> {
             while (true) {
                 System.out.println("it works");
-                try {
+                Platform.runLater(() -> {
                     System.out.println("move cow");
-                    monstersTurn();
-                } catch (NewLevelException e) {
-                    System.out.println("it doesn't work");
-                }
+                    try {
+                        monstersTurn();
+                    } catch (NewLevelException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+
 
                 // Delay between turns (optional)
                 try {

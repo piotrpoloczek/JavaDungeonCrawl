@@ -7,9 +7,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.flogger.Flogger;
-
-import javax.swing.text.View;
 
 public class ViewContainer {
 
@@ -18,6 +15,7 @@ public class ViewContainer {
 
     @Getter @Setter
     private Scene scene;
+    @Getter @Setter
     private GridPane container;
     @Getter @Setter
     private Game game;
@@ -27,7 +25,6 @@ public class ViewContainer {
 
     public ViewContainer(Game game) {
         this.game = game;
-
         this.gameView = new GameView(game);
 
         this.container = new GridPane();
@@ -35,14 +32,9 @@ public class ViewContainer {
         this.scene = new Scene(container);
         scene.getStylesheets().add("style.css");
         scene.setOnKeyPressed(this::onKeyPressed);
-
-        showGameView();
     }
 
-    public void showGameView() {
-        this.container.getChildren().clear();
-        this.container.getChildren().add(this.gameView.getUi());
-    }
+
 
 
     private void onKeyPressed(KeyEvent keyEvent){

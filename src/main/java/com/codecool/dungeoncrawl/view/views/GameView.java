@@ -32,6 +32,7 @@ public class GameView {
         this.game = game;
         this.canvas = new Canvas(25 * Tiles.TILE_WIDTH, 20 * Tiles.TILE_WIDTH);
         this.context = canvas.getGraphicsContext2D();
+        setUi(prepareGridPane());
     }
 
     private GridPane prepareGridPane() {
@@ -39,12 +40,14 @@ public class GameView {
         ui.setPrefWidth(300);
         ui.setPadding(new Insets(10));
 
-        // TODO:  this is special for you @Piotr
-        ui.add(new Label("Health: "), 0, 0);
-        ui.add(healthLabel, 1, 0);
-
-        Label nameLabel = new Label("Name: ");
-        ui.add(inventoryLabel, 0, 1);
+//        // TODO:  this is special for you @Piotr
+//        ui.add(new Label("Health: "), 0, 0);
+//        ui.add(healthLabel, 1, 0);
+//
+//        Label nameLabel = new Label("Name: ");
+//        ui.add(inventoryLabel, 0, 1);
+        refreshView();
+        ui.getChildren().add(context.getCanvas());
 
         return ui;
     }
@@ -68,8 +71,8 @@ public class GameView {
         int endY = Math.min(levelHeight, startY + viewportHeight);
 
         drawViewport(startX, startY, endX, endY);
-        healthLabel.setText("Health: " + game.getCurrentMap().getPlayer().getHealth());
-        inventoryLabel.setText("Inventory: " + game.getCurrentMap().getPlayer().getInventory().toString());
+//        healthLabel.setText("Health: " + game.getCurrentMap().getPlayer().getHealth());
+//        inventoryLabel.setText("Inventory: " + game.getCurrentMap().getPlayer().getInventory().toString());
     }
 
     private void drawViewport(int startX, int startY, int endX, int endY) {
