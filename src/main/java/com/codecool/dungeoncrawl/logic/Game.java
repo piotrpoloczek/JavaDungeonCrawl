@@ -8,10 +8,12 @@ import com.codecool.dungeoncrawl.logic.map.GameMap;
 import com.codecool.dungeoncrawl.logic.map.GameMapFactory;
 import com.codecool.dungeoncrawl.logic.map.MapLoader;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
+import com.codecool.dungeoncrawl.logic.messages.Message;
 import javafx.application.Platform;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.print.attribute.standard.MediaSize;
 import java.util.ConcurrentModificationException;
 import java.util.List;
 
@@ -19,6 +21,8 @@ import static com.codecool.dungeoncrawl.logic.Direction.generateRandomDirection;
 
 public class Game {
 
+    @Getter @Setter
+    private Message message;
     private List<String> mapFiles;
     @Getter @Setter
     private GameMap currentMap;
@@ -29,6 +33,7 @@ public class Game {
 
 
     public Game() {
+        this.message = Message.getInstance();
         this.player = new Player();
         this.mapFiles = GameMapFactory.createGameMaps();
         this.actualLevel = 0;
@@ -40,9 +45,11 @@ public class Game {
     private Thread createMonstersThread() {
         Thread monstersThread = new Thread(() -> {
             while (true) {
-                System.out.println("it works");
+//                message.setActualMessage("it works");
+//                System.out.println("it works");
                 Platform.runLater(() -> {
-                    System.out.println("move cow");
+//                    System.out.println("move cow");
+//                    message.setActualMessage("or not");
                     try {
                         monstersTurn();
                     } catch (NewLevelException e) {

@@ -40,10 +40,10 @@ public class Main extends Application {
     private Thread createDisplayThread() {
         Thread displayThread = new Thread(() -> {
             while (true) {
-                System.out.println("it we cow");
+//                System.out.println("it we cow");
                 Platform.runLater(() -> {
                     viewContainer.getGameView().refreshView();
-                    viewContainer.getContainer().getChildren().setAll(viewContainer.getGameView().getUi());
+                    viewContainer.getContainer().getChildren().setAll(viewContainer.getGameView().getBorderPane());
                 });
 
                 // Delay between turns (optional)
@@ -59,9 +59,11 @@ public class Main extends Application {
 
 
     public void showGameView() {
-        viewContainer.getContainer().getChildren().add(viewContainer.getGameView().getUi());
+        viewContainer.getContainer().getChildren().add(viewContainer.getGameView().getBorderPane());
         primaryStage.show();
     }
+
+
 
 
 }

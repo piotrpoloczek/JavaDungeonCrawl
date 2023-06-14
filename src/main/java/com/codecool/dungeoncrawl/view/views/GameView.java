@@ -8,6 +8,8 @@ import javafx.geometry.Insets;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import lombok.Getter;
@@ -21,10 +23,16 @@ public class GameView {
     @Getter @Setter
     private GridPane ui;
     @Getter @Setter
+    private GridPane messagePane;
+    @Getter @Setter
     private Label healthLabel;
     @Getter @Setter
     private Label inventoryLabel;
+    @Getter @Setter
+    private Label messageLabel;
     private Game game;
+    @Getter @Setter
+    private BorderPane borderPane;
 
 
 
@@ -32,25 +40,40 @@ public class GameView {
         this.game = game;
         this.canvas = new Canvas(25 * Tiles.TILE_WIDTH, 20 * Tiles.TILE_WIDTH);
         this.context = canvas.getGraphicsContext2D();
-        setUi(prepareGridPane());
+
+        this.healthLabel = new Label();
+        this.inventoryLabel = new Label();
+        this.messageLabel = new Label();
+
+        prepareGridPane();
+        prepareMessagePane();
+        prepareBorderPane();
     }
 
-    private GridPane prepareGridPane() {
-        GridPane ui = new GridPane();
+    private void prepareBorderPane() {
+        this.borderPane = new BorderPane();
+        borderPane.setCenter(canvas);
+        borderPane.setRight(getUi());
+        borderPane.setBottom(getMessagePane());
+    }
+
+    private void prepareGridPane() {
+        ui = new GridPane();
         ui.setPrefWidth(300);
         ui.setPadding(new Insets(10));
-
-//        // TODO:  this is special for you @Piotr
-//        ui.add(new Label("Health: "), 0, 0);
-//        ui.add(healthLabel, 1, 0);
-//
-//        Label nameLabel = new Label("Name: ");
-//        ui.add(inventoryLabel, 0, 1);
-        refreshView();
-        ui.getChildren().add(context.getCanvas());
-
-        return ui;
+        ui.add(healthLabel, 1, 0);
+        ui.add(inventoryLabel, 0, 1);
+        ui.add(messageLabel, 0, 2);
     }
+
+    private void prepareMessagePane() {
+        messagePane = new GridPane();
+        messagePane.setPrefHeight(100);
+        ui.setPadding(new Insets(10));
+        messagePane.add(messageLabel, 1, 0);
+    }
+
+
 
     public void refreshView() {
         context.setFill(Color.BLACK);
@@ -71,8 +94,9 @@ public class GameView {
         int endY = Math.min(levelHeight, startY + viewportHeight);
 
         drawViewport(startX, startY, endX, endY);
-//        healthLabel.setText("Health: " + game.getCurrentMap().getPlayer().getHealth());
-//        inventoryLabel.setText("Inventory: " + game.getCurrentMap().getPlayer().getInventory().toString());
+        healthLabel.setText("Health: " + game.getCurrentMap().getPlayer().getHealth());
+        inventoryLabel.setText("Inventory: " + game.getCurrentMap().getPlayer().getInventory().toString());
+        messageLabel.setText(game.getMessage().getActualMessage());
     }
 
     private void drawViewport(int startX, int startY, int endX, int endY) {
@@ -91,6 +115,5 @@ public class GameView {
             }
         }
     }
-
 
 }
