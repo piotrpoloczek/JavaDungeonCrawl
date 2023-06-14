@@ -2,14 +2,19 @@ package com.codecool.dungeoncrawl.view.views;
 
 import com.codecool.dungeoncrawl.logic.Direction;
 import com.codecool.dungeoncrawl.logic.Game;
+import com.codecool.dungeoncrawl.view.DisplayTask;
 import com.codecool.dungeoncrawl.view.DisplayThread;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class ViewContainer {
 
@@ -26,6 +31,7 @@ public class ViewContainer {
     private GameView gameView;
     @Getter @Setter
     private InventoryView inventoryView;
+    private DisplayTask displayTask;
     private Thread displayThread;
 
 
@@ -40,7 +46,12 @@ public class ViewContainer {
         scene.getStylesheets().add("style.css");
         scene.setOnKeyPressed(this::onKeyPressed);
 
-        displayThread = new DisplayThread(container, gameView);
+        displayTask = new DisplayTask(container, gameView);
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.submit(displayTask);
+        displayTask.pauseTask();
+
+        showGameView();
     }
 
 
@@ -71,12 +82,12 @@ public class ViewContainer {
     }
 
     public void showGameView() {
+        this.displayTask.resumeTask();
         this.getContainer().getChildren().add(this.getGameView().getGamePane());
-        this.displayThread.start();
     }
 
     public void showInventoryView() {
-//        displayThread.pauseThread();
+        this.displayTask.pauseTask();
         this.getContainer().getChildren().add(this.getInventoryView().getMainPane());
 //        primaryStage.show();
     }
