@@ -76,7 +76,6 @@ public class Player extends Actor {
 
     public void useItem(Item item) {
         item.use(this);
-        //use item;
     }
 
     public String getTileName() {

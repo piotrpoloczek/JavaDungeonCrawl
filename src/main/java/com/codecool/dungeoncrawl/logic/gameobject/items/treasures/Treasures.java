@@ -5,7 +5,7 @@ import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
 import com.codecool.dungeoncrawl.logic.gameobject.items.Item;
 import lombok.Getter;
 
-public class Treasures  extends Item {
+public abstract class Treasures  extends Item {
 
     @Getter
     private int value;

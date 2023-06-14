@@ -60,7 +60,7 @@ public class MapLoader {
                             cell.setType(CellType.FLOOR);
                             monsters.add(new Minotaur(cell));
                             break;
-                        case 'b':
+//                        case 'b':
 //                            cell.setType(CellType.FLOOR);
 //                            monsters.add(new Boss(cell));
 //                            break;
