@@ -6,9 +6,7 @@ import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
 import com.codecool.dungeoncrawl.view.Tiles;
 import javafx.geometry.Insets;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -18,28 +16,31 @@ import lombok.Setter;
 
 public class GameView {
 
-    private Canvas canvas;
-    private GraphicsContext context;
+    // containers
     @Getter @Setter
-    private GridPane ui;
+    private BorderPane gamePane;
+    @Getter @Setter
+    private Canvas canvas;
+    @Getter @Setter
+    private GridPane inventoryPane;
     @Getter @Setter
     private GridPane messagePane;
+
+    // labels
     @Getter @Setter
     private Label healthLabel;
     @Getter @Setter
     private Label inventoryLabel;
     @Getter @Setter
     private Label messageLabel;
-    private Game game;
-    @Getter @Setter
-    private BorderPane borderPane;
 
+    // game
+    private Game game;
 
 
     public GameView(Game game) {
         this.game = game;
         this.canvas = new Canvas(25 * Tiles.TILE_WIDTH, 20 * Tiles.TILE_WIDTH);
-        this.context = canvas.getGraphicsContext2D();
 
         this.healthLabel = new Label();
         this.inventoryLabel = new Label();
@@ -51,33 +52,33 @@ public class GameView {
     }
 
     private void prepareBorderPane() {
-        this.borderPane = new BorderPane();
-        borderPane.setCenter(canvas);
-        borderPane.setRight(getUi());
-        borderPane.setBottom(getMessagePane());
+        this.gamePane = new BorderPane();
+        gamePane.setCenter(canvas);
+        gamePane.setRight(getInventoryPane());
+        gamePane.setBottom(getMessagePane());
     }
 
     private void prepareGridPane() {
-        ui = new GridPane();
-        ui.setPrefWidth(300);
-        ui.setPadding(new Insets(10));
-        ui.add(healthLabel, 1, 0);
-        ui.add(inventoryLabel, 0, 1);
-        ui.add(messageLabel, 0, 2);
+        inventoryPane = new GridPane();
+        inventoryPane.setPrefWidth(300);
+        inventoryPane.setPadding(new Insets(10));
+        inventoryPane.add(healthLabel, 1, 0);
+        inventoryPane.add(inventoryLabel, 0, 1);
+        inventoryPane.add(messageLabel, 0, 2);
     }
 
     private void prepareMessagePane() {
         messagePane = new GridPane();
         messagePane.setPrefHeight(100);
-        ui.setPadding(new Insets(10));
+        messagePane.setPadding(new Insets(10));
         messagePane.add(messageLabel, 1, 0);
     }
 
 
 
     public void refreshView() {
-        context.setFill(Color.BLACK);
-        context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        getCanvas().getGraphicsContext2D().setFill(Color.BLACK);
+        getCanvas().getGraphicsContext2D().fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
         int levelWidth = game.getCurrentMap().getWidth();
         int levelHeight = game.getCurrentMap().getHeight();
@@ -105,12 +106,12 @@ public class GameView {
                 Cell cell = game.getCurrentMap().getCell(x, y);
                 if (cell.getGameObject() != null) {
                     if (cell.getGameObject() instanceof Player) {
-                        Tiles.drawPlayer(context, cell.getGameObject(), x - startX, y - startY);
+                        Tiles.drawPlayer(getCanvas().getGraphicsContext2D(), cell.getGameObject(), x - startX, y - startY);
                     } else {
-                        Tiles.drawTile(context, cell.getGameObject(), x - startX, y - startY);
+                        Tiles.drawTile(getCanvas().getGraphicsContext2D(), cell.getGameObject(), x - startX, y - startY);
                     }
                 } else {
-                    Tiles.drawTile(context, cell, x - startX, y - startY);
+                    Tiles.drawTile(getCanvas().getGraphicsContext2D(), cell, x - startX, y - startY);
                 }
             }
         }

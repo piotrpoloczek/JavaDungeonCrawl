@@ -2,6 +2,8 @@ package com.codecool.dungeoncrawl.view.views;
 
 import com.codecool.dungeoncrawl.logic.Direction;
 import com.codecool.dungeoncrawl.logic.Game;
+import com.codecool.dungeoncrawl.view.DisplayThread;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
@@ -22,19 +24,24 @@ public class ViewContainer {
     private Game game;
     @Getter @Setter
     private GameView gameView;
+    @Getter @Setter
+    private InventoryView inventoryView;
+    private Thread displayThread;
 
 
     public ViewContainer(Game game) {
         this.game = game;
         this.gameView = new GameView(game);
+        this.inventoryView = new InventoryView(game);
 
         this.container = new GridPane();
         container.setPrefSize(SCENE_HEIGHT, SCENE_WIDTH);
         this.scene = new Scene(container);
         scene.getStylesheets().add("style.css");
         scene.setOnKeyPressed(this::onKeyPressed);
-    }
 
+        displayThread = new DisplayThread(container, gameView);
+    }
 
 
 
@@ -51,16 +58,27 @@ public class ViewContainer {
                 getGame().gameTurn(Direction.LEFT);
                 break;
             case I:
-                //showInventoryView();
+                showInventoryView();
                 break;
             case Q:
-                //showGameView();
+                showGameView();
                 break;
             case RIGHT:
                 getGame().gameTurn(Direction.RIGHT);
                 break;
         }
 //        gameView.refreshView();
+    }
+
+    public void showGameView() {
+        this.getContainer().getChildren().add(this.getGameView().getGamePane());
+        this.displayThread.start();
+    }
+
+    public void showInventoryView() {
+//        displayThread.pauseThread();
+        this.getContainer().getChildren().add(this.getInventoryView().getMainPane());
+//        primaryStage.show();
     }
 
 

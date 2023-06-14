@@ -16,7 +16,7 @@ public class Main extends Application {
     private ViewContainer viewContainer;
     @Getter @Setter
     private Game game;
-    private Thread displayThread;
+
 
 
     @Override
@@ -25,45 +25,13 @@ public class Main extends Application {
         this.game = new Game();
         this.viewContainer = new ViewContainer(game);
         this.scene = viewContainer.getScene();
-
         primaryStage.setScene(scene);
-
-        showGameView();
-        this.displayThread = createDisplayThread();
-        this.displayThread.start();
+        primaryStage.show();
     }
 
     public static void main(String[] args) {
         launch(args);
     }
-
-    private Thread createDisplayThread() {
-        Thread displayThread = new Thread(() -> {
-            while (true) {
-//                System.out.println("it we cow");
-                Platform.runLater(() -> {
-                    viewContainer.getGameView().refreshView();
-                    viewContainer.getContainer().getChildren().setAll(viewContainer.getGameView().getBorderPane());
-                });
-
-                // Delay between turns (optional)
-                try {
-                    Thread.sleep(100); // Adjust the delay as needed
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        return displayThread;
-    }
-
-
-    public void showGameView() {
-        viewContainer.getContainer().getChildren().add(viewContainer.getGameView().getBorderPane());
-        primaryStage.show();
-    }
-
-
 
 
 }
