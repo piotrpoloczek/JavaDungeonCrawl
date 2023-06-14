@@ -2,8 +2,10 @@ package com.codecool.dungeoncrawl.view;
 
 import com.codecool.dungeoncrawl.logic.Direction;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,13 +17,17 @@ public class AppView extends Application {
     private static int SCENE_HEIGHT = 400;
 
     private Stage primaryStage;
-    private GameView gameView;
+    private Scene scene;
+
+
+    private GameViewOld gameView;
     private InventoryMenuView inventoryMenuView;
     private Scene mainMenuScene;
     private Scene classMenuScene;
     private Scene gameScene;
     private Scene inventoryScene;
-    @Getter @Setter
+    @Getter
+    @Setter
     private Thread displayThread;
 
 
@@ -32,7 +38,12 @@ public class AppView extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
-        this.gameView = new GameView();
+        this.scene = new Scene(new GridPane());
+
+
+
+
+        this.gameView = new GameViewOld();
         this.mainMenuScene = createMainMenuScene();
         this.classMenuScene = createClassMenuView();
         this.gameScene = createGameScene();
@@ -40,6 +51,9 @@ public class AppView extends Application {
         this.inventoryScene = createInventoryScene();
         showMainMenuView();
         this.displayThread = createDisplayThread();
+
+        Platform.runLater(() -> displayThread.start());
+
     }
 
     private Thread createDisplayThread() {
@@ -57,7 +71,9 @@ public class AppView extends Application {
             }
         });
         return displayThread;
-    }
+}
+
+
 
     private Scene createMainMenuScene() {
         MainMenuView mainMenuView = new MainMenuView(this);
@@ -110,7 +126,7 @@ public class AppView extends Application {
         gameView.refreshView();
         primaryStage.show();
 
-        displayThread.start();
+//        displayThread.start();
     }
 
 
@@ -136,6 +152,6 @@ public class AppView extends Application {
                 gameView.getGame().gameTurn(Direction.RIGHT);
                 break;
         }
-        gameView.refreshView();
+//        gameView.refreshView();
     }
 }

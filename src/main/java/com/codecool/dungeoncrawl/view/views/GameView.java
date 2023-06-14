@@ -1,13 +1,13 @@
-package com.codecool.dungeoncrawl.view;
+package com.codecool.dungeoncrawl.view.views;
 
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.Game;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
+import com.codecool.dungeoncrawl.view.Tiles;
 import javafx.geometry.Insets;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import lombok.Getter;
@@ -16,32 +16,23 @@ import lombok.Setter;
 
 public class GameView {
 
+    private Canvas canvas;
+    private GraphicsContext context;
     @Getter @Setter
-    Game game;
+    private GridPane ui;
     @Getter @Setter
-    Canvas canvas;
+    private Label healthLabel;
     @Getter @Setter
-    GraphicsContext context;
-    @Getter @Setter
-    Label healthLabel;
-    @Getter @Setter
-    Label inventoryLabel;
-    @Getter @Setter
-    GridPane ui;
-    @Getter @Setter
-    BorderPane borderPane;
+    private Label inventoryLabel;
+    private Game game;
 
-    public GameView() {
-        prepareGame();
+
+
+    public GameView(Game game) {
+        this.game = game;
+        this.canvas = new Canvas(25 * Tiles.TILE_WIDTH, 20 * Tiles.TILE_WIDTH);
+        this.context = canvas.getGraphicsContext2D();
         setUi(prepareGridPane());
-        setBorderPane(prepareBorderPane());
-    }
-
-    private BorderPane prepareBorderPane() {
-        BorderPane borderPane = new BorderPane();
-        borderPane.setCenter(getCanvas());
-        borderPane.setRight(getUi());
-        return borderPane;
     }
 
     private GridPane prepareGridPane() {
@@ -49,40 +40,17 @@ public class GameView {
         ui.setPrefWidth(300);
         ui.setPadding(new Insets(10));
 
-
-        // TODO:  this is special for you @Piotr
-        ui.add(new Label("Health: "), 0, 0);
-        ui.add(healthLabel, 1, 0);
-
-        Label nameLabel = new Label("Name: ");
-        ui.add(inventoryLabel, 0, 1);
-
-//        Label ageLabel = new Label("Age: ");
-//        ui.add(ageLabel, 0, 2);
+//        // TODO:  this is special for you @Piotr
+//        ui.add(new Label("Health: "), 0, 0);
+//        ui.add(healthLabel, 1, 0);
 //
-//        Label genderLabel = new Label("Gender: ");
-//        ui.add(genderLabel, 0, 3);
-
+//        Label nameLabel = new Label("Name: ");
+//        ui.add(inventoryLabel, 0, 1);
+        refreshView();
+        ui.getChildren().add(context.getCanvas());
 
         return ui;
     }
-
-    private void prepareGame() {
-        setGame(new Game());
-
-        int levelWidth = getGame().getCurrentMap().getWidth();
-        int levelHeight = getGame().getCurrentMap().getHeight();
-        int tileSize = Tiles.TILE_WIDTH;
-
-        System.out.println(levelHeight + " " + levelWidth);
-
-        setCanvas( new Canvas(25 * tileSize, 20 * tileSize));
-        setContext(canvas.getGraphicsContext2D());
-
-        setHealthLabel(new Label());
-        setInventoryLabel(new Label());
-    }
-
 
     public void refreshView() {
         context.setFill(Color.BLACK);
@@ -103,8 +71,8 @@ public class GameView {
         int endY = Math.min(levelHeight, startY + viewportHeight);
 
         drawViewport(startX, startY, endX, endY);
-        healthLabel.setText("Health: " + game.getCurrentMap().getPlayer().getHealth());
-        inventoryLabel.setText("Inventory: " + game.getCurrentMap().getPlayer().getInventory().toString());
+//        healthLabel.setText("Health: " + game.getCurrentMap().getPlayer().getHealth());
+//        inventoryLabel.setText("Inventory: " + game.getCurrentMap().getPlayer().getInventory().toString());
     }
 
     private void drawViewport(int startX, int startY, int endX, int endY) {
@@ -123,4 +91,6 @@ public class GameView {
             }
         }
     }
+
+
 }
