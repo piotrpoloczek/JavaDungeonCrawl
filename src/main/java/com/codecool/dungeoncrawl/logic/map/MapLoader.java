@@ -2,9 +2,9 @@ package com.codecool.dungeoncrawl.logic.map;
 
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
-import com.codecool.dungeoncrawl.logic.gameobject.actors.monsters.*;
-import com.codecool.dungeoncrawl.logic.gameobject.actors.npc.Princes;
+import com.codecool.dungeoncrawl.logic.gameobject.actors.monsters.Monster;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
+import com.codecool.dungeoncrawl.logic.gameobject.actors.monsters.Skeleton;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.npc.Wizard;
 import com.codecool.dungeoncrawl.logic.gameobject.items.food.Apple;
 import com.codecool.dungeoncrawl.logic.gameobject.items.keys.Key;
@@ -50,18 +50,6 @@ public class MapLoader {
                             cell.setType(CellType.FLOOR);
                             monsters.add(new Skeleton(cell));
                             break;
-                        case 'z':
-                            cell.setType(CellType.FLOOR);
-                            monsters.add(new Ghost(cell));
-                            break;
-                        case 'm':
-                            cell.setType(CellType.FLOOR);
-                            monsters.add(new Minotaur(cell));
-                            break;
-                        case 'b':
-                            cell.setType(CellType.FLOOR);
-                            monsters.add(new Boss(cell));
-                            break;
                         case '@':
                             cell.setType(CellType.FLOOR);
                             map.getPlayer().setCell(cell);
@@ -77,10 +65,6 @@ public class MapLoader {
                         case 'w':
                             cell.setType(CellType.FLOOR);
                             new Wizard(cell);
-                            break;
-                        case 'p':
-                            cell.setType(CellType.FLOOR);
-                            new Princes(cell);
                             break;
                         case 'k':
                             cell.setType(CellType.FLOOR);

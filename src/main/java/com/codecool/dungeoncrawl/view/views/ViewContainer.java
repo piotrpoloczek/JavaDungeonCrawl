@@ -5,18 +5,19 @@ import com.codecool.dungeoncrawl.logic.Game;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import lombok.Getter;
 import lombok.Setter;
 
 public class ViewContainer {
 
-    private static int SCENE_WIDTH = 400;
-    private static int SCENE_HEIGHT = 400;
+    private static int SCENE_WIDTH = 600;
+    private static int SCENE_HEIGHT = 600;
 
     @Getter @Setter
     private Scene scene;
     @Getter @Setter
-    private GridPane container;
+    private Pane container;
     @Getter @Setter
     private Game game;
     @Getter @Setter
