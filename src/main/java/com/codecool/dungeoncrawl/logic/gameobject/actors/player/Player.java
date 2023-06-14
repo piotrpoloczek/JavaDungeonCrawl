@@ -75,7 +75,7 @@ public class Player extends Actor {
     }
 
     public void useItem(Item item) {
-//        item.useIt(this);
+        item.use(this);
         //use item;
     }
 

@@ -5,15 +5,17 @@ import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
 import com.codecool.dungeoncrawl.logic.gameobject.items.Item;
 import com.codecool.dungeoncrawl.logic.gameobject.items.UseItem;
 import lombok.Getter;
+import lombok.Setter;
 
 public abstract class Food extends Item implements UseItem {
 
-    @Getter
+    @Getter @Setter
     private int itemPower;
 
     public Food(Cell cell, int itemPower) {
         super(cell);
         this.itemPower = itemPower;
+
     }
 
     public void use(Player player) {
