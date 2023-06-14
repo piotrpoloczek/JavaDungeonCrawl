@@ -4,19 +4,9 @@ import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.monsters.Monster;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
-import com.codecool.dungeoncrawl.logic.gameobject.actors.monsters.Skeleton;
-import com.codecool.dungeoncrawl.logic.gameobject.actors.npc.Wizard;
-import com.codecool.dungeoncrawl.logic.gameobject.items.food.Apple;
-import com.codecool.dungeoncrawl.logic.gameobject.items.keys.Key;
-import com.codecool.dungeoncrawl.logic.gameobject.items.keys.RedKey;
-import com.codecool.dungeoncrawl.logic.gameobject.specialitems.doors.RedDoor;
-import com.codecool.dungeoncrawl.logic.gameobject.specialitems.stairs.StairsDown;
-import com.codecool.dungeoncrawl.logic.gameobject.items.treasures.Gold;
-import com.codecool.dungeoncrawl.logic.gameobject.specialitems.stairs.StairsHeaven;
 
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 public class MapLoader {
