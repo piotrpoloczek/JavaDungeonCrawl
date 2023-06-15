@@ -35,7 +35,7 @@ public class Tiles {
         tileMap.put("wall", new Tile(1, 1));
         tileMap.put("floor", new Tile(1, 4));
         tileMap.put("player", new Tile(27, 0));
-        tileMap.put("skeleton", new Tile(12, 10, 32, 64));
+        tileMap.put("skeleton", new Tile(29, 6));
         tileMap.put("ghost", new Tile(28, 7));
         tileMap.put("minotaur", new Tile(26, 9));
         tileMap.put("princes", new Tile(12, 23));

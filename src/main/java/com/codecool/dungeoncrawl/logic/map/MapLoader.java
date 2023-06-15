@@ -5,25 +5,27 @@ import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.monsters.Ghost;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.monsters.Minotaur;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.monsters.Monster;
-import com.codecool.dungeoncrawl.logic.gameobject.actors.npc.Princes;
-import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.monsters.Skeleton;
-import com.codecool.dungeoncrawl.logic.gameobject.actors.npc.Wizard;
-import com.codecool.dungeoncrawl.logic.gameobject.items.food.Apple;
-import com.codecool.dungeoncrawl.logic.gameobject.items.keys.Key;
-import com.codecool.dungeoncrawl.logic.gameobject.items.keys.RedKey;
-import com.codecool.dungeoncrawl.logic.gameobject.items.treasures.Crown;
-import com.codecool.dungeoncrawl.logic.gameobject.specialitems.doors.RedDoor;
-import com.codecool.dungeoncrawl.logic.gameobject.specialitems.stairs.StairsDown;
-import com.codecool.dungeoncrawl.logic.gameobject.items.treasures.Gold;
-import com.codecool.dungeoncrawl.logic.gameobject.specialitems.stairs.StairsHeaven;
+import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
 
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.lang.reflect.Constructor;
+import java.util.*;
+
+/**
+ * To add new object which IS NOT a monster:
+ * Go to SymbolsAndClasses and add new line to static block. You need to provide new symbol, and fully qualified class name.
+ * Path up to gameobject package is in GAME_OBJECT_PACKAGE_PATH as in other existing lines.
+ *
+ * To add new object which IS a monster:
+ * Do everything as above and in method getMonstersChars() add new line with a monster
+ *
+ */
 
 public class MapLoader {
+
+    private static final Map<Character, String> symbolsClasses = SymbolsAndClasses.getSymbolsClasses();
+
     public static GameMap loadMap(String filename, Player player) {
         InputStream is = MapLoader.class.getResourceAsStream(filename);
         Scanner scanner = new Scanner(is);
@@ -34,93 +36,78 @@ public class MapLoader {
 
         GameMap map = new GameMap(player, width, height, CellType.EMPTY);
         List<Monster> monsters = new ArrayList<>();
+        List<Character> monstersChars = getMonstersChars();
 
         for (int y = 0; y < height; y++) {
-            try {
+            if (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
+
                 for (int x = 0; x < width; x++) {
                     if (x < line.length()) {
+
                         Cell cell = map.getCell(x, y);
-                        switch (line.charAt(x)) {
-                            case ' ':
-                                cell.setType(CellType.EMPTY);
-                                break;
-                            case '#':
-                                cell.setType(CellType.WALL);
-                                break;
-                            case '.':
-                                cell.setType(CellType.FLOOR);
-                                break;
-                            case 's':
-                                cell.setType(CellType.FLOOR);
-                                monsters.add(new Skeleton(cell));
-                                break;
-                            case 'z':
-                                cell.setType(CellType.FLOOR);
-                                monsters.add(new Ghost(cell));
-                                break;
-                            case 'm':
-                                cell.setType(CellType.FLOOR);
-                                monsters.add(new Minotaur(cell));
-                                break;
-//                        case 'b':
-//                            cell.setType(CellType.FLOOR);
-//                            monsters.add(new Boss(cell));
-//                            break;
-                            case '@':
-                                cell.setType(CellType.FLOOR);
+                        char currentChar = line.charAt(x);
+                        setCellTypeByChar(currentChar, cell);
+
+                        if (currentChar != ' ' && currentChar != '#') {
+                            if (symbolsClasses.get(currentChar) == null) {
+                                continue;
+                            }
+                            String className = symbolsClasses.get(currentChar);
+                            Object o = createObjectByClassName(className, cell);
+
+                            if (monstersChars.contains(currentChar)) {
+                                monsters.add((Monster) o);
+                            }
+                            if (currentChar == '@') {
                                 map.getPlayer().setCell(cell);
-                                break;
-                            case 'd':
-                                cell.setType(CellType.FLOOR);
-                                new StairsDown(cell);
-                                break;
-                            case 'a':
-                                cell.setType(CellType.FLOOR);
-                                new Apple(cell);
-                                break;
-                            case 'w':
-                                cell.setType(CellType.FLOOR);
-                                new Wizard(cell);
-                                break;
-                            case 'p':
-                                cell.setType(CellType.FLOOR);
-                                new Princes(cell);
-                                break;
-                            case 'k':
-                                cell.setType(CellType.FLOOR);
-                                new RedKey(cell);
-                                break;
-                            case 'g':
-                                cell.setType(CellType.FLOOR);
-                                new RedDoor(cell);
-                                break;
-                            case '$':
-                                cell.setType(CellType.FLOOR);
-                                new Gold(cell);
-                                break;
-                            case 'x':
-                                cell.setType(CellType.FLOOR);
-                                new Crown(cell);
-                                break;
-                            case 'h':
-                                cell.setType(CellType.FLOOR);
-                                new StairsHeaven(cell);
-                                break;
-                            default:
-                                throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");
+                            }
                         }
                     }
                 }
-            } catch (Exception e) {
-                System.out.println(e);
             }
-
         }
-
         map.setMonsters(monsters);
 
         return map;
+    }
+
+    private static Object createObjectByClassName(String className, Cell cell) {
+
+        try {
+            Class aClass = Class.forName(className);
+
+            Class[] types = {Cell.class};
+            Constructor constructor = aClass.getConstructor(types);
+
+            Object[] parameters = {cell};
+            return constructor.newInstance(parameters);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private static void setCellTypeByChar(char symbol, Cell cell) {
+        if(symbol == ' ') {
+            cell.setType(CellType.EMPTY);
+        }
+        else if(symbol == '#') {
+            cell.setType(CellType.WALL);
+        }
+        else {
+            cell.setType(CellType.FLOOR);
+        }
+    }
+
+    private static List<Character> getMonstersChars() {
+        List<Character> monstersChars = new ArrayList<>();
+        monstersChars.add('s'); //Skeleton
+        monstersChars.add('z'); //Ghost
+        monstersChars.add('m'); //Minotaur
+
+        return monstersChars;
     }
 
 }
