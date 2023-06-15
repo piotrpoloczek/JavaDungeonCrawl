@@ -39,7 +39,6 @@ public class Inventory {
         }
     }
 
-    //TODO geter do zawracania ilości złota (wielkości listy)
     public int getGoldAmount() {
         return gold.stream()
                 .mapToInt(Treasures::getValue)
@@ -52,6 +51,10 @@ public class Inventory {
 
     private boolean isInventoryFull() {
         return sack.size()>=inventorySize;
+    }
+
+    public void removeFromBag(String itemName){
+        sack.remove(itemName);
     }
 
 

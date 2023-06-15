@@ -20,6 +20,7 @@ public class RedDoor extends Door {
 
             if(player.getInventory().isInABag("RedKey")) {
                 this.getCell().setGameObject(null);
+                player.getInventory().removeFromBag("RedKey");
             }
             else {
                 System.out.println("You don't have a key");
