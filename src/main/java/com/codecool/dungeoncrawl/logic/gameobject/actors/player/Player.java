@@ -21,6 +21,7 @@ public class Player extends Actor {
     @Getter @Setter
     private int experience;
     private int level;
+    @Getter @Setter
     private Class playerClass;
     private Level playerLevel;
     private static int PLAYER_HEALTH = 100;

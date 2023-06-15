@@ -9,11 +9,4 @@ public class WarriorClass extends Class {
     private static Health HEALTH = new Health(10);
     private static Strength STRENGTH = new Strength();
     private static Dexterity DEXTERITY = new Dexterity();
-
-
-    public WarriorClass() {
-        super();
-        // set health, strength and dexterity based on the choosen class
-    }
-
 }

@@ -1,5 +1,7 @@
 package com.codecool.dungeoncrawl.view.views;
 
+import com.codecool.dungeoncrawl.logic.Game;
+import com.codecool.dungeoncrawl.logic.gameobject.actors.player.classes.ClassFactory;
 import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
@@ -25,9 +27,12 @@ public class ClassView {
     @Setter
     private HBox mainBox;
     private VBox centerPane;
+    @Getter @Setter
+    private Game game;
 
 
-    public ClassView() {
+    public ClassView(Game game) {
+        this.game = game;
         this.mainPane = new BorderPane();
         mainPane.setPrefSize(600, 600);
         this.mainBox = new HBox();
@@ -70,7 +75,10 @@ public class ClassView {
         button.setOnAction(event -> {
             System.out.println("Selected Class: " + className);
 
-            // TODO choose class based on user choice
+            // choose class based on user choice
+            getGame().getCurrentMap().getPlayer().setPlayerClass(
+                    ClassFactory.getClass(className)
+            );
 
             ViewContainer.getInstance().showGameView();
         });

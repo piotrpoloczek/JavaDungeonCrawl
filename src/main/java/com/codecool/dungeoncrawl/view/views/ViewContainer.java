@@ -46,7 +46,7 @@ public class ViewContainer {
         this.game = game;
         this.gameView = new GameView(game);
         this.inventoryView = new InventoryView(game);
-        this.classView = new ClassView();
+        this.classView = new ClassView(game);
 
         this.container = new GridPane();
         container.setPrefSize(SCENE_HEIGHT, SCENE_WIDTH);
