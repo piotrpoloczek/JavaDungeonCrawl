@@ -15,8 +15,10 @@ import java.util.concurrent.Executors;
 
 public class ViewContainer {
 
-    private static int SCENE_WIDTH = 600;
-    private static int SCENE_HEIGHT = 600;
+
+    private static ViewContainer instance;
+    private static int SCENE_WIDTH = 800;
+    private static int SCENE_HEIGHT = 1200;
 
     @Getter @Setter
     private Scene scene;
@@ -28,13 +30,23 @@ public class ViewContainer {
     private GameView gameView;
     @Getter @Setter
     private InventoryView inventoryView;
+    @Getter @Setter
+    private ClassView classView;
     private DisplayTask displayTask;
+
+    public static ViewContainer getInstance() {
+        if (instance == null) {
+            instance = new ViewContainer(new Game());
+        }
+        return instance;
+    }
 
 
     public ViewContainer(Game game) {
         this.game = game;
         this.gameView = new GameView(game);
         this.inventoryView = new InventoryView(game);
+        this.classView = new ClassView();
 
         this.container = new GridPane();
         container.setPrefSize(SCENE_HEIGHT, SCENE_WIDTH);
@@ -47,7 +59,7 @@ public class ViewContainer {
         executorService.submit(displayTask);
         displayTask.pauseTask();
 
-        showGameView();
+        showClassView();
     }
 
 
@@ -79,13 +91,24 @@ public class ViewContainer {
     public void showGameView() {
         this.displayTask.resumeTask();
         this.getContainer().getChildren().clear();
-        this.getContainer().getChildren().add(this.getGameView().getGamePane());
+        this.getContainer().getChildren().add(
+                this.getGameView().getGamePane()
+        );
     }
 
     public void showInventoryView() {
         this.displayTask.pauseTask();
         this.getContainer().getChildren().clear();
         this.getInventoryView().refresh();
-        this.getContainer().getChildren().add(this.getInventoryView().getMainPane());
+        this.getContainer().getChildren().add(
+                this.getInventoryView().getMainPane()
+        );
+    }
+
+    public void showClassView() {
+        this.getContainer().getChildren().clear();
+        this.getContainer().getChildren().add(
+                this.getClassView().getMainPane()
+        );
     }
 }

@@ -14,16 +14,13 @@ public class Main extends Application {
     private Stage primaryStage;
     private Scene scene;
     private ViewContainer viewContainer;
-    @Getter @Setter
-    private Game game;
 
 
 
     @Override
     public void start(Stage stage) throws Exception {
         this.primaryStage = stage;
-        this.game = new Game();
-        this.viewContainer = new ViewContainer(game);
+        this.viewContainer = ViewContainer.getInstance();
         this.scene = viewContainer.getScene();
         primaryStage.setScene(scene);
         primaryStage.show();
