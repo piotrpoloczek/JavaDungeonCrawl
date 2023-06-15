@@ -47,6 +47,10 @@ public class Tiles {
         tileMap.put("gold", new Tile(9, 26));
         tileMap.put("stairs heaven", new Tile(1, 10));
 
+        tileMap.put("player-mage", new Tile(24, 1));
+
+        tileMap.put("player-warrior", new Tile(31, 0));
+
     }
 
     public static void drawTile(GraphicsContext context, Drawable d, int x, int y) {

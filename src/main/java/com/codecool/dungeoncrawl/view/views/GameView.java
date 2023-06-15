@@ -106,7 +106,7 @@ public class GameView {
                 Cell cell = game.getCurrentMap().getCell(x, y);
                 if (cell.getGameObject() != null) {
                     if (cell.getGameObject() instanceof Player) {
-                        Tiles.drawPlayer(getCanvas().getGraphicsContext2D(), cell.getGameObject(), x - startX, y - startY);
+                        Tiles.drawTile(getCanvas().getGraphicsContext2D(), cell.getGameObject(), x - startX, y - startY);
                     } else {
                         Tiles.drawTile(getCanvas().getGraphicsContext2D(), cell.getGameObject(), x - startX, y - startY);
                     }

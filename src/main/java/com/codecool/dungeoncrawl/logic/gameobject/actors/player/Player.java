@@ -79,7 +79,8 @@ public class Player extends Actor {
         item.use(this);
     }
 
+    @Override
     public String getTileName() {
-        return "player";
+        return this.playerClass.getTileName();
     }
 }

@@ -5,7 +5,7 @@ public class ClassFactory {
 
     public static Class getClass(String name) {
         switch (name) {
-            case "MAge":
+            case "Mage":
                 return new MageClass();
             default:
                 return new WarriorClass();
