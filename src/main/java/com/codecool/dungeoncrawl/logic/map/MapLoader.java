@@ -36,81 +36,86 @@ public class MapLoader {
         List<Monster> monsters = new ArrayList<>();
 
         for (int y = 0; y < height; y++) {
-            String line = scanner.nextLine();
-            for (int x = 0; x < width; x++) {
-                if (x < line.length()) {
-                    Cell cell = map.getCell(x, y);
-                    switch (line.charAt(x)) {
-                        case ' ':
-                            cell.setType(CellType.EMPTY);
-                            break;
-                        case '#':
-                            cell.setType(CellType.WALL);
-                            break;
-                        case '.':
-                            cell.setType(CellType.FLOOR);
-                            break;
-                        case 's':
-                            cell.setType(CellType.FLOOR);
-                            monsters.add(new Skeleton(cell));
-                            break;
-                        case 'z':
-                            cell.setType(CellType.FLOOR);
-                            monsters.add(new Ghost(cell));
-                            break;
-                        case 'm':
-                            cell.setType(CellType.FLOOR);
-                            monsters.add(new Minotaur(cell));
-                            break;
+            try {
+                String line = scanner.nextLine();
+                for (int x = 0; x < width; x++) {
+                    if (x < line.length()) {
+                        Cell cell = map.getCell(x, y);
+                        switch (line.charAt(x)) {
+                            case ' ':
+                                cell.setType(CellType.EMPTY);
+                                break;
+                            case '#':
+                                cell.setType(CellType.WALL);
+                                break;
+                            case '.':
+                                cell.setType(CellType.FLOOR);
+                                break;
+                            case 's':
+                                cell.setType(CellType.FLOOR);
+                                monsters.add(new Skeleton(cell));
+                                break;
+                            case 'z':
+                                cell.setType(CellType.FLOOR);
+                                monsters.add(new Ghost(cell));
+                                break;
+                            case 'm':
+                                cell.setType(CellType.FLOOR);
+                                monsters.add(new Minotaur(cell));
+                                break;
 //                        case 'b':
 //                            cell.setType(CellType.FLOOR);
 //                            monsters.add(new Boss(cell));
 //                            break;
-                        case '@':
-                            cell.setType(CellType.FLOOR);
-                            map.getPlayer().setCell(cell);
-                            break;
-                        case 'd':
-                            cell.setType(CellType.FLOOR);
-                            new StairsDown(cell);
-                            break;
-                        case 'a':
-                            cell.setType(CellType.FLOOR);
-                            new Apple(cell);
-                            break;
-                        case 'w':
-                            cell.setType(CellType.FLOOR);
-                            new Wizard(cell);
-                            break;
-                        case 'p':
-                            cell.setType(CellType.FLOOR);
-                            new Princes(cell);
-                            break;
-                        case 'k':
-                            cell.setType(CellType.FLOOR);
-                            new RedKey(cell);
-                            break;
-                        case 'g':
-                            cell.setType(CellType.FLOOR);
-                            new RedDoor(cell);
-                            break;
-                        case '$':
-                            cell.setType(CellType.FLOOR);
-                            new Gold(cell);
-                            break;
-                        case 'x':
-                            cell.setType(CellType.FLOOR);
-                            new Crown(cell);
-                            break;
-                        case 'h':
-                            cell.setType(CellType.FLOOR);
-                            new StairsHeaven(cell);
-                            break;
-                        default:
-                            throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");
+                            case '@':
+                                cell.setType(CellType.FLOOR);
+                                map.getPlayer().setCell(cell);
+                                break;
+                            case 'd':
+                                cell.setType(CellType.FLOOR);
+                                new StairsDown(cell);
+                                break;
+                            case 'a':
+                                cell.setType(CellType.FLOOR);
+                                new Apple(cell);
+                                break;
+                            case 'w':
+                                cell.setType(CellType.FLOOR);
+                                new Wizard(cell);
+                                break;
+                            case 'p':
+                                cell.setType(CellType.FLOOR);
+                                new Princes(cell);
+                                break;
+                            case 'k':
+                                cell.setType(CellType.FLOOR);
+                                new RedKey(cell);
+                                break;
+                            case 'g':
+                                cell.setType(CellType.FLOOR);
+                                new RedDoor(cell);
+                                break;
+                            case '$':
+                                cell.setType(CellType.FLOOR);
+                                new Gold(cell);
+                                break;
+                            case 'x':
+                                cell.setType(CellType.FLOOR);
+                                new Crown(cell);
+                                break;
+                            case 'h':
+                                cell.setType(CellType.FLOOR);
+                                new StairsHeaven(cell);
+                                break;
+                            default:
+                                throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");
+                        }
                     }
                 }
+            } catch (Exception e) {
+                System.out.println(e);
             }
+
         }
 
         map.setMonsters(monsters);

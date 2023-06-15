@@ -39,5 +39,4 @@ public class Skeleton extends Monster {
             fight(player);
         }
     }
-
 }

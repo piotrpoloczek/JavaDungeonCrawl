@@ -88,6 +88,4 @@ public class ViewContainer {
         this.getInventoryView().refresh();
         this.getContainer().getChildren().add(this.getInventoryView().getMainPane());
     }
-
-
 }
