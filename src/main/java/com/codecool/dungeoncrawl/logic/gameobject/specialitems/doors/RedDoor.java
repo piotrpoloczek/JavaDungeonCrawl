@@ -25,7 +25,11 @@ public class RedDoor extends Door {
 
             if(player.getInventory().isInABag("RedKey")) {
                 this.getCell().setGameObject(null);
-//                player.getInventory().removeFromInventory();
+                Item key = player.getInventory().getSack().stream()
+                        .filter(item1 -> "RedKey".equals(item1.getName()))
+                        .findAny()
+                        .orElse(null);
+                player.getInventory().removeFromInventory(key);
             }
             else {
                 Message.getInstance().setActualMessage("You don't have a key");

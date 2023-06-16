@@ -74,7 +74,6 @@ public class Inventory {
     }
 
     public void removeFromInventory(Item item) {
-            Message.getInstance().setActualMessage("dzień dobry");
-            sack.remove(item);
+        sack.remove(item);
     }
 }
