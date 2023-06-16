@@ -11,6 +11,4 @@ public class Sword extends Weapon{
         super(cell);
         this.setPower(POWER);
     }
-
-
 }

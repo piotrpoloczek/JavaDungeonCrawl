@@ -5,6 +5,7 @@ import com.codecool.dungeoncrawl.logic.Game;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
 import com.codecool.dungeoncrawl.view.Tiles;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
@@ -30,6 +31,8 @@ public class GameView {
     @Getter @Setter
     private Label healthLabel;
     @Getter @Setter
+    private Label defenceLabel;
+    @Getter @Setter
     private Label inventoryLabel;
     @Getter @Setter
     private Label messageLabel;
@@ -43,6 +46,7 @@ public class GameView {
         this.canvas = new Canvas(25 * Tiles.TILE_WIDTH, 20 * Tiles.TILE_WIDTH);
 
         this.healthLabel = new Label();
+        this.defenceLabel = new Label();
         this.inventoryLabel = new Label();
         this.messageLabel = new Label();
 
@@ -63,8 +67,9 @@ public class GameView {
         inventoryPane.setPrefWidth(300);
         inventoryPane.setPadding(new Insets(10));
         inventoryPane.add(healthLabel, 1, 0);
-        inventoryPane.add(inventoryLabel, 0, 1);
-        inventoryPane.add(messageLabel, 0, 2);
+//        inventoryPane.add(defenceLabel,0,1);
+        inventoryPane.add(inventoryLabel, 0, 2);
+        inventoryPane.add(messageLabel, 0, 3);
     }
 
     private void prepareMessagePane() {
@@ -96,6 +101,7 @@ public class GameView {
 
         drawViewport(startX, startY, endX, endY);
         healthLabel.setText("Health: " + game.getCurrentMap().getPlayer().getHealth());
+//        healthLabel.setText("Defence: " + game.getCurrentMap().getPlayer().getDefense());
         inventoryLabel.setText("Inventory: " + game.getCurrentMap().getPlayer().getInventory().toString());
         messageLabel.setText(game.getMessage().getActualMessage());
     }
