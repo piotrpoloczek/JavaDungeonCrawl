@@ -8,11 +8,12 @@ import com.codecool.dungeoncrawl.logic.gameobject.GameObject;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.Actor;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
 import lombok.Getter;
+import lombok.Setter;
 
 
 public abstract class Monster extends Actor {
 
-    @Getter
+    @Getter @Setter
     private int expReward;
 
     public Monster(Cell cell) {

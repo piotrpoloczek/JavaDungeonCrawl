@@ -11,6 +11,10 @@ public class Minotaur extends Monster {
     public Minotaur(Cell cell) {
         super(cell);
         setHealth(health);
+        setAttack(4);
+        setDefense(4);
+        setDexterity(3);
+        setExpReward(20);
     }
 
     @Override

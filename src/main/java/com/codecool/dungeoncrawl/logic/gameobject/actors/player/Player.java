@@ -20,7 +20,6 @@ public class Player extends Actor {
     private Journal journal = new Journal();
     @Getter @Setter
     private int experience;
-    private int level;
     @Getter @Setter
     private Class playerClass;
     private Level playerLevel;
@@ -29,6 +28,8 @@ public class Player extends Actor {
     public Player(Cell cell) {
         super(cell, PLAYER_HEALTH);
         this.inventory = new Inventory();
+        this.playerLevel = new Level(this);
+        this.experience = 0;
     }
 
     public Player(){
@@ -37,6 +38,7 @@ public class Player extends Actor {
         setDefense(5);
         setDexterity(5);
         this.inventory = new Inventory();
+        this.playerLevel = new Level(this);
     }
 
     public String getName() {
@@ -52,6 +54,10 @@ public class Player extends Actor {
         if(!actor.isAlive()) {
             this.setExperience(getExperience() + monster.getExpReward());
             System.out.println("Exp gained " + monster.getExpReward());
+
+            if(playerLevel.isNewLevel(getExperience())) {
+                playerLevel.levelUp();
+            }
         }
     }
 
