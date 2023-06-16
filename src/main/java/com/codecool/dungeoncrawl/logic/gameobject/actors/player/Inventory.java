@@ -50,6 +50,7 @@ public class Inventory {
         return sack.stream().anyMatch(i -> i.getClass().getSimpleName().equals(itemName));
     }
 
+
     private boolean isInventoryFull() {
         return sack.size()>=inventorySize;
     }
