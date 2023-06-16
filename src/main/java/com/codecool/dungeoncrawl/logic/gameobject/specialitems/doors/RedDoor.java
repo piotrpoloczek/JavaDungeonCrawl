@@ -4,6 +4,7 @@ import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.exceptions.NewLevelException;
 import com.codecool.dungeoncrawl.logic.gameobject.GameObject;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
+import com.codecool.dungeoncrawl.logic.gameobject.items.Item;
 
 public class RedDoor extends Door {
 
@@ -17,6 +18,11 @@ public class RedDoor extends Door {
             Player player = (Player) gameObject;
             System.out.println("Solid door");
             System.out.println("You need a key");
+
+            Item item = player.getInventory().getSack().stream()
+                    .filter(item1 -> "RedKey".equals(item1.getName()))
+                    .findAny()
+                    .orElse(null);
 
             if(player.getInventory().isInABag("RedKey")) {
                 this.getCell().setGameObject(null);
