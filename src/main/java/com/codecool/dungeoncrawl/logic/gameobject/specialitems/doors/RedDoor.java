@@ -20,18 +20,18 @@ public class RedDoor extends Door {
             System.out.println("Solid door");
             System.out.println("You need a key");
 
-            Item item = player.getInventory().getSack().stream()
+            Item key = player.getInventory().getSack().stream()
                     .filter(item1 -> "RedKey".equals(item1.getName()))
                     .findAny()
                     .orElse(null);
 
 
-            if(player.getInventory().isInABag(item)) {
+            if(player.getInventory().isInABag(key)) {
                 this.getCell().setGameObject(null);
-                Item key = player.getInventory().getSack().stream()
-                        .filter(item1 -> "RedKey".equals(item1.getName()))
-                        .findAny()
-                        .orElse(null);
+//                Item key = player.getInventory().getSack().stream()
+//                        .filter(item1 -> "RedKey".equals(item1.getName()))
+//                        .findAny()
+//                        .orElse(null);
                 player.getInventory().removeFromInventory(key);
             }
             else {

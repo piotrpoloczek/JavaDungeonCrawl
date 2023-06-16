@@ -5,6 +5,7 @@ import com.codecool.dungeoncrawl.logic.exceptions.GameException;
 import com.codecool.dungeoncrawl.logic.exceptions.NewLevelException;
 import com.codecool.dungeoncrawl.logic.gameobject.GameObject;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
+import com.codecool.dungeoncrawl.logic.gameobject.items.Item;
 import com.codecool.dungeoncrawl.logic.tasks.Journal;
 import com.codecool.dungeoncrawl.logic.tasks.Task;
 
@@ -24,7 +25,12 @@ public class Princes extends Npc {
 
             createPrincesTask(player);
 
-            if(player.getInventory().isInABag("crown")) {
+            Item crown = player.getInventory().getSack().stream()
+                    .filter(item1 -> "crown".equals(item1.getName()))
+                    .findAny()
+                    .orElse(null);
+
+            if(player.getInventory().isInABag(crown)) {
                 System.out.println("You have become king! Happy end!");
                 this.getCell().setGameObject(null);
 
