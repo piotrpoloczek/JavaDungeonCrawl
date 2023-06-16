@@ -34,6 +34,7 @@ public class Inventory {
             gold.add((Treasures) item);
         } else if (!isInventoryFull()){
             sack.add(item);
+            inventorySize--;
         } else {
             Message.getInstance().setActualMessage("Inventory is full!");
             System.out.println("Inventory is full!");
@@ -62,12 +63,14 @@ public class Inventory {
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Sack: ").append("\n");
+        sb.append("\n");
+//        sb.append("Sack: ").append("\n");
         for (Item item : sack) {
 
             sb.append(sack.indexOf(item) + " : " + item.toString()).append("\n");
         }
         sb.append("Inventory Size: ").append(inventorySize).append("\n");
+        sb.append("To open inventory press 'i'").append("\n");
         sb.append("Gold: ").append(getGoldAmount()).append("\n");
         sb.append("Current Weapon: ").append(currentWeapon).append("\n");
         sb.append("Current Armor: ").append(currentArmor).append("\n");
@@ -76,5 +79,6 @@ public class Inventory {
 
     public void removeFromInventory(Item item) {
         sack.remove(item);
+        inventorySize++;
     }
 }

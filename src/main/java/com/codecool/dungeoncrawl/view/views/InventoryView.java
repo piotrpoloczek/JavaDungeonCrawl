@@ -60,7 +60,7 @@ public class InventoryView {
                     // Item is clicked, perform the desired action
                     System.out.println("Item clicked: " + item.getName() + item);
                     item.use(game.getCurrentMap().getPlayer());
-                    getGame().getCurrentMap().getPlayer().getInventory().getSack().remove(item);
+                    getGame().getCurrentMap().getPlayer().getInventory().removeFromInventory(item);
                     // ...
                     refresh();
                     break; // Exit the loop since the item has been found
