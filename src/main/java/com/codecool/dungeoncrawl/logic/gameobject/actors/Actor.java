@@ -40,6 +40,12 @@ public abstract class Actor extends GameObject {
         this.health = health;
     }
 
+    public Actor(Cell cell, int health, int defense) {
+        super(cell);
+        this.health = health;
+        this.defense = defense;
+    }
+
     public void move(int dx, int dy) throws GameException {
         Cell nextCell = cell.getNeighbor(dx, dy);
 

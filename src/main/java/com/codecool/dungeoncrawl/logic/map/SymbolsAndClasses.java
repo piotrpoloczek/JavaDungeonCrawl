@@ -28,5 +28,7 @@ public class SymbolsAndClasses {
         symbolsClasses.put('g' , GAME_OBJECT_PACKAGE_PATH + "specialitems.doors.RedDoor");
         symbolsClasses.put('d' , GAME_OBJECT_PACKAGE_PATH + "specialitems.stairs.StairsDown");
         symbolsClasses.put('h' , GAME_OBJECT_PACKAGE_PATH + "specialitems.stairs.StairsHeaven");
+
+        symbolsClasses.put('1' , GAME_OBJECT_PACKAGE_PATH + "items.armor.Chainmail");
     }
 }

@@ -39,6 +39,7 @@ public class Tiles {
         tileMap.put("ghost", new Tile(28, 7));
         tileMap.put("minotaur", new Tile(26, 9));
         tileMap.put("princes", new Tile(12, 23));
+
         tileMap.put("stairs down", new Tile(28, 6));
         tileMap.put("apple", new Tile(15, 29));
         tileMap.put("wizard", new Tile(26, 0));
@@ -47,6 +48,8 @@ public class Tiles {
         tileMap.put("gold", new Tile(9, 26));
         tileMap.put("stairs heaven", new Tile(1, 10));
         tileMap.put("redKey", new Tile(18, 23));
+
+        tileMap.put("chainmail", new Tile(0,23));
 
         tileMap.put("player-mage", new Tile(24, 1));
 

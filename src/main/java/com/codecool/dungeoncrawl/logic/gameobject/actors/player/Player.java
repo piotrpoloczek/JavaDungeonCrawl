@@ -24,9 +24,10 @@ public class Player extends Actor {
     private Class playerClass;
     private Level playerLevel;
     private static int PLAYER_HEALTH = 100;
+    private static int PLAYER_DEFENSE = 0;
 
     public Player(Cell cell) {
-        super(cell, PLAYER_HEALTH);
+        super(cell, PLAYER_HEALTH, PLAYER_DEFENSE);
         this.inventory = new Inventory();
         this.playerLevel = new Level(this);
         this.experience = 0;
