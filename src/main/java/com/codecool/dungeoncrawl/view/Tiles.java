@@ -46,6 +46,7 @@ public class Tiles {
         tileMap.put("door", new Tile(20, 12));
         tileMap.put("gold", new Tile(9, 26));
         tileMap.put("stairs heaven", new Tile(1, 10));
+        tileMap.put("redKey", new Tile(18, 23));
 
         tileMap.put("player-mage", new Tile(24, 1));
 
