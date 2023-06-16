@@ -34,7 +34,6 @@ public class Inventory {
             gold.add((Treasures) item);
         } else if (!isInventoryFull()){
             sack.add(item);
-            inventorySize--;
         } else {
             Message.getInstance().setActualMessage("Inventory is full!");
             System.out.println("Inventory is full!");
@@ -79,6 +78,5 @@ public class Inventory {
 
     public void removeFromInventory(Item item) {
         sack.remove(item);
-        inventorySize++;
     }
 }
