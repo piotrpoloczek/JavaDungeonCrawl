@@ -47,7 +47,8 @@ public class Inventory {
     }
 
     public boolean isInABag(Item item) {
-        return sack.stream().anyMatch(i -> i.getClass().getSimpleName().equals(item));
+        return sack.contains(item);
+//        return sack.stream().anyMatch(i -> i.getClass().getSimpleName().equals(item));
     }
 
 

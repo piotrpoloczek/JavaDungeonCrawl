@@ -21,7 +21,7 @@ public class RedDoor extends Door {
             System.out.println("You need a key");
 
             Item key = player.getInventory().getSack().stream()
-                    .filter(item1 -> "RedKey".equals(item1.getName()))
+                    .filter(item1 -> "redKey".equals(item1.getName()))
                     .findAny()
                     .orElse(null);
 
@@ -33,6 +33,7 @@ public class RedDoor extends Door {
 //                        .findAny()
 //                        .orElse(null);
                 player.getInventory().removeFromInventory(key);
+
             }
             else {
                 Message.getInstance().setActualMessage("You don't have a key");
