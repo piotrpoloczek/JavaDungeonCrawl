@@ -15,6 +15,9 @@ public abstract class Item extends GameObject implements UseItem {
     public void putInInventory(Player player) {
         player.getInventory().putItemToInventory(this);
     }
+//    public void removeFromPlayerInventory(Player player) {
+//        player.getInventory().removeFromInventory(this);
+//    }
 
     @Override
     public void action(GameObject gameObject) throws NewLevelException {
