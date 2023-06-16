@@ -5,6 +5,7 @@ import com.codecool.dungeoncrawl.logic.exceptions.NewLevelException;
 import com.codecool.dungeoncrawl.logic.gameobject.GameObject;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
 import com.codecool.dungeoncrawl.logic.gameobject.items.Item;
+import com.codecool.dungeoncrawl.logic.messages.Message;
 
 public class RedDoor extends Door {
 
@@ -24,10 +25,13 @@ public class RedDoor extends Door {
                     .findAny()
                     .orElse(null);
 
-            if(player.getInventory().isInABag("RedKey")) {
+
+            if(player.getInventory().isInABag(item)) {
                 this.getCell().setGameObject(null);
+//                player.getInventory().removeFromInventory();
             }
             else {
+                Message.getInstance().setActualMessage("You don't have a key");
                 System.out.println("You don't have a key");
             }
         }

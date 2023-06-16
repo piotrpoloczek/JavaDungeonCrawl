@@ -5,6 +5,7 @@ import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.exceptions.GameException;
 import com.codecool.dungeoncrawl.logic.gameobject.GameObject;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
+import com.codecool.dungeoncrawl.logic.messages.Message;
 import com.codecool.dungeoncrawl.logic.util.RandomGenerator;
 import lombok.Getter;
 import lombok.Setter;
@@ -54,16 +55,20 @@ public abstract class Actor extends GameObject {
     }
 
     public void attack(Actor actor){
-
+        Message.getInstance().setActualMessage(this.getName() +" is attacking " + actor.getName());
         System.out.println( this.getName() + " is attacking " + actor.getName());
 
         if(isDefenceSuccessful(actor)) {
+            Message.getInstance().setActualMessage(actor.getName() + " pushes back the attack!");
             System.out.println(actor.getName() + " pushes back the attack!");
             System.out.println();
         }
         else {
             int damage = setHarm(actor, attack);
-            System.out.println("Damage: " + damage + ", " + actor.getName() + " health: " + actor.getHealth());
+            Message.getInstance().setActualMessage("Damage: " + damage + ", " + actor.getName()
+                    + " health: " + actor.getHealth());
+            System.out.println("Damage: " + damage + ", " + actor.getName() + " health: "
+                    + actor.getHealth());
             System.out.println();
         }
 
@@ -71,6 +76,7 @@ public abstract class Actor extends GameObject {
             actor.counterAttack(this);
         }
         else {
+            Message.getInstance().setActualMessage(actor.getName() + " died!");
             System.out.println(actor.getName() + " died!");
             actor.cell.setGameObject(null);
         }
@@ -86,6 +92,7 @@ public abstract class Actor extends GameObject {
 
     private int setHarm(Actor actor, int damage) {
         if(isHitCritical()) {
+            Message.getInstance().setActualMessage("Critical hit!");
             System.out.println("Critical hit!");
             actor.setHealth((actor.getHealth() - damage * 2));
             damage *= 2;

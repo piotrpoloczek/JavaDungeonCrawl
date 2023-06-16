@@ -15,6 +15,7 @@ import lombok.Setter;
 
 import javax.print.attribute.standard.MediaSize;
 import java.util.ConcurrentModificationException;
+import java.util.Iterator;
 import java.util.List;
 
 import static com.codecool.dungeoncrawl.logic.Direction.generateRandomDirection;
@@ -60,7 +61,7 @@ public class Game {
 
                 // Delay between turns (optional)
                 try {
-                    Thread.sleep(100); // Adjust the delay as needed
+                    Thread.sleep(220); // Adjust the delay as needed
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -70,10 +71,12 @@ public class Game {
     }
 
     private void monstersTurn() throws NewLevelException {
-        for (Monster monster : getCurrentMap().getMonsters()) {
+        Iterator<Monster> iterator = getCurrentMap().getMonsters().iterator();
+        while(iterator.hasNext()) {
+            Monster monster = iterator.next();
 
             if (!monster.isAlive()) {
-                getCurrentMap().removeMonsters(monster);
+                iterator.remove();
             } else {
                 Direction direction = generateRandomDirection();
                 monster.move(direction.getX(), direction.getY(), getCurrentMap().getPlayer());
@@ -88,10 +91,9 @@ public class Game {
                 throw new GameOverException();
             }
 
-//            System.out.println(direction.getX() + " : " + direction.getY());
             getCurrentMap().getPlayer().getName();
             getCurrentMap().getPlayer().move(direction.getX(), direction.getY());
-//            monstersTurn();
+
         } catch (GameOverException e) {
             System.out.println(e);
             System.out.println("Game Over");

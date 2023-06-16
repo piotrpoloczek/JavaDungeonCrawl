@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.codecool.dungeoncrawl.logic.gameobject.items.Item;
 import com.codecool.dungeoncrawl.logic.gameobject.items.treasures.Treasures;
+import com.codecool.dungeoncrawl.logic.messages.Message;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,7 +23,6 @@ public class Inventory {
     @Getter @Setter
     private Item currentArmor;
 
-    //TODO ? limit space in sack
 
     public Inventory() {
         this.sack = new ArrayList<>();
@@ -35,11 +35,11 @@ public class Inventory {
         } else if (!isInventoryFull()){
             sack.add(item);
         } else {
+            Message.getInstance().setActualMessage("Inventory is full!");
             System.out.println("Inventory is full!");
         }
     }
 
-    //TODO geter do zawracania ilości złota (wielkości listy)
     public int getGoldAmount() {
         return gold.stream()
                 .mapToInt(Treasures::getValue)
@@ -50,10 +50,10 @@ public class Inventory {
         return sack.stream().anyMatch(i -> i.getClass().getSimpleName().equals(itemName));
     }
 
+
     private boolean isInventoryFull() {
         return sack.size()>=inventorySize;
     }
-
 
     public void useItem(Item item) {
         //item.useIt();
@@ -71,5 +71,10 @@ public class Inventory {
         sb.append("Current Weapon: ").append(currentWeapon).append("\n");
         sb.append("Current Armor: ").append(currentArmor).append("\n");
         return sb.toString();
+    }
+
+    public void removeFromInventory(Item item) {
+            Message.getInstance().setActualMessage("dzień dobry");
+            sack.remove(item);
     }
 }
