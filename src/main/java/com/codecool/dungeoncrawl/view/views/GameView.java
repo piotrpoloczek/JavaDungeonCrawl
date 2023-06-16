@@ -67,7 +67,7 @@ public class GameView {
         inventoryPane.setPrefWidth(300);
         inventoryPane.setPadding(new Insets(10));
         inventoryPane.add(healthLabel, 1, 0);
-//        inventoryPane.add(defenceLabel,0,1);
+        inventoryPane.add(defenceLabel,1,1);
         inventoryPane.add(inventoryLabel, 0, 2);
         inventoryPane.add(messageLabel, 0, 3);
     }
@@ -101,7 +101,7 @@ public class GameView {
 
         drawViewport(startX, startY, endX, endY);
         healthLabel.setText("Health: " + game.getCurrentMap().getPlayer().getHealth());
-//        healthLabel.setText("Defence: " + game.getCurrentMap().getPlayer().getDefense());
+        defenceLabel.setText("Defence: " + game.getCurrentMap().getPlayer().getDefense());
         inventoryLabel.setText("Inventory: " + game.getCurrentMap().getPlayer().getInventory().toString());
         messageLabel.setText(game.getMessage().getActualMessage());
     }
