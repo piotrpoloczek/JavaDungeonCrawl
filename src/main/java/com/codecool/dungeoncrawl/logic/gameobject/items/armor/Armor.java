@@ -10,13 +10,21 @@ import lombok.Setter;
 public abstract class Armor extends Item implements UseItem {
 
     @Getter @Setter
-    private int power;
+    private int itemPower;
+
+    public Armor(Cell cell, int itemPower) {
+        super(cell);
+        this.itemPower = itemPower;
+    }
 
     public Armor(Cell cell) {
         super(cell);
     }
 
+
     public void use(Player player) {
-        player.setDefense(player.getDefense()+this.power);
+        player.setDefense(player.getDefense()+this.itemPower);
     }
 }
+
+

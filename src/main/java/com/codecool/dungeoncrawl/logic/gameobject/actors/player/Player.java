@@ -34,9 +34,9 @@ public class Player extends Actor {
     }
 
     public Player(){
-        super(PLAYER_HEALTH);
+        super(PLAYER_HEALTH, PLAYER_DEFENSE);
         setAttack(5);
-        setDefense(5);
+//        setDefense(PLAYER_DEFENSE);
         setDexterity(5);
         this.inventory = new Inventory();
         this.playerLevel = new Level(this);

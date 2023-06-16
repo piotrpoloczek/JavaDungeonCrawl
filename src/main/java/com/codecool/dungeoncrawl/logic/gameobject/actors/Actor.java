@@ -29,6 +29,11 @@ public abstract class Actor extends GameObject {
         super();
         this.health = health;
     }
+    public Actor(int health, int defense){
+        super();
+        this.health = health;
+        this.defense = defense;
+    }
 
     public Actor(Cell cell) {
         super(cell);
