@@ -32,6 +32,9 @@ public class ViewContainer {
     private InventoryView inventoryView;
     @Getter @Setter
     private ClassView classView;
+    @Getter @Setter
+    private MainView mainView;
+
     private DisplayTask displayTask;
 
     public static ViewContainer getInstance() {
@@ -47,6 +50,7 @@ public class ViewContainer {
         this.gameView = new GameView(game);
         this.inventoryView = new InventoryView(game);
         this.classView = new ClassView(game);
+        this.mainView = new MainView();
 
         this.container = new GridPane();
         container.setPrefSize(SCENE_HEIGHT, SCENE_WIDTH);
@@ -58,6 +62,7 @@ public class ViewContainer {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         executorService.submit(displayTask);
         displayTask.pauseTask();
+
 
         showClassView();
     }
