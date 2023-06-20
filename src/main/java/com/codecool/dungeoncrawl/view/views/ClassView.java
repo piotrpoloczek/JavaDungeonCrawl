@@ -9,7 +9,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import lombok.Getter;
 import lombok.Setter;
@@ -76,7 +75,7 @@ public class ClassView {
             System.out.println("Selected Class: " + className);
 
             // choose class based on user choice
-            getGame().getCurrentMap().getPlayer().setPlayerClass(
+            getGame().getCurrentMap().getPlayer().setPlayerHeroClass(
                     ClassFactory.getClass(className)
             );
 

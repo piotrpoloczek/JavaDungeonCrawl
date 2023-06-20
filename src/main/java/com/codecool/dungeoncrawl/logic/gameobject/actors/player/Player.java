@@ -5,7 +5,7 @@ import com.codecool.dungeoncrawl.logic.exceptions.GameException;
 import com.codecool.dungeoncrawl.logic.gameobject.GameObject;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.Actor;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.monsters.Monster;
-import com.codecool.dungeoncrawl.logic.gameobject.actors.player.classes.Class;
+import com.codecool.dungeoncrawl.logic.gameobject.actors.player.classes.HeroClass;
 import com.codecool.dungeoncrawl.logic.gameobject.items.Item;
 import com.codecool.dungeoncrawl.logic.gameobject.items.treasures.Gold;
 import com.codecool.dungeoncrawl.logic.tasks.Journal;
@@ -21,7 +21,7 @@ public class Player extends Actor {
     @Getter @Setter
     private int experience;
     @Getter @Setter
-    private Class playerClass;
+    private HeroClass playerHeroClass;
     private Level playerLevel;
     private static int PLAYER_HEALTH = 100;
     private static int PLAYER_DEFENSE = 0;
@@ -88,6 +88,6 @@ public class Player extends Actor {
 
     @Override
     public String getTileName() {
-        return this.playerClass.getTileName();
+        return this.playerHeroClass.getTileName();
     }
 }

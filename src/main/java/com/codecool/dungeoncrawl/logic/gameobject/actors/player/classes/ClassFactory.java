@@ -3,12 +3,12 @@ package com.codecool.dungeoncrawl.logic.gameobject.actors.player.classes;
 public class ClassFactory {
 
 
-    public static Class getClass(String name) {
+    public static HeroClass getClass(String name) {
         switch (name) {
             case "Mage":
-                return new MageClass();
+                return new MageHeroClass();
             default:
-                return new WarriorClass();
+                return new WarriorHeroClass();
         }
     }
 }

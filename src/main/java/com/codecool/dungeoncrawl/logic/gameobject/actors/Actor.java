@@ -63,6 +63,8 @@ public abstract class Actor extends GameObject {
             nextCell.setGameObject(this);
             cell = nextCell;
         }
+
+        // move result
     }
 
     public void attack(Actor actor){
