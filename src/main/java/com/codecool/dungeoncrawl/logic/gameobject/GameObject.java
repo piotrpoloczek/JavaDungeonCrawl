@@ -14,6 +14,7 @@ public abstract class GameObject implements Drawable {
     @Getter @Setter
     private String name;
 
+
     public GameObject(Cell cell) {
         this.cell = cell;
         cell.setGameObject(this);

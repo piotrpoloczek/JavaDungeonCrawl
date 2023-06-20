@@ -7,27 +7,32 @@ import com.codecool.dungeoncrawl.logic.gameobject.GameObject;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
 import com.codecool.dungeoncrawl.logic.messages.Message;
 import com.codecool.dungeoncrawl.logic.util.RandomGenerator;
+import com.codecool.dungeoncrawl.view.Tiles;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.awt.*;
+
+@Getter @Setter
 public abstract class Actor extends GameObject {
 
-    @Getter @Setter
     private int health;
-
-    @Getter @Setter
     private int attack;
-
-    @Getter @Setter
     private int defense;
-
-    @Getter @Setter
     private int dexterity;
 
+    private Rectangle solid;
+    private int worldX, worldY;
+    private int speed;
+    public int solidAreaDefaultX, solidAreaDefaultY;
+    public boolean collisionOn = false;
 
     public Actor(int health){
         super();
         this.health = health;
+
+        this.worldX = cell.getX() * Tiles.TILE_WIDTH;
+        this.worldY = cell.getY() * Tiles.TILE_WIDTH;
     }
     public Actor(int health, int defense){
         super();
@@ -52,6 +57,12 @@ public abstract class Actor extends GameObject {
     }
 
     public void move(int dx, int dy) throws GameException {
+
+        // check next coordinates in pixels
+        int nextX = this.worldX + dx * Tiles.TILE_WIDTH;
+        int nextY = this.worldY + dy * Tiles.TILE_WIDTH;
+
+
         Cell nextCell = cell.getNeighbor(dx, dy);
 
         if (nextCell.getGameObject() != null) {
