@@ -2,7 +2,13 @@ package com.codecool.dungeoncrawl.logic.gameobject.actors;
 
 import com.codecool.dungeoncrawl.logic.util.RandomGenerator;
 
-public abstract class Fight {}
+public abstract class Fight {
+    public static final int CRITICAL_HIT_FACTOR = 2;
+    public static final int DICE_THROW_ENHANCEMENT = 10;
+    public static final int ATTRIBUTE_ENHANCEMENT = 110;
+    public static final int BOUND = 110;
+
+}
 
 //    private Actor thisActor;
 //

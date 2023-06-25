@@ -111,8 +111,8 @@ public abstract class Actor extends GameObject {
         if(isHitCritical()) {
             Message.getInstance().setActualMessage("Critical hit!");
             System.out.println("Critical hit!");
-            actor.setHealth((actor.getHealth() - damage * 2));
-            damage *= 2;
+            actor.setHealth((actor.getHealth() - damage * Fight.CRITICAL_HIT_FACTOR));
+            damage *= Fight.CRITICAL_HIT_FACTOR;
         }
         else {
             actor.setHealth(actor.getHealth() - damage);
@@ -122,12 +122,12 @@ public abstract class Actor extends GameObject {
 
     private boolean isHitCritical() {
         int diceThrow = RandomGenerator.throwADice() + RandomGenerator.throwADice();
-        return diceThrow * 10 >= 110 - dexterity * 4;
+        return diceThrow * Fight.DICE_THROW_ENHANCEMENT >= Fight.BOUND - dexterity * Fight.ATTRIBUTE_ENHANCEMENT;
     }
 
     private boolean isDefenceSuccessful(Actor actor) {
         int diceThrow = RandomGenerator.throwADice() + RandomGenerator.throwADice();
-        return diceThrow * 10 >= 110 - actor.getDefense() * 4;
+        return diceThrow * Fight.DICE_THROW_ENHANCEMENT >= Fight.BOUND - actor.getDefense() * Fight.ATTRIBUTE_ENHANCEMENT;
     }
 
     public boolean isAlive() {
