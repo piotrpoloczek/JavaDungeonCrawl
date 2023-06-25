@@ -2,6 +2,7 @@ package com.codecool.dungeoncrawl.logic.gameobject.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
+import com.codecool.dungeoncrawl.logic.GameEvent;
 import com.codecool.dungeoncrawl.logic.exceptions.GameException;
 import com.codecool.dungeoncrawl.logic.gameobject.GameObject;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
@@ -51,12 +52,14 @@ public abstract class Actor extends GameObject {
         this.defense = defense;
     }
 
-    public void move(int dx, int dy) throws GameException {
+    public GameEvent move(int dx, int dy) throws GameException {
+
+
         Cell nextCell = cell.getNeighbor(dx, dy);
 
         if (nextCell.getGameObject() != null) {
             GameObject gameObject = nextCell.getGameObject();
-            action(gameObject);
+            return action(gameObject);
         }
         else if (nextCell.getType().equals(CellType.FLOOR)) {
             cell.setGameObject(null);
@@ -64,6 +67,7 @@ public abstract class Actor extends GameObject {
             cell = nextCell;
         }
 
+        return null;
         // move result
     }
 
@@ -148,5 +152,5 @@ public abstract class Actor extends GameObject {
 
     protected abstract void fight(Actor actor);
 
-    public abstract void action(GameObject gameObject) throws GameException;
+    public abstract GameEvent action(GameObject gameObject) throws GameException;
 }

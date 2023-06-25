@@ -2,6 +2,7 @@ package com.codecool.dungeoncrawl.logic.gameobject;
 
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.Drawable;
+import com.codecool.dungeoncrawl.logic.GameEvent;
 import com.codecool.dungeoncrawl.logic.exceptions.GameException;
 import com.codecool.dungeoncrawl.logic.exceptions.NewLevelException;
 import lombok.Getter;
@@ -22,7 +23,7 @@ public abstract class GameObject implements Drawable {
     public GameObject() {
     }
 
-    public abstract void action(GameObject gameObject) throws GameException;
+    public abstract GameEvent action(GameObject gameObject) throws GameException;
 
     public void setCell(Cell cell) {
         this.cell = cell;

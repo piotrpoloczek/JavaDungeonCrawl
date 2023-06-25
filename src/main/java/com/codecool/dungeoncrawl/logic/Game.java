@@ -58,7 +58,6 @@ public class Game {
                     }
                 });
 
-
                 // Delay between turns (optional)
                 try {
                     Thread.sleep(220); // Adjust the delay as needed
@@ -92,22 +91,26 @@ public class Game {
             }
 
             getCurrentMap().getPlayer().getName();
-            getCurrentMap().getPlayer().move(direction.getX(), direction.getY());
-
-        } catch (GameOverException e) {
-            System.out.println(e);
-            System.out.println("Game Over");
-            System.exit(0);
-        } catch (NewLevelException e) {
-            System.out.println(e);
-            changeCurrentMap();
-        } catch (GameEndException e) {
-            System.out.println("Game is finished");
-            System.exit(0);
-        } catch (ConcurrentModificationException e) {
-            System.out.println(e);
+            GameEvent gameEvent = getCurrentMap().getPlayer().move(direction.getX(), direction.getY());
+            gameEventHandler(gameEvent);
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private void gameEventHandler(GameEvent gameEvent) {
+        switch (gameEvent) {
+            case GAME_END:
+                System.out.println("Game is finished");
+                System.exit(0);
+                break;
+            case NEXT_LEVEL:
+                changeCurrentMap();
+                break;
+            case GAME_OVER:
+                System.out.println("Game Over");
+                System.exit(0);
+                break;
         }
     }
 

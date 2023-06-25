@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl.logic.gameobject.actors.player;
 
 import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.GameEvent;
 import com.codecool.dungeoncrawl.logic.exceptions.GameException;
 import com.codecool.dungeoncrawl.logic.gameobject.GameObject;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.Actor;
@@ -63,7 +64,7 @@ public class Player extends Actor {
     }
 
     @Override
-    public void action(GameObject gameObject) throws GameException {
+    public GameEvent action(GameObject gameObject) throws GameException {
 
         // if the object is monster then player will attack it,
         // in other situation the gameObject will take action, taking player as parameter
@@ -78,8 +79,10 @@ public class Player extends Actor {
             gold.action(this);
         }
         else {
-            gameObject.action(this);
+            return gameObject.action(this);
         }
+
+        return null;
     }
 
     public void useItem(Item item) {

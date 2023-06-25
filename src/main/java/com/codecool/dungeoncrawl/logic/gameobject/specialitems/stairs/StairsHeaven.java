@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl.logic.gameobject.specialitems.stairs;
 
 import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.GameEvent;
 import com.codecool.dungeoncrawl.logic.exceptions.GameEndException;
 import com.codecool.dungeoncrawl.logic.exceptions.GameException;
 import com.codecool.dungeoncrawl.logic.exceptions.NewLevelException;
@@ -19,9 +20,10 @@ public class StairsHeaven extends SpecialItem {
     }
 
     @Override
-    public void action(GameObject gameObject) throws GameException {
+    public GameEvent action(GameObject gameObject) throws GameException {
         if (gameObject instanceof Player) {
-            throw new GameEndException();
+            return GameEvent.GAME_END;
         }
+        return null;
     }
 }
