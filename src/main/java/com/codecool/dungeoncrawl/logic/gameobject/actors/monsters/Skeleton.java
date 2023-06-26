@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl.logic.gameobject.actors.monsters;
 
 import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.GameEvent;
 import com.codecool.dungeoncrawl.logic.gameobject.GameObject;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.Actor;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
@@ -31,10 +32,12 @@ public class Skeleton extends Monster {
     }
 
     @Override
-    public void action(GameObject gameObject) {
+    public GameEvent action(GameObject gameObject) {
         if (gameObject instanceof Player) {
             Player player = (Player) gameObject;
             fight(player);
         }
+
+        return null;
     }
 }

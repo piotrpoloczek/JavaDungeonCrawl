@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl.logic.gameobject.actors.npc;
 
 import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.GameEvent;
 import com.codecool.dungeoncrawl.logic.exceptions.GameException;
 import com.codecool.dungeoncrawl.logic.exceptions.NewLevelException;
 import com.codecool.dungeoncrawl.logic.gameobject.GameObject;
@@ -17,7 +18,7 @@ public class Princes extends Npc {
     }
 
     @Override
-    public void action(GameObject gameObject) throws NewLevelException {
+    public GameEvent action(GameObject gameObject) throws NewLevelException {
         if (gameObject instanceof Player) {
             Player player = (Player) gameObject;
             System.out.println("You found an princes");
@@ -45,6 +46,8 @@ public class Princes extends Npc {
                 System.out.println("Find the crown!");
             }
         }
+
+        return null;
     }
 
     public void createPrincesTask(Player player) {

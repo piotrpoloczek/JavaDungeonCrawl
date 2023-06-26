@@ -1,7 +1,6 @@
 package com.codecool.dungeoncrawl.logic;
 
-import com.codecool.dungeoncrawl.logic.exceptions.GameEndException;
-import com.codecool.dungeoncrawl.logic.exceptions.GameOverException;
+
 import com.codecool.dungeoncrawl.logic.exceptions.NewLevelException;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.monsters.Monster;
 import com.codecool.dungeoncrawl.logic.map.GameMap;
@@ -13,8 +12,6 @@ import javafx.application.Platform;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.print.attribute.standard.MediaSize;
-import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.List;
 
@@ -87,12 +84,15 @@ public class Game {
         try {
 
             if (!getCurrentMap().getPlayer().isAlive()) {
-                throw new GameOverException();
+                GameEvent gameEvent = GameEvent.GAME_OVER;
+                gameEventHandler(gameEvent);
             }
 
             getCurrentMap().getPlayer().getName();
             GameEvent gameEvent = getCurrentMap().getPlayer().move(direction.getX(), direction.getY());
-            gameEventHandler(gameEvent);
+            if (gameEvent != null) {
+                gameEventHandler(gameEvent);
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

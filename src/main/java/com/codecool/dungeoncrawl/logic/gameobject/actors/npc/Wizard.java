@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl.logic.gameobject.actors.npc;
 
 import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.GameEvent;
 import com.codecool.dungeoncrawl.logic.exceptions.NewLevelException;
 import com.codecool.dungeoncrawl.logic.gameobject.GameObject;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
@@ -16,7 +17,7 @@ public class Wizard extends Npc {
     }
 
     @Override
-    public void action(GameObject gameObject) throws NewLevelException {
+    public GameEvent action(GameObject gameObject) throws NewLevelException {
         if (gameObject instanceof Player) {
             Player player = (Player) gameObject;
             Message.getInstance().setActualMessage("You met an old wizard");
@@ -43,6 +44,8 @@ public class Wizard extends Npc {
                 System.out.println("Bring more gold!");
             }
         }
+
+        return null;
     }
 
     public void createWizardTask(Player player) {
