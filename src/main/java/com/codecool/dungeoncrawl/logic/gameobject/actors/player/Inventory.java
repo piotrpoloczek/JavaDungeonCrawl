@@ -72,11 +72,14 @@ public class Inventory {
         sb.append("To open inventory press 'i'").append("\n");
         sb.append("Gold: ").append(getGoldAmount()).append("\n");
         if (currentArmor == null) {
-            sb.append("Current Weapon: ").append("Empty").append("\n");
             sb.append("Current Armor: ").append("Empty").append("\n");
         } else {
-            sb.append("Current Weapon: ").append(currentWeapon).append("\n");
             sb.append("Current Armor: ").append(currentArmor).append("\n");
+        }
+        if (currentWeapon == null) {
+            sb.append("Current Weapon: ").append("Empty").append("\n");
+        } else {
+            sb.append("Current Weapon: ").append(currentWeapon).append("\n");
         }
         return sb.toString();
     }
