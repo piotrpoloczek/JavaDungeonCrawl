@@ -13,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 public class GameStateDaoJdbc implements GameStateDao {
     private DataSource dataSource;
+    private PlayerDaoJdbc playerDao;
 
     @Override
     public void add(GameState state) {
@@ -55,14 +56,16 @@ public class GameStateDaoJdbc implements GameStateDao {
                     Date savedAt = resultSet.getDate("saved_at");
                     int playerId = resultSet.getInt("player_id");
 
-                    //get playermodel by id to create gamestate
-//                    return new GameState(currentMap, savedAt, playerModel);
+                    PlayerModel playerModel = playerDao.get(playerId);
+
+                    return new GameState(currentMap, savedAt, playerModel);
                 }
             }
         }
         catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
         return null;
     }
 
@@ -77,11 +80,11 @@ public class GameStateDaoJdbc implements GameStateDao {
             while(resultSet.next()) {
                 String currentMap = resultSet.getString("current_map");
                 Date savedAt = resultSet.getDate("saved_at");
-                PlayerModel playerModel = null;
-                int playerId = resultSet.getInt("player_id");
 
-                //get playermodel by id to create gamestate
-//                gameStates.add(new GameState(currentMap, savedAt, playerModel));
+                int playerId = resultSet.getInt("player_id");
+                PlayerModel playerModel = playerDao.get(playerId);
+
+                gameStates.add(new GameState(currentMap, savedAt, playerModel));
             }
         }
         catch (SQLException e) {

@@ -4,12 +4,15 @@ import com.codecool.dungeoncrawl.logic.Direction;
 import com.codecool.dungeoncrawl.logic.Game;
 import com.codecool.dungeoncrawl.view.DisplayTask;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -82,6 +85,17 @@ public class ViewContainer {
             case Q:
                 showGameView();
                 break;
+            case S:
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Game Save");
+                alert.setHeaderText("Do you want to save your game state?");
+
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK){
+                    // saving to db
+                } else {
+                    // nothing happens
+                }
             case RIGHT:
                 getGame().gameTurn(Direction.RIGHT);
                 break;
