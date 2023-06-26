@@ -24,6 +24,7 @@ public abstract class Armor extends Item implements UseItem {
 
     public void use(Player player) {
         player.setDefense(player.getDefense()+this.itemPower);
+        player.getInventory().setCurrentArmor(this);
     }
 }
 
