@@ -12,33 +12,41 @@ import java.util.List;
 
 @AllArgsConstructor
 public class GameStateDaoJdbc implements GameStateDao {
-    private Connection connection;
+    private DataSource dataSource;
 
-    @SneakyThrows
     @Override
     public void add(GameState state) {
-        try(PreparedStatement statement = connection.prepareStatement(Queries.ADD_GAME_STATE)) {
+        try(Connection conn = dataSource.getConnection()) {
+            PreparedStatement statement = conn.prepareStatement(Queries.ADD_GAME_STATE);
+
             statement.setString(1, state.getCurrentMap());
             statement.setInt(2, state.getPlayer().getId());
             statement.executeUpdate();
         }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    @SneakyThrows
     @Override
     public void update(GameState state) {
-        try (PreparedStatement statement = connection.prepareStatement(Queries.UPDATE_GAME_STATE)) {
+        try (Connection conn = dataSource.getConnection()) {
+            PreparedStatement statement = conn.prepareStatement(Queries.UPDATE_GAME_STATE);
+
             statement.setString(1, state.getCurrentMap());
             statement.setDate(2, state.getSavedAt());
             statement.setInt(3, state.getPlayer().getId());
             statement.executeUpdate();
         }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    @SneakyThrows
     @Override
     public GameState get(int id) {
-        try (PreparedStatement statement = connection.prepareStatement(Queries.GET_GAME_STATE)) {
+        try (Connection conn = dataSource.getConnection()) {
+            PreparedStatement statement = conn.prepareStatement(Queries.GET_GAME_STATE);
             statement.setInt(1, id);
 
             try(ResultSet resultSet = statement.executeQuery()) {
@@ -52,15 +60,18 @@ public class GameStateDaoJdbc implements GameStateDao {
                 }
             }
         }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         return null;
     }
 
-    @SneakyThrows
     @Override
     public List<GameState> getAll() {
         List<GameState> gameStates = new ArrayList<>();
 
-        try(Statement statement = connection.createStatement()) {
+        try(Connection conn = dataSource.getConnection()) {
+            Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery(Queries.GET_ALL_GAME_STATES);
 
             while(resultSet.next()) {
@@ -72,6 +83,9 @@ public class GameStateDaoJdbc implements GameStateDao {
                 //get playermodel by id to create gamestate
 //                gameStates.add(new GameState(currentMap, savedAt, playerModel));
             }
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
         }
 
         return gameStates;

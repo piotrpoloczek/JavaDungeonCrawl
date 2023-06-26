@@ -7,4 +7,12 @@ public class Queries {
     public static final String GET_ALL_GAME_STATES = "SELECT * FROM game_state";
 
     public static final String UPDATE_GAME_STATE = "UPDATE game_state SET current_map = ?, saved_at = ?, player_id = ? WHERE id = ?";
+
+    public static final String ADD_PLAYER = "INSERT INTO player (player_name, hp, x, y) VALUES (?, ?, ?, ?)";
+
+    public static final String UPDATE_PLAYER = "UPDATE player SET player_name = ?, hp = ?, x = ?, y = ? WHERE id = ?";
+
+    public static final String GET_PLAYER = "SELECT * FROM player WHERE id = ?";
+
+    public static final String GET_ALL_PLAYERS = "SELECT * FROM player";
 }
