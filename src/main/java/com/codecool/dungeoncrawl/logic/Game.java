@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl.logic;
 
 
+import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
 import com.codecool.dungeoncrawl.logic.exceptions.NewLevelException;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.monsters.Monster;
 import com.codecool.dungeoncrawl.logic.map.GameMap;
@@ -12,6 +13,7 @@ import javafx.application.Platform;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
 
@@ -25,12 +27,22 @@ public class Game {
     @Getter @Setter
     private GameMap currentMap;
     private int actualLevel;
+    @Getter
     private Player player;
     @Getter @Setter
     private Thread monstersThread;
+    @Getter
+    private GameDatabaseManager dbManager;
 
 
     public Game() {
+        this.dbManager = new GameDatabaseManager();
+        try {
+            dbManager.setup();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
         this.message = Message.getInstance();
         this.player = new Player();
         this.mapFiles = GameMapFactory.createGameMaps();

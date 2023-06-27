@@ -134,6 +134,7 @@ public class GameView {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK){
+            game.getDbManager().savePlayer(game.getPlayer());
             // saving to db
         } else {
             // nothing happens
