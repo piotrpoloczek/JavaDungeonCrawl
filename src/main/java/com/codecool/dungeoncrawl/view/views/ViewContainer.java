@@ -86,16 +86,8 @@ public class ViewContainer {
                 showGameView();
                 break;
             case S:
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Game Save");
-                alert.setHeaderText("Do you want to save your game state?");
-
-                Optional<ButtonType> result = alert.showAndWait();
-                if (result.get() == ButtonType.OK){
-                    // saving to db
-                } else {
-                    // nothing happens
-                }
+                gameView.showSaveGameWindow();
+                break;
             case RIGHT:
                 getGame().gameTurn(Direction.RIGHT);
                 break;

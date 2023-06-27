@@ -7,12 +7,16 @@ import com.codecool.dungeoncrawl.view.Tiles;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.Optional;
 
 
 public class GameView {
@@ -120,6 +124,19 @@ public class GameView {
                     Tiles.drawTile(getCanvas().getGraphicsContext2D(), cell, x - startX, y - startY);
                 }
             }
+        }
+    }
+
+    public void showSaveGameWindow() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Game Save");
+        alert.setHeaderText("Do you want to save your game state?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            // saving to db
+        } else {
+            // nothing happens
         }
     }
 
