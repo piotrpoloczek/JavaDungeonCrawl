@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 public class GameStateDaoJdbc implements GameStateDao {
     private DataSource dataSource;
-    private PlayerDaoJdbc playerDao;
+    private PlayerDao playerDao;
 
     @Override
     public void add(GameState state) {

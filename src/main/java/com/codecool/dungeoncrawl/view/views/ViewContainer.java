@@ -3,7 +3,12 @@ package com.codecool.dungeoncrawl.view.views;
 import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
 import com.codecool.dungeoncrawl.logic.Direction;
 import com.codecool.dungeoncrawl.logic.Game;
+import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
+import com.codecool.dungeoncrawl.model.GameState;
+import com.codecool.dungeoncrawl.model.PlayerModel;
 import com.codecool.dungeoncrawl.view.DisplayTask;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -13,6 +18,7 @@ import javafx.scene.layout.Pane;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Date;
 import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -128,13 +134,28 @@ public class ViewContainer {
         alert.setHeaderText("Do you want to save your game state?");
 
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK){
-            game.getDbManager().savePlayer(game.getPlayer());
-            // saving to db
-        } else {
-            // nothing happens
-        }
+        result.ifPresent(this::handleSaveStateButton);
 
         this.displayTask.resumeTask();
+    }
+
+    //Sorry for now i don't know where to put this method
+    private void handleSaveStateButton(ButtonType buttonType) {
+        GameState gameState;
+        PlayerModel playerModel = new PlayerModel(game.getPlayer());
+
+        if (buttonType == ButtonType.OK) {
+            try {
+                ObjectMapper objectMapper = new ObjectMapper();
+                String currentMap = objectMapper.writeValueAsString(game.getCurrentMap());
+                gameState = new GameState(currentMap, new Date(System.currentTimeMillis()), playerModel);
+
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+
+            game.getDbManager().savePlayer(playerModel);
+            game.getDbManager().saveGameState(gameState);
+        }
     }
 }

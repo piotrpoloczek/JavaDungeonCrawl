@@ -5,12 +5,14 @@ import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.Actor;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.monsters.Monster;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.List;
 
 public class GameMap {
     private int width;
     private int height;
+    @JsonManagedReference
     private Cell[][] cells;
     private Player player;
     private List<Monster> monsters;

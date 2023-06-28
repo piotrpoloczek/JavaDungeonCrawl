@@ -5,11 +5,15 @@ import com.codecool.dungeoncrawl.logic.Drawable;
 import com.codecool.dungeoncrawl.logic.GameEvent;
 import com.codecool.dungeoncrawl.logic.exceptions.GameException;
 import com.codecool.dungeoncrawl.logic.exceptions.NewLevelException;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 
 public abstract class GameObject implements Drawable {
 
+    @JsonBackReference
     @Getter
     protected Cell cell;
     @Getter @Setter
