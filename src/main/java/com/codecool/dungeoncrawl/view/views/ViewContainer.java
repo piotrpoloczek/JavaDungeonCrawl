@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -22,6 +23,8 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -101,6 +104,10 @@ public class ViewContainer {
                 this.displayTask.pauseTask();
                 this.showSaveGameWindow();
                 break;
+            case L:
+                this.displayTask.pauseTask();
+                this.showLoadGameWindow();
+                break;
             case RIGHT:
                 getGame().gameTurn(Direction.RIGHT);
                 break;
@@ -138,6 +145,20 @@ public class ViewContainer {
 
         Optional<ButtonType> result = alert.showAndWait();
         result.ifPresent(this::handleSaveStateButton);
+
+        this.displayTask.resumeTask();
+    }
+
+    public void showLoadGameWindow() {
+        List<String> choices = dbManager.getGameStateDao().getGameStatesInfo();
+
+        ChoiceDialog<String> dialog = new ChoiceDialog<>("", choices);
+        dialog.setTitle("Load Game");
+        dialog.setHeaderText("Choose game from the list:");
+
+        Optional<String> result = dialog.showAndWait();
+
+        //result.ifPresent(letter -> System.out.println("Your choice: " + letter));
 
         this.displayTask.resumeTask();
     }

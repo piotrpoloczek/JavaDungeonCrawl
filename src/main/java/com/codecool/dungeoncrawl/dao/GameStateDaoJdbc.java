@@ -93,4 +93,15 @@ public class GameStateDaoJdbc implements GameStateDao {
 
         return gameStates;
     }
+
+    public ArrayList<String> getGameStatesInfo() {
+        ArrayList<String> gameStatesInfoLines = new ArrayList<>();
+        List<GameState> gameStates = getAll();
+
+        for(GameState gs : gameStates) {
+            gameStatesInfoLines.add(gs.toString());
+        }
+
+        return gameStatesInfoLines;
+    }
 }

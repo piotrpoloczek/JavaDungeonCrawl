@@ -3,6 +3,7 @@ package com.codecool.dungeoncrawl.dao;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
 import com.codecool.dungeoncrawl.model.GameState;
 import com.codecool.dungeoncrawl.model.PlayerModel;
+import lombok.Getter;
 import lombok.Setter;
 import org.postgresql.ds.PGSimpleDataSource;
 
@@ -12,7 +13,8 @@ import java.sql.SQLException;
 public class GameDatabaseManager {
     @Setter
     private PlayerDao playerDao;
-    private GameStateDao gameStateDao;
+    @Getter
+    private GameStateDaoJdbc gameStateDao;
 
     public void setup() throws SQLException {
         DataSource dataSource = connect();
@@ -30,7 +32,7 @@ public class GameDatabaseManager {
 
     private DataSource connect() throws SQLException {
         PGSimpleDataSource dataSource = new PGSimpleDataSource();
-        String dbName = "dungeoncrawl";
+        String dbName = "dungeon_crawl";
         String user = "postgres";
         String password = "postgres";
 

@@ -47,4 +47,9 @@ public class GameState extends BaseModel {
     public void setPlayer(PlayerModel player) {
         this.player = player;
     }
+
+    @Override
+    public String toString() {
+        return "Player " + this.player.getPlayerName() + ", " + "Saved on " + savedAt;
+    }
 }
