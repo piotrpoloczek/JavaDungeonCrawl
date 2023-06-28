@@ -18,6 +18,9 @@ import javafx.scene.layout.Pane;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Date;
 import java.util.Optional;
 import java.util.concurrent.ExecutorService;
@@ -150,12 +153,24 @@ public class ViewContainer {
                 String currentMap = objectMapper.writeValueAsString(game.getCurrentMap());
                 gameState = new GameState(currentMap, new Date(System.currentTimeMillis()), playerModel);
 
+                whenWriteStringUsingBufferedWritter_thenCorrect("test", currentMap);
+
             } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
 
             game.getDbManager().savePlayer(playerModel);
             game.getDbManager().saveGameState(gameState);
         }
+    }
+
+    public void whenWriteStringUsingBufferedWritter_thenCorrect(String fileName, String data)
+            throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
+        writer.write(data);
+
+        writer.close();
     }
 }
