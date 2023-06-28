@@ -1,5 +1,6 @@
 package com.codecool.dungeoncrawl.view.views;
 
+import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
 import com.codecool.dungeoncrawl.logic.Direction;
 import com.codecool.dungeoncrawl.logic.Game;
 import com.codecool.dungeoncrawl.view.DisplayTask;
@@ -36,6 +37,8 @@ public class ViewContainer {
     @Getter @Setter
     private ClassView classView;
     private DisplayTask displayTask;
+    @Getter @Setter
+    private GameDatabaseManager dbManager;
 
     public static ViewContainer getInstance() {
         if (instance == null) {
@@ -86,7 +89,8 @@ public class ViewContainer {
                 showGameView();
                 break;
             case S:
-                gameView.showSaveGameWindow();
+                this.displayTask.pauseTask();
+                this.showSaveGameWindow();
                 break;
             case RIGHT:
                 getGame().gameTurn(Direction.RIGHT);
@@ -116,5 +120,21 @@ public class ViewContainer {
         this.getContainer().getChildren().add(
                 this.getClassView().getMainPane()
         );
+    }
+
+    public void showSaveGameWindow() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Game Save");
+        alert.setHeaderText("Do you want to save your game state?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            game.getDbManager().savePlayer(game.getPlayer());
+            // saving to db
+        } else {
+            // nothing happens
+        }
+
+        this.displayTask.resumeTask();
     }
 }
