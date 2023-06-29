@@ -6,12 +6,16 @@ import com.codecool.dungeoncrawl.logic.gameobject.actors.Actor;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.monsters.Monster;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 public class GameMap {
     private int width;
     private int height;
+
+    @Getter @Setter
     @JsonManagedReference
     private Cell[][] cells;
     private Player player;
