@@ -9,7 +9,7 @@ CREATE TABLE public.game_state (
 DROP TABLE IF EXISTS public.game_map;
 CREATE TABLE public.game_map (
                                    id serial NOT NULL PRIMARY KEY,
-                                   current_map text NOT NULL,
+                                   current_map bytea NOT NULL,
                                    saved_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
                                    player_id text NOT NULL
 );

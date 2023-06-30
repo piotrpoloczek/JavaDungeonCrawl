@@ -58,8 +58,6 @@ public class GameMapDaoJdbc implements GameMapDao {
             try(ResultSet resultSet = statement.executeQuery()) {
                 if(resultSet.next()) {
                     byte[] currentMap = resultSet.getBytes("current_map");
-                    Date savedAt = resultSet.getDate("saved_at");
-                    int playerId = resultSet.getInt("player_id");
 
                     ByteArrayInputStream bi = new ByteArrayInputStream(currentMap);
                     ObjectInputStream oi = new ObjectInputStream(bi);
