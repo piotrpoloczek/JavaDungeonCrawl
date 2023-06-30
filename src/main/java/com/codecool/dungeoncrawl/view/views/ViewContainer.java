@@ -199,7 +199,7 @@ public class ViewContainer {
         }
     }
 
-    private void handleSaveStateButton(ButtonType buttonType) {
+    private void handleSaveStateButton(ButtonType buttonType){
         if (buttonType == ButtonType.OK) {
             try {
 
@@ -212,11 +212,14 @@ public class ViewContainer {
                 objectOutputStream.close();
 
 
+                game.getDbManager().saveGameMap(game.getCurrentMap());
+
             } catch (JsonProcessingException e) {
                 throw new RuntimeException(e);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+
         }
     }
 
@@ -225,20 +228,19 @@ public class ViewContainer {
             try {
 
 
-                FileInputStream fileInputStream
-                        = new FileInputStream("yourfile.txt");
-                ObjectInputStream objectInputStream
-                        = new ObjectInputStream(fileInputStream);
-                GameMap gameMap = (GameMap) objectInputStream.readObject();
-                objectInputStream.close();
+//                FileInputStream fileInputStream
+//                        = new FileInputStream("yourfile.txt");
+//                ObjectInputStream objectInputStream
+//                        = new ObjectInputStream(fileInputStream);
+//                GameMap gameMap = (GameMap) objectInputStream.readObject();
+//                objectInputStream.close();
+//
+//                game.setCurrentMap(gameMap);
 
-                game.setCurrentMap(gameMap);
+                GameMap loadedMap = game.getDbManager().getGameMap(1);
+                game.setCurrentMap(loadedMap);
 
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } catch (ClassNotFoundException e) {
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
