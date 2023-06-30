@@ -6,7 +6,9 @@ import com.codecool.dungeoncrawl.logic.gameobject.actors.Actor;
 import lombok.Getter;
 import lombok.Setter;
 
-public class Cell implements Drawable {
+import java.io.Serializable;
+
+public class Cell implements Drawable, Serializable {
     private CellType type;
 
     @Setter @Getter

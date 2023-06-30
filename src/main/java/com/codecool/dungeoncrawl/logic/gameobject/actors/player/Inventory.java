@@ -1,5 +1,6 @@
 package com.codecool.dungeoncrawl.logic.gameobject.actors.player;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +11,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 
-public class Inventory {
+public class Inventory implements Serializable {
     @Getter @Setter
     private List<Item> sack;
     private int inventorySize = 10;

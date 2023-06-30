@@ -4,6 +4,7 @@ import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
 import com.codecool.dungeoncrawl.logic.Direction;
 import com.codecool.dungeoncrawl.logic.Game;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
+import com.codecool.dungeoncrawl.logic.map.GameMap;
 import com.codecool.dungeoncrawl.model.GameState;
 import com.codecool.dungeoncrawl.model.PlayerModel;
 import com.codecool.dungeoncrawl.view.DisplayTask;
@@ -19,9 +20,7 @@ import javafx.scene.layout.Pane;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -150,6 +149,17 @@ public class ViewContainer {
     }
 
     public void showLoadGameWindow() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Game Save");
+        alert.setHeaderText("Do you want to save your game state?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        result.ifPresent(this::handleLoadStateButton);
+
+        this.displayTask.resumeTask();
+    }
+
+    public void showLoadGameWindow2() {
         List<String> choices = dbManager.getGameStateDao().getGameStatesInfo();
 
         ChoiceDialog<String> dialog = new ChoiceDialog<>("", choices);
@@ -158,13 +168,13 @@ public class ViewContainer {
 
         Optional<String> result = dialog.showAndWait();
 
-        //result.ifPresent(letter -> System.out.println("Your choice: " + letter));
+        result.ifPresent(letter -> System.out.println("Your choice: " + letter));
 
         this.displayTask.resumeTask();
     }
 
     //Sorry for now i don't know where to put this method
-    private void handleSaveStateButton(ButtonType buttonType) {
+    private void handleSaveStateButton2(ButtonType buttonType) {
         GameState gameState;
         PlayerModel playerModel = new PlayerModel(game.getPlayer());
 
@@ -172,6 +182,8 @@ public class ViewContainer {
             try {
                 ObjectMapper objectMapper = new ObjectMapper();
                 String currentMap = objectMapper.writeValueAsString(game.getCurrentMap());
+
+
                 gameState = new GameState(currentMap, new Date(System.currentTimeMillis()), playerModel);
 
                 whenWriteStringUsingBufferedWritter_thenCorrect("test", currentMap);
@@ -184,6 +196,51 @@ public class ViewContainer {
 
             game.getDbManager().savePlayer(playerModel);
             game.getDbManager().saveGameState(gameState);
+        }
+    }
+
+    private void handleSaveStateButton(ButtonType buttonType) {
+        if (buttonType == ButtonType.OK) {
+            try {
+
+                FileOutputStream fileOutputStream
+                        = new FileOutputStream("yourfile.txt");
+                ObjectOutputStream objectOutputStream
+                        = new ObjectOutputStream(fileOutputStream);
+                objectOutputStream.writeObject(game.getCurrentMap());
+                objectOutputStream.flush();
+                objectOutputStream.close();
+
+
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    private void handleLoadStateButton(ButtonType buttonType) {
+        if (buttonType == ButtonType.OK) {
+            try {
+
+
+                FileInputStream fileInputStream
+                        = new FileInputStream("yourfile.txt");
+                ObjectInputStream objectInputStream
+                        = new ObjectInputStream(fileInputStream);
+                GameMap gameMap = (GameMap) objectInputStream.readObject();
+                objectInputStream.close();
+
+                game.setCurrentMap(gameMap);
+
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

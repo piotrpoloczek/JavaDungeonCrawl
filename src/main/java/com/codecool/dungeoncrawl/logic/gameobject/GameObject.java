@@ -11,7 +11,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 
-public abstract class GameObject implements Drawable {
+import java.io.Serializable;
+
+public abstract class GameObject implements Drawable, Serializable {
 
     @JsonBackReference
     @Getter

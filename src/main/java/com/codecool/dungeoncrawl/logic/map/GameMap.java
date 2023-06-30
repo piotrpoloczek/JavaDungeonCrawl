@@ -9,14 +9,15 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class GameMap {
+public class GameMap implements Serializable {
     private int width;
     private int height;
 
     @Getter @Setter
-    @JsonManagedReference
+//    @JsonManagedReference
     private Cell[][] cells;
     private Player player;
     private List<Monster> monsters;

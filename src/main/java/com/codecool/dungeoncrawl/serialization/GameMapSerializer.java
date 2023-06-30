@@ -17,7 +17,7 @@ public class GameMapSerializer extends StdSerializer<GameMap> {
     @Override
     public void serialize(GameMap gameMap, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
         jsonGenerator.writeStartObject();
-        jsonGenerator.writeStringField("map", Arrays.toString(gameMap.getCells()));
+        jsonGenerator.writeStringField("cells", Arrays.toString(gameMap.getCells()));
         jsonGenerator.writeEndObject();
     }
 }

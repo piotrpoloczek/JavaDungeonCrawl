@@ -3,7 +3,9 @@ package com.codecool.dungeoncrawl.logic.gameobject.actors.player;
 import lombok.Getter;
 import lombok.Setter;
 
-public class Level {
+import java.io.Serializable;
+
+public class Level implements Serializable {
 
     private Player player;
     private int newLevelExperience;
