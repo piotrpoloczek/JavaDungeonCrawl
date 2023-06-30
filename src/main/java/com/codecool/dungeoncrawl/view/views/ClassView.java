@@ -2,6 +2,7 @@ package com.codecool.dungeoncrawl.view.views;
 
 import com.codecool.dungeoncrawl.logic.Game;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.player.classes.ClassFactory;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
@@ -52,9 +53,31 @@ public class ClassView {
                 mageVBox,
                 archerVBox
         );
+        Button newGameButton = createClassButton("New Game");
+        newGameButton.setOnAction(event ->{});
+
+        Button loadGameButton = createClassButton("Load Game");
+        loadGameButton.setOnAction(event ->{});
+
+        Button quitGameButton = createClassButton("Quit Game");
+        quitGameButton.setOnAction(event ->{
+            Platform.exit();
+        });
+
+        HBox optionsBox = new HBox();
+        optionsBox.setAlignment(Pos.BASELINE_CENTER);
+        optionsBox.setSpacing(10);
+        optionsBox.getChildren().addAll(newGameButton, loadGameButton, quitGameButton);
+
         centerPane.setAlignment(Pos.CENTER);
         centerPane.getChildren().add(mainBox);
         mainPane.setCenter(centerPane);
+    }
+
+    private Button createOptionButton(String optionName){
+        Button button = new Button(optionName);
+        button.setPrefWidth(120);
+        return button;
     }
 
     private VBox prepareVBox (String imagePath, String className){
