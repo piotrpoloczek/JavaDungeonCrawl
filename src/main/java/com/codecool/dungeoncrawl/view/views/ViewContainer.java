@@ -237,7 +237,7 @@ public class ViewContainer {
 //
 //                game.setCurrentMap(gameMap);
 
-                GameMap loadedMap = game.getDbManager().getGameMap(1);
+                GameMap loadedMap = game.getDbManager().getGameMap(5);
                 game.setCurrentMap(loadedMap);
 
             } catch (Exception e) {

@@ -57,7 +57,10 @@ public abstract class Actor extends GameObject {
 
         Cell nextCell = cell.getNeighbor(dx, dy);
 
-        if (nextCell.getGameObject() != null) {
+        if (nextCell == null) {
+            return null;
+        }
+        else if (nextCell.getGameObject() != null) {
             GameObject gameObject = nextCell.getGameObject();
             return action(gameObject);
         }
