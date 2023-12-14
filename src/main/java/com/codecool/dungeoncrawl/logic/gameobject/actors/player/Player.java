@@ -1,11 +1,12 @@
 package com.codecool.dungeoncrawl.logic.gameobject.actors.player;
 
 import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.GameEvent;
 import com.codecool.dungeoncrawl.logic.exceptions.GameException;
 import com.codecool.dungeoncrawl.logic.gameobject.GameObject;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.Actor;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.monsters.Monster;
-import com.codecool.dungeoncrawl.logic.gameobject.actors.player.classes.Class;
+import com.codecool.dungeoncrawl.logic.gameobject.actors.player.classes.HeroClass;
 import com.codecool.dungeoncrawl.logic.gameobject.items.Item;
 import com.codecool.dungeoncrawl.logic.gameobject.items.treasures.Gold;
 import com.codecool.dungeoncrawl.logic.tasks.Journal;
@@ -20,22 +21,26 @@ public class Player extends Actor {
     private Journal journal = new Journal();
     @Getter @Setter
     private int experience;
-    private int level;
-    private Class playerClass;
+    @Getter @Setter
+    private HeroClass playerHeroClass;
     private Level playerLevel;
     private static int PLAYER_HEALTH = 100;
+    private static int PLAYER_DEFENSE = 0;
 
     public Player(Cell cell) {
-        super(cell, PLAYER_HEALTH);
+        super(cell, PLAYER_HEALTH, PLAYER_DEFENSE);
         this.inventory = new Inventory();
+        this.playerLevel = new Level(this);
+        this.experience = 0;
     }
 
     public Player(){
-        super(PLAYER_HEALTH);
+        super(PLAYER_HEALTH, PLAYER_DEFENSE);
         setAttack(5);
-        setDefense(5);
+//        setDefense(PLAYER_DEFENSE);
         setDexterity(5);
         this.inventory = new Inventory();
+        this.playerLevel = new Level(this);
     }
 
     public String getName() {
@@ -51,11 +56,15 @@ public class Player extends Actor {
         if(!actor.isAlive()) {
             this.setExperience(getExperience() + monster.getExpReward());
             System.out.println("Exp gained " + monster.getExpReward());
+
+            if(playerLevel.isNewLevel(getExperience())) {
+                playerLevel.levelUp();
+            }
         }
     }
 
     @Override
-    public void action(GameObject gameObject) throws GameException {
+    public GameEvent action(GameObject gameObject) throws GameException {
 
         // if the object is monster then player will attack it,
         // in other situation the gameObject will take action, taking player as parameter
@@ -70,16 +79,18 @@ public class Player extends Actor {
             gold.action(this);
         }
         else {
-            gameObject.action(this);
+            return gameObject.action(this);
         }
+
+        return null;
     }
 
     public void useItem(Item item) {
-//        item.useIt(this);
-        //use item;
+        item.use(this);
     }
 
+    @Override
     public String getTileName() {
-        return "player";
+        return this.playerHeroClass.getTileName();
     }
 }

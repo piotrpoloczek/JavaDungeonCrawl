@@ -6,7 +6,9 @@ import com.codecool.dungeoncrawl.logic.gameobject.actors.Actor;
 import lombok.Getter;
 import lombok.Setter;
 
-public class Cell implements Drawable {
+import java.io.Serializable;
+
+public class Cell implements Drawable, Serializable {
     private CellType type;
 
     @Setter @Getter
@@ -30,7 +32,12 @@ public class Cell implements Drawable {
     }
 
     public Cell getNeighbor(int dx, int dy) {
-        return gameMap.getCell(x + dx, y + dy);
+        try {
+            return gameMap.getCell(x + dx, y + dy);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return null;
+        }
+
     }
     @Override
     public String getTileName() {

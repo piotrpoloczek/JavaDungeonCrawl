@@ -2,9 +2,11 @@ package com.codecool.dungeoncrawl.logic.gameobject.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
+import com.codecool.dungeoncrawl.logic.GameEvent;
 import com.codecool.dungeoncrawl.logic.exceptions.GameException;
 import com.codecool.dungeoncrawl.logic.gameobject.GameObject;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
+import com.codecool.dungeoncrawl.logic.messages.Message;
 import com.codecool.dungeoncrawl.logic.util.RandomGenerator;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,6 +30,11 @@ public abstract class Actor extends GameObject {
         super();
         this.health = health;
     }
+    public Actor(int health, int defense){
+        super();
+        this.health = health;
+        this.defense = defense;
+    }
 
     public Actor(Cell cell) {
         super(cell);
@@ -39,31 +46,49 @@ public abstract class Actor extends GameObject {
         this.health = health;
     }
 
-    public void move(int dx, int dy) throws GameException {
+    public Actor(Cell cell, int health, int defense) {
+        super(cell);
+        this.health = health;
+        this.defense = defense;
+    }
+
+    public GameEvent move(int dx, int dy) throws GameException {
+
+
         Cell nextCell = cell.getNeighbor(dx, dy);
 
-        if (nextCell.getGameObject() != null) {
+        if (nextCell == null) {
+            return null;
+        }
+        else if (nextCell.getGameObject() != null) {
             GameObject gameObject = nextCell.getGameObject();
-            action(gameObject);
+            return action(gameObject);
         }
         else if (nextCell.getType().equals(CellType.FLOOR)) {
             cell.setGameObject(null);
             nextCell.setGameObject(this);
             cell = nextCell;
         }
+
+        return null;
+        // move result
     }
 
     public void attack(Actor actor){
-
+        Message.getInstance().setActualMessage(this.getName() +" is attacking " + actor.getName());
         System.out.println( this.getName() + " is attacking " + actor.getName());
 
         if(isDefenceSuccessful(actor)) {
+            Message.getInstance().setActualMessage(actor.getName() + " pushes back the attack!");
             System.out.println(actor.getName() + " pushes back the attack!");
             System.out.println();
         }
         else {
             int damage = setHarm(actor, attack);
-            System.out.println("Damage: " + damage + ", " + actor.getName() + " health: " + actor.getHealth());
+            Message.getInstance().setActualMessage("Damage: " + damage + ", " + actor.getName()
+                    + " health: " + actor.getHealth());
+            System.out.println("Damage: " + damage + ", " + actor.getName() + " health: "
+                    + actor.getHealth());
             System.out.println();
         }
 
@@ -71,6 +96,7 @@ public abstract class Actor extends GameObject {
             actor.counterAttack(this);
         }
         else {
+            Message.getInstance().setActualMessage(actor.getName() + " died!");
             System.out.println(actor.getName() + " died!");
             actor.cell.setGameObject(null);
         }
@@ -86,9 +112,10 @@ public abstract class Actor extends GameObject {
 
     private int setHarm(Actor actor, int damage) {
         if(isHitCritical()) {
+            Message.getInstance().setActualMessage("Critical hit!");
             System.out.println("Critical hit!");
-            actor.setHealth((actor.getHealth() - damage * 2));
-            damage *= 2;
+            actor.setHealth((actor.getHealth() - damage * Fight.CRITICAL_HIT_FACTOR));
+            damage *= Fight.CRITICAL_HIT_FACTOR;
         }
         else {
             actor.setHealth(actor.getHealth() - damage);
@@ -98,12 +125,12 @@ public abstract class Actor extends GameObject {
 
     private boolean isHitCritical() {
         int diceThrow = RandomGenerator.throwADice() + RandomGenerator.throwADice();
-        return diceThrow * 10 >= 110 - dexterity * 4;
+        return diceThrow * Fight.DICE_THROW_ENHANCEMENT >= Fight.BOUND - dexterity * Fight.ATTRIBUTE_ENHANCEMENT;
     }
 
     private boolean isDefenceSuccessful(Actor actor) {
         int diceThrow = RandomGenerator.throwADice() + RandomGenerator.throwADice();
-        return diceThrow * 10 >= 110 - actor.getDefense() * 4;
+        return diceThrow * Fight.DICE_THROW_ENHANCEMENT >= Fight.BOUND - actor.getDefense() * Fight.ATTRIBUTE_ENHANCEMENT;
     }
 
     public boolean isAlive() {
@@ -128,5 +155,5 @@ public abstract class Actor extends GameObject {
 
     protected abstract void fight(Actor actor);
 
-    public abstract void action(GameObject gameObject) throws GameException;
+    public abstract GameEvent action(GameObject gameObject) throws GameException;
 }

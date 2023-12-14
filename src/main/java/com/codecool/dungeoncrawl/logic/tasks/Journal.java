@@ -2,11 +2,12 @@ package com.codecool.dungeoncrawl.logic.tasks;
 
 import lombok.Getter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class Journal {
+public class Journal implements Serializable {
     private List<Task> actualTasks = new ArrayList<>();
     @Getter
     private List<Task> finishedTask = new ArrayList<>();

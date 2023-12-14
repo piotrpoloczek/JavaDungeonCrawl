@@ -35,7 +35,11 @@ public class Tiles {
         tileMap.put("wall", new Tile(1, 1));
         tileMap.put("floor", new Tile(1, 4));
         tileMap.put("player", new Tile(27, 0));
-        tileMap.put("skeleton", new Tile(12, 10, 32, 64));
+        tileMap.put("skeleton", new Tile(29, 6));
+        tileMap.put("ghost", new Tile(28, 7));
+        tileMap.put("minotaur", new Tile(26, 9));
+        tileMap.put("princes", new Tile(12, 23));
+
         tileMap.put("stairs down", new Tile(28, 6));
         tileMap.put("apple", new Tile(15, 29));
         tileMap.put("wizard", new Tile(26, 0));
@@ -43,6 +47,13 @@ public class Tiles {
         tileMap.put("door", new Tile(20, 12));
         tileMap.put("gold", new Tile(9, 26));
         tileMap.put("stairs heaven", new Tile(1, 10));
+        tileMap.put("redKey", new Tile(18, 23));
+
+        tileMap.put("chainmail", new Tile(0,23));
+
+        tileMap.put("player-mage", new Tile(24, 1));
+
+        tileMap.put("player-warrior", new Tile(31, 0));
 
     }
 

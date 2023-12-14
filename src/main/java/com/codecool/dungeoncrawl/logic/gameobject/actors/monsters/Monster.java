@@ -3,16 +3,18 @@ package com.codecool.dungeoncrawl.logic.gameobject.actors.monsters;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.Direction;
+import com.codecool.dungeoncrawl.logic.GameEvent;
 import com.codecool.dungeoncrawl.logic.exceptions.NewLevelException;
 import com.codecool.dungeoncrawl.logic.gameobject.GameObject;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.Actor;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
 import lombok.Getter;
+import lombok.Setter;
 
 
 public abstract class Monster extends Actor {
 
-    @Getter
+    @Getter @Setter
     private int expReward;
 
     public Monster(Cell cell) {
@@ -24,11 +26,13 @@ public abstract class Monster extends Actor {
     }
 
     @Override
-    public void action(GameObject gameObject) throws NewLevelException {
+    public GameEvent action(GameObject gameObject) throws NewLevelException {
         if (gameObject instanceof Player) {
             Player player = (Player) gameObject;
             this.fight(player);
         }
+
+        return null;
     }
 
     public void move(int dx, int dy, Player player) throws NewLevelException {

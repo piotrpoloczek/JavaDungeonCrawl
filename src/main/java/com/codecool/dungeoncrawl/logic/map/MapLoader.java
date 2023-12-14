@@ -2,28 +2,29 @@ package com.codecool.dungeoncrawl.logic.map;
 
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
+import com.codecool.dungeoncrawl.logic.gameobject.actors.monsters.Ghost;
+import com.codecool.dungeoncrawl.logic.gameobject.actors.monsters.Minotaur;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.monsters.Monster;
+import com.codecool.dungeoncrawl.logic.gameobject.actors.monsters.Skeleton;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
 
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.util.*;
 
+/**
+ * To add new object which IS NOT a monster:
+ * Go to SymbolsAndClasses and add new line to static block. You need to provide new symbol, and fully qualified class name.
+ * Path up to gameobject package is in GAME_OBJECT_PACKAGE_PATH as in other existing lines.
+ *
+ * To add new object which IS a monster:
+ * Do everything as above and in method getMonstersChars() add new line with a monster
+ *
+ */
+
 public class MapLoader {
 
-    private static Map<Character, String> symbolsClasses = new HashMap<>();
-    private static final String GAME_OBJECT_PACKAGE_PATH = "com.codecool.dungeoncrawl.logic.gameobject.";
-
-    static {
-        symbolsClasses.put('s' , GAME_OBJECT_PACKAGE_PATH + "actors.monsters.Skeleton");
-        symbolsClasses.put('@' , GAME_OBJECT_PACKAGE_PATH + "actors.player.Player");
-        symbolsClasses.put('d' , GAME_OBJECT_PACKAGE_PATH + "specialitems.stairs.StairsDown");
-        symbolsClasses.put('w' , GAME_OBJECT_PACKAGE_PATH + "actors.npc.Wizard");
-        symbolsClasses.put('k' , GAME_OBJECT_PACKAGE_PATH + "items.keys.RedKey");
-        symbolsClasses.put('g' , GAME_OBJECT_PACKAGE_PATH + "specialitems.doors.RedDoor");
-        symbolsClasses.put('$' , GAME_OBJECT_PACKAGE_PATH + "items.treasures.Gold");
-        symbolsClasses.put('h' , GAME_OBJECT_PACKAGE_PATH + "specialitems.stairs.StairsHeaven");
-    }
+    private static final Map<Character, String> symbolsClasses = SymbolsAndClasses.getSymbolsClasses();
 
     public static GameMap loadMap(String filename, Player player) {
         InputStream is = MapLoader.class.getResourceAsStream(filename);
@@ -35,34 +36,37 @@ public class MapLoader {
 
         GameMap map = new GameMap(player, width, height, CellType.EMPTY);
         List<Monster> monsters = new ArrayList<>();
+        List<Character> monstersChars = getMonstersChars();
 
         for (int y = 0; y < height; y++) {
-            String line = scanner.nextLine();
-            for (int x = 0; x < width; x++) {
-                if (x < line.length()) {
-                    Cell cell = map.getCell(x, y);
+            if (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
 
-                    char currentChar = line.charAt(x);
-                    setCellTypeByChar(currentChar, cell);
+                for (int x = 0; x < width; x++) {
+                    if (x < line.length()) {
 
-                    if (currentChar != ' ' && currentChar != '#') {
-                        if(symbolsClasses.get(currentChar) == null) {
-                            continue;
-                        }
-                        String className = symbolsClasses.get(currentChar);
-                        Object o = createObjectByClassName(className, cell);
+                        Cell cell = map.getCell(x, y);
+                        char currentChar = line.charAt(x);
+                        setCellTypeByChar(currentChar, cell);
 
-                        if(currentChar == 's') {
-                            monsters.add((Monster) o);
-                        }
-                        if(currentChar == '@') {
-                            map.getPlayer().setCell(cell);
+                        if (currentChar != ' ' && currentChar != '#') {
+                            if (symbolsClasses.get(currentChar) == null) {
+                                continue;
+                            }
+                            String className = symbolsClasses.get(currentChar);
+                            Object o = createObjectByClassName(className, cell);
+
+                            if (monstersChars.contains(currentChar)) {
+                                monsters.add((Monster) o);
+                            }
+                            if (currentChar == '@') {
+                                map.getPlayer().setCell(cell);
+                            }
                         }
                     }
                 }
             }
         }
-
         map.setMonsters(monsters);
 
         return map;
@@ -95,6 +99,15 @@ public class MapLoader {
         else {
             cell.setType(CellType.FLOOR);
         }
+    }
+
+    private static List<Character> getMonstersChars() {
+        List<Character> monstersChars = new ArrayList<>();
+        monstersChars.add('s'); //Skeleton
+        monstersChars.add('z'); //Ghost
+        monstersChars.add('m'); //Minotaur
+
+        return monstersChars;
     }
 
 }

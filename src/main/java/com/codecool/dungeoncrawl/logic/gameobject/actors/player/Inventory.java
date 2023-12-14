@@ -1,15 +1,17 @@
 package com.codecool.dungeoncrawl.logic.gameobject.actors.player;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.codecool.dungeoncrawl.logic.gameobject.items.Item;
 import com.codecool.dungeoncrawl.logic.gameobject.items.treasures.Treasures;
+import com.codecool.dungeoncrawl.logic.messages.Message;
 import lombok.Getter;
 import lombok.Setter;
 
 
-public class Inventory {
+public class Inventory implements Serializable {
     @Getter @Setter
     private List<Item> sack;
     private int inventorySize = 10;
@@ -22,7 +24,6 @@ public class Inventory {
     @Getter @Setter
     private Item currentArmor;
 
-    //TODO ? limit space in sack
 
     public Inventory() {
         this.sack = new ArrayList<>();
@@ -35,25 +36,26 @@ public class Inventory {
         } else if (!isInventoryFull()){
             sack.add(item);
         } else {
+            Message.getInstance().setActualMessage("Inventory is full!");
             System.out.println("Inventory is full!");
         }
     }
 
-    //TODO geter do zawracania ilości złota (wielkości listy)
     public int getGoldAmount() {
         return gold.stream()
                 .mapToInt(Treasures::getValue)
                 .sum();
     }
 
-    public boolean isInABag(String itemName ) {
-        return sack.stream().anyMatch(i -> i.getClass().getSimpleName().equals(itemName));
+    public boolean isInABag(Item item) {
+        return sack.contains(item);
+//        return sack.stream().anyMatch(i -> i.getClass().getSimpleName().equals(item));
     }
+
 
     private boolean isInventoryFull() {
         return sack.size()>=inventorySize;
     }
-
 
     public void useItem(Item item) {
         //item.useIt();
@@ -61,15 +63,29 @@ public class Inventory {
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Sack: ").append("\n");
+        sb.append("\n");
+//        sb.append("Sack: ").append("\n");
         for (Item item : sack) {
 
             sb.append(sack.indexOf(item) + " : " + item.toString()).append("\n");
         }
         sb.append("Inventory Size: ").append(inventorySize).append("\n");
+        sb.append("To open inventory press 'i'").append("\n");
         sb.append("Gold: ").append(getGoldAmount()).append("\n");
-        sb.append("Current Weapon: ").append(currentWeapon).append("\n");
-        sb.append("Current Armor: ").append(currentArmor).append("\n");
+        if (currentArmor == null) {
+            sb.append("Current Armor: ").append("Empty").append("\n");
+        } else {
+            sb.append("Current Armor: ").append(currentArmor).append("\n");
+        }
+        if (currentWeapon == null) {
+            sb.append("Current Weapon: ").append("Empty").append("\n");
+        } else {
+            sb.append("Current Weapon: ").append(currentWeapon).append("\n");
+        }
         return sb.toString();
+    }
+
+    public void removeFromInventory(Item item) {
+        sack.remove(item);
     }
 }

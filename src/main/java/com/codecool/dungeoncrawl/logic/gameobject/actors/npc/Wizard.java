@@ -1,9 +1,11 @@
 package com.codecool.dungeoncrawl.logic.gameobject.actors.npc;
 
 import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.GameEvent;
 import com.codecool.dungeoncrawl.logic.exceptions.NewLevelException;
 import com.codecool.dungeoncrawl.logic.gameobject.GameObject;
 import com.codecool.dungeoncrawl.logic.gameobject.actors.player.Player;
+import com.codecool.dungeoncrawl.logic.messages.Message;
 import com.codecool.dungeoncrawl.logic.tasks.Journal;
 import com.codecool.dungeoncrawl.logic.tasks.Task;
 
@@ -15,15 +17,18 @@ public class Wizard extends Npc {
     }
 
     @Override
-    public void action(GameObject gameObject) throws NewLevelException {
+    public GameEvent action(GameObject gameObject) throws NewLevelException {
         if (gameObject instanceof Player) {
             Player player = (Player) gameObject;
+            Message.getInstance().setActualMessage("You met an old wizard");
+            Message.getInstance().setActualMessage("He won't let you go unless you bring him 50 gold");
             System.out.println("You met an old wizard");
             System.out.println("He won't let you go unless you bring him 50 gold");
 
             createWizardTask(player);
 
             if(player.getInventory().getGoldAmount() >= 50) {
+                Message.getInstance().setActualMessage("Wizard kindly lets you in...");
                 System.out.println("Wizard kindly lets you in...");
                 this.getCell().setGameObject(null);
 
@@ -35,9 +40,12 @@ public class Wizard extends Npc {
                 player.setExperience(player.getExperience() + expReward);
             }
             else {
+                Message.getInstance().setActualMessage("Bring more gold!");
                 System.out.println("Bring more gold!");
             }
         }
+
+        return null;
     }
 
     public void createWizardTask(Player player) {

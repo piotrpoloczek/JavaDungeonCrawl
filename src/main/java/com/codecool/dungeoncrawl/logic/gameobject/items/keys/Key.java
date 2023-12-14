@@ -12,6 +12,6 @@ public class Key extends Item {
 
     @Override
     public void use(Player player) {
-
+//        player.getInventory().removeFromInventory(this);
     }
 }

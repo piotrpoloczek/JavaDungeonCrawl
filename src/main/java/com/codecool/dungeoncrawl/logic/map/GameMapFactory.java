@@ -7,8 +7,10 @@ public class GameMapFactory {
 
     public static List<String> createGameMaps() {
         ArrayList<String> gameMaps = new ArrayList<>();
-        gameMaps.add("/map.txt");
-        gameMaps.add("/map2.txt");
+        gameMaps.add("/newMap.txt");
+        gameMaps.add("/newMap1.txt");
+        gameMaps.add("/newMap2.txt");
+        gameMaps.add("/newMap3.txt");
         return gameMaps;
     }
 }

@@ -3,9 +3,10 @@ package com.codecool.dungeoncrawl.logic.tasks;
 import com.codecool.dungeoncrawl.logic.gameobject.items.Item;
 import lombok.Getter;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Task {
+public class Task implements Serializable {
     @Getter
     private String name;
     private List<Item> reward;

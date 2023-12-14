@@ -19,5 +19,6 @@ public abstract class Weapon extends Item implements UseItem {
     @Override
     public void use(Player player) {
         player.setAttack(player.getAttack() + this.power );
+        player.getInventory().setCurrentWeapon(this);
     }
 }
